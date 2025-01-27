@@ -226,9 +226,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   }
 
   public stopLoadingSkeleton() : void {
-   setTimeout(() => {
     this.contentLoaded = true
-   }, 5000)
   }
 
   ngOnDestroy(): void {
