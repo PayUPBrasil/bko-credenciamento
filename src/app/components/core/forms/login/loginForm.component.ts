@@ -13,7 +13,7 @@ interface user {
 }
 @Component({
   selector: 'app-forms-login',
-  imports: [ReactiveFormsModule, ButtonPrimaryComponent, NgIf],
+  imports: [ReactiveFormsModule, ButtonPrimaryComponent],
   templateUrl: './loginForm.component.html',
   styleUrl: './loginForm.component.scss',
   standalone: true
