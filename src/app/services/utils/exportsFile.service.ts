@@ -13,6 +13,7 @@ export class ExportsFileService {
   private apiUrl = environment.api.url;
 
   exportToPdf(htmlContent: string): Observable<Blob> {
+    console.log('Exportando para PDF o service...');
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post(`${this.apiUrl}/export-pdf`, { htmlContent }, {
       headers: headers,
