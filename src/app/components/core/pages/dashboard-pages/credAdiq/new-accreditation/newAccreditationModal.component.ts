@@ -2,7 +2,6 @@ import { NgFor, NgIf } from "@angular/common";
 import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ProductListConfigurationComponent } from "./productListConfiguration.component";
-import { FlagTagComponent } from "../../../../layout/flagTag.component";
 import { TecnologyTableAdiq } from "../../../../../../services/utils/tecnologyTableAdiq.service";
 import { CommonModule } from "@angular/common";
 import { NewAccreditationService } from "./newAccreditation.service";
@@ -16,7 +15,7 @@ import { SessionService } from "../../../../../../services/session/session.servi
   selector: "app-pages-newAccreditationModal",
   templateUrl: "./newAccreditationModal.component.html",
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, NgFor, ProductListConfigurationComponent, FlagTagComponent, CommonModule, AccreditationModalComponent],
+  imports: [ReactiveFormsModule, NgIf, NgFor, ProductListConfigurationComponent,  CommonModule, AccreditationModalComponent],
   animations: [fadeInOut]
 })
 
