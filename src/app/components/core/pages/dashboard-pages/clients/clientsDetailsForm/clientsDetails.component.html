@@ -1,0 +1,194 @@
+<div class="bg-[#eef1f6] pt-8 lg:p-4">
+  <div class="mt-14 flex items-center rounded-2xl bg-white px-3">
+    <div class="w-full">
+      <app-layout-breadcrumb [path]="path" />
+    </div>
+    <div class="z-10 flex w-full items-end justify-end">
+      <app-layout-button-actionButton [actionButtonElements]="actionButtonElements" (MenuClickedItem)="clickedItem($event)" />
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-7 rounded-lg bg-[#eef1f6] p-4 dark:border-gray-700">
+    <!-- Dados básicos -->
+    <div class="absolute right-14 mt-4 w-auto" (click)="modalConfigurations('Detalhes do Estabelecimento')">
+      <img class="h-5 w-5 cursor-pointer" src="/assets/icons/pincel.svg" alt="Icone de edição" />
+    </div>
+    <ng-container>
+      @if (clientDetails[0] && clientDetails[0].type && clientDetails[0].type === 'PJ') {
+        <app-pages-client-detail-estabelishment [clientDetails]="clientDetails" [createdBy]="userName" />
+      } @else {
+        <app-pages-client-detail-person [clientDetails]="clientDetails" [createdBy]="userName" />
+      }
+    </ng-container>
+
+    <!-- Credenciamento -->
+    <app-pages-client-detail-accreditation [clientDetails]="clientDetails" />
+
+    <!-- Bandeiras Habilitadas -->
+    @if (clientDetails[0] && clientDetails[0].codProdutos) {
+      <div class="relative">
+        <div class="absolute right-10 mt-4 w-auto" (click)="modalConfigurations('Bandeiras Habilitadas')">
+          <img class="h-5 w-5 cursor-pointer" src="/assets/icons/pincel.svg" alt="Icone de edição" />
+        </div>
+        <app-pages-client-detail-flags [clientDetails]="clientDetails[0].codProdutos" />
+      </div>
+    }
+    <!-- Endereço -->
+
+    <div class="relative">
+      <div class=" " (click)="modalConfigurations('Endereço do Estabelecimento')">
+        <div class="absolute right-10 mt-4 w-auto">
+          <img class="h-5 w-5 cursor-pointer" src="/assets/icons/pincel.svg" alt="Icone de edição" />
+        </div>
+        <app-pages-client-detail-address [clientDetails]="clientDetails" />
+      </div>
+    </div>
+
+    <!-- Sócios -->
+
+    <ng-container>
+      <div class="relative">
+        <div class="absolute right-10 mt-4 w-auto"></div>
+        @if (clientDetails[0] && clientDetails[0].type && clientDetails[0].type === 'PJ') {
+          <app-pages-client-detail-partners [clientDetails]="clientDetails" />
+        }
+      </div>
+    </ng-container>
+
+    <!-- Representante -->
+    <div class="hidden grid-cols-1">
+      <div class="flex items-center justify-between rounded-t-2xl bg-white p-3 px-5 shadow-sm">
+        <div>
+          <h1 class="p-2 px-3 font-sans text-lg font-bold">Representante</h1>
+        </div>
+        <div>
+          <span class="hover:text-primary-500 cursor-pointer transition-all delay-75">
+            <svg xmlns="http://www.w3.org/2000/svg " fill="none " viewBox="0 0 24 24 " stroke-width="1.5 " stroke="currentColor " class="size-6">
+              <path stroke-linecap="round " stroke-linejoin="round " d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z " />
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div class="flex flex-col gap-5 overflow-x-scroll rounded-b-2xl bg-white p-5 pt-0 shadow-sm sm:overflow-hidden">
+        <div>
+          <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+            <thead class="bg-white">
+              <tr>
+                <th scope="col" class="flex items-center gap-4 px-6 py-4 font-sans text-sm font-bold text-gray-900">
+                  <span>
+                    <input type="checkbox" (click)="check = !check" id="example12" name="checkGroup1" class="h-4 w-4 rounded border-gray-300 text-primary shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400" />
+                  </span>
+                  <span> CR ID </span>
+                </th>
+                <th scope="col" class="px-6 py-4 font-sans text-sm font-bold text-gray-900">Nome</th>
+                <th scope="col" class="px-6 py-4 font-sans text-sm font-bold text-gray-900">Documento</th>
+                <th scope="col" class="hidden px-6 py-4 font-sans text-sm font-bold text-gray-900">Cliente</th>
+                <th scope="col" class="px-6 py-4 font-sans text-sm font-bold text-gray-900">Tipo</th>
+                <th scope="col" class="px-6 py-4 font-sans text-sm font-bold text-gray-900">Status</th>
+              </tr>
+            </thead>
+
+            <ng-container *ngIf="clientDetails[0] && clientDetails[0].agents">
+              <tbody class="divide-y divide-gray-100 border-t border-gray-100" *ngFor="let agents of clientDetails[0].agents">
+                <tr class="cursor-pointer border-b hover:bg-slate-50">
+                  <th class="flex gap-3 px-6 py-4 text-primary">
+                    <input type="checkbox" [checked]="check" id="example12" name="checkGroup1" class="h-4 w-4 rounded border-gray-300 text-primary shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400" />
+                    <span class="font-sans font-semibold text-gray-700">{{ agents.crId || '-' }}</span>
+                  </th>
+                  <th class="px-6 py-4 text-sm text-primary hover:text-secondary" (click)="socioDetails(agents.userUuid)">
+                    {{ agents.agentName || '-' }}
+                  </th>
+                  <td class="px-6 py-4 font-sans text-gray-800">{{ agents.agentDocument || '-' }}</td>
+                  <td class="px-6 py-4 font-sans text-gray-800">{{ agents.agentPosition || '-' }}</td>
+                  <td class="px-6 py-4 font-sans text-gray-800">
+                    <span class="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-gray-600" [ngClass]="{ 'bg-red-400': agents.accreditationStatus == 'Rejeitado', 'bg-green-400': agents.accreditationStatus == 'Aprovado', 'bg-gray-500 text-white': agents.accreditationStatus == 'Pendente' }">
+                      <img class="h-4 w-4 rounded-full" [src]="getIconSrc(agents.accreditationStatus)" alt="Icone de Check" />
+                      {{ agents.accreditationStatus || '-' }}
+                    </span>
+                  </td>
+                  <td class="flex justify-end gap-4 px-6 py-4 font-medium">
+                    <!-- <a href="/dashboard/clients/details" class="text-primary-700">Ver Detalhes</a> -->
+                  </td>
+                </tr>
+              </tbody>
+            </ng-container>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documentos -->
+    <div>
+      <div>
+        <app-pages-client-detail-documents [clientDetails]="clientDetails" />
+      </div>
+    </div>
+
+    <!-- Observações -->
+
+    <div>
+      <app-pages-client-detail-observation />
+    </div>
+
+    <!-- Histórico de alterações -->
+
+    <ng-container *ngIf="clientDetails[0] && clientDetails[0].clientHistory">
+      <app-pages-client-detail-history [clientDetails]="clientDetails[0].clientHistory" />
+    </ng-container>
+
+    <!-- Funcionamento -->
+
+    <app-pages-client-detail-operation />
+
+    <!-- Solução -->
+    <app-pages-client-detail-soluion />
+  </div>
+
+  @if (accreditationAdiq) {
+    <app-pages-newAccreditationModal [clientDocument]="clientDetails[0].basicData.document" [type]="clientDetails[0].type" (closeModalAccreditation)="closeModalOfAccreditation($event)" />
+  }
+</div>
+
+@if (generateContract == true) {
+  <ng-container>
+    <div class="relative z-10">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-2 text-center sm:items-center sm:p-0">
+          <div class="relative flex h-[280px] transform flex-col justify-around overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+            <div class="z-10 flex h-full w-full items-center justify-center">
+              <div class="z-50 bg-gray-300 opacity-80"></div>
+              <app-pages-contractModal class="h-full w-full" [newContract]="true" [clientDocument]="clientDetails[0].basicData.document" (closeModalEvent)="generateContract = false" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+}
+
+@if (showEditDataModal) {
+  <ng-container>
+    <app-pages-clientsModalEditData [editionDetails]="editionDetails" [clientDetails]="clientDetails[0]" (closeModal)="showEditDataModal = false" />
+  </ng-container>
+}
+
+@if (showNoteEditor) {
+  <ng-container>
+    <app-pages-note (closeNoteEditor)="showNoteEditor = !showNoteEditor" />
+  </ng-container>
+}
+
+@if (rejectCustomerModal) {
+  <ng-container>
+    <app-layout-confirmModal [modalValues]="modalValues" (clickedBtn)="changeClientStatus($event)" />
+  </ng-container>
+}
+
+@if (ShowNotifyModal) {
+  <app-layout-notify [notifyElements]="notifyElements" (buttonClicked)="ShowNotifyModal = false" />
+}
+
+@if (generateContractModal) {
+  <app-layout-confirmModal [modalValues]="modalConfirmationValues" (clickedBtn)="contractModal($event)" />
+}

@@ -1,0 +1,26 @@
+<div class="min-h-80 font-sans">
+    <div>
+        <div class="fixed inset-0 z-10  opacity-55  bg-slate-50"></div>
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
+            <div class="m-auto w-11/12 overflow-hidden rounded-lg bg-white shadow-xl sm:max-w-md ">
+                <div class="relative p-5 flex flex-col gap-5">
+                    <div class="text-center">
+                        <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-full  text-red-500">
+                            <img src="/assets/icons/alertIcon.svg" alt="Icone de alerta">
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium text-red-500">{{alert.title}}</h3>
+                            <div class="mt-2 text-sm">{{alert.message}}</div>
+                        </div>
+                    </div>
+                    <div class="mt-2 flex justify-end gap-3">
+                        <!-- <button (click)="modalButton(alert.buttonCancelText)" type="button" class="flex-1 rounded-lg border border-red-500 bg-red-500 px-4 py-2 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-red-700 hover:bg-red-700 focus:ring focus:ring-red-200 disabled:cursor-not-allowed disabled:border-red-300 disabled:bg-red-300"
+                            #btnCancel>{{alert.buttonCancelText}}</button> -->
+                        <button (click)="modalButton(alert.buttonConfirmText)" type="button" class="flex-1 rounded-lg border border-gray-300 bg-green-500 text-white px-4 py-2 text-center text-sm font-medium shadow-sm transition-all  focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400"
+                            #btnConfirm>{{alert.buttonConfirmText}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

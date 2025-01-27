@@ -1,0 +1,4 @@
+<button type="button" [disabled]="data.disabled !== false" [ariaLabel]="data.aria_label" [title]="data.title" [ngClass]="{ 'cursor-not-allowed bg-slate-400 text-white': data.disabled == true, 'cursor-pointer bg-accent text-white': data.disabled === false }" class="flex h-[48px] w-full items-center justify-center gap-2 rounded-lg border p-3 text-white" (click)="goTo()">
+  <span *ngIf="data.loadingStatus !== 'visible'" class="text-white">{{ data.title }}</span>
+  <div *ngIf="data.loadingStatus === 'visible'" class="border-[rgba(0,0,0, .1)] h-[25px] w-[25px] animate-spin rounded-[50%] border-[5px] border-solid border-l-secondary transition-all delay-1000"></div>
+</button>

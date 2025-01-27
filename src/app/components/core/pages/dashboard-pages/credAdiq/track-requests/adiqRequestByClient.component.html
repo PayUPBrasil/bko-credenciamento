@@ -1,0 +1,129 @@
+<ng-container *ngIf="adiqAccreditationList.length > 0; else noRequests">
+  <div class="mt-20 h-screen bg-background p-4">
+    <div class="bg-white">
+      <app-layout-breadcrumb [path]="path" />
+    </div>
+    <div class="rounded-lg bg-white dark:border-gray-700">
+      <div class="flex items-center justify-between gap-3 px-5 py-7">
+        <div>
+          <h1 class="text-xl font-bold">
+            Solicitações da empresa: <b>{{ adiqAccreditationList[0].tradeName }}</b>
+          </h1>
+        </div>
+        <div class="flex gap-3">
+          <!-- <app-layout-searchInput (InputValue)="inputValue($event)" />
+                <app-layout-filter class="" />
+                <app-layout-button-actionButton /> -->
+        </div>
+      </div>
+
+      <div class="m-auto mb-4 grid grid-cols-1 items-center justify-center gap-4">
+        <div>
+          <div>
+            <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+              <thead class="bg-white">
+                <tr>
+                  <th scope="col" class="px-6 py-4 text-sm font-bold text-gray-900">Id da Proposta</th>
+                  <th scope="col" class="hidden px-6 py-4 text-sm font-bold text-gray-900">Tipo</th>
+                  <th scope="col" class="px-6 py-4 text-sm font-bold text-gray-900">Solicitante</th>
+                  <th scope="col" class="px-6 py-4 text-sm font-bold text-gray-900">Tecnologia</th>
+                  <th scope="col" class="px-6 py-4 text-sm font-bold text-gray-900">Data da Solicitação</th>
+                  <th scope="col" class="px-6 py-4 text-sm font-bold text-gray-900">Última Atualização</th>
+                  <th scope="col" class="px-6 py-4 text-sm font-bold text-gray-900">Status</th>
+                </tr>
+              </thead>
+
+              <tbody class="divide-y divide-gray-100 border-t border-gray-100" *ngFor="let accreditationList of adiqAccreditationList; trackBy: trackByIdProposal">
+                <ng-container>
+                  <tr class="border-b">
+                    <th class="cursor-pointer px-6 py-4 text-sm text-primary hover:text-secondary">
+                      {{ accreditationList.idProposal }}
+                    </th>
+
+                    <!-- {{accreditationList.last_modification_user}} -->
+                    <td class="px-6 py-4 font-sans text-gray-800">{{ getUserById(accreditationList.last_modification_user) | async }}</td>
+                    <td class="px-6 py-4 font-sans text-gray-800">{{ accreditationList.tecnologia.tecnologyCode === '3' ? 'E-commerce' : accreditationList.tecnologia.tecnologyCode === '4' ? 'POS' : 'TEF' }}</td>
+                    <td class="px-6 py-4 font-sans text-gray-800">{{ accreditationList.last_modification | date: "dd/ MM/ yyyy '-' hh:mm a" }}</td>
+                    <td class="px-6 py-4 font-sans text-gray-800">{{ accreditationList.proposalStatus.proposalLastUpdate }}</td>
+
+                    <td class="font-sans text-gray-800">
+                      <span
+                        class="rounded-xl p-1 px-2"
+                        [ngClass]="{
+                          'bg-green-100 text-green-700': accreditationList.proposalStatus.description === 'Aprovado',
+                          'bg-gray-100 text-gray-700': accreditationList.proposalStatus.description === 'Enviado para fila Backoffice',
+                          'rounded-full bg-red-100 px-2 py-1 text-red-700': accreditationList.proposalStatus.description === 'Sem Status',
+                          'rounded-full bg-yellow-100 px-2 py-1 text-yellow-700': accreditationList.proposalStatus.description === 'PAYWARE',
+                        }"
+                      >
+                        {{ accreditationList.proposalStatus.description && accreditationList.proposalStatus.description !== 'PAYWARE' ? accreditationList.proposalStatus.description : 'Aguardando' }}</span
+                      >
+                    </td>
+
+                    <td class="flex justify-end gap-4 px-6 py-4 font-medium">
+                      <button class="group relative flex items-center gap-2" (click)="requestAdiqKey(accreditationList.idProposal)" *ngIf="accreditationList.tecnologia.tecnologyCode === '3' && accreditationList.proposalStatus.description === 'Aprovado'">
+                        <span>
+                          <img class="h-6 w-6" [src]="sendEmailRequestAdiq" alt="Envio de e-mail" />
+                        </span>
+                        <span class="absolute -left-52 hidden rounded-md border bg-black p-1 text-xs text-gray-200 group-hover:block"> Enviar e-mail solicitando chave </span>
+                      </button>
+
+                      <button class="group relative flex items-center gap-2" (click)="showProposalDetails = true">
+                        <span>
+                          <img class="h-6 w-6 rounded-full transition-all delay-75 hover:bg-slate-200" src="assets/icons/plus.svg" alt="Envio de e-mail" />
+                        </span>
+                        <span class="absolute -left-16 top-10 hidden w-28 rounded-md border bg-black p-1 text-xs text-gray-200 group-hover:block"> Ver Detalhes </span>
+                      </button>
+
+                      <button *ngIf="accreditationList.proposalStatus.description == 'Aprovado'" class="group relative flex items-center gap-2">
+                        <span>
+                          <img class="h-6 w-6 rounded-full transition-all delay-75 hover:bg-slate-200" src="assets/icons/clipboard.svg" alt="Copiar MID" />
+                        </span>
+                        <span class="absolute -left-12 top-10 hidden w-28 rounded-md border bg-black p-1 text-xs text-gray-200 group-hover:block"> Copiar Mid </span>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-5">
+        <!-- <app-layout-pagination /> -->
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noRequests>
+  <div class="sm:ml-50 mt-20 flex h-[90vh] flex-col items-center justify-center gap-5 font-sans text-red-500">
+    <span> </span>
+    <p class="text-sm lg:text-lg">Não existem solicitações para mostrar no momento.</p>
+    <div class="w-48">
+      <app-layout-buttons-primary-button
+        (click)="backToClientPage()"
+        [data]="{
+          title: 'Voltar',
+          color: 'text-white',
+          bg_color: 'bg-primary',
+          aria_label: 'voltar para tela anterior',
+          disabled: false,
+          routerLink: 'string',
+          loadingStatus: 'string',
+        }"
+      />
+    </div>
+  </div>
+</ng-template>
+
+@if (ShowNotifyModal) {
+  <ng-container>
+    <app-layout-notify [notifyElements]="notifyElements" (buttonClicked)="ShowNotifyModal = false" />
+  </ng-container>
+}
+
+@if (showProposalDetails) {
+  <app-pages-adiq-proposal-details (modalVisibility)="closeModal()" />
+}

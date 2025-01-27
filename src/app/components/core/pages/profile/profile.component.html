@@ -1,0 +1,153 @@
+<ng-container aria-label="Meu Perfil">
+  <section class="h-screen overflow-hidden bg-background">
+    <div class="plus-jakarta-sans mt-16 p-4">
+      <div class="header h-[25vh] w-full rounded-2xl bg-red-200 bg-pattern-user bg-cover bg-center bg-no-repeat"></div>
+      <div class="black m-auto mt-[-60px] flex h-[10vh] w-[95%] items-center justify-between rounded-full bg-opacity-10 bg-gradient-to-r from-fuchsia-100 via-white to-violet-200">
+        <div class="absolute w-full"></div>
+        <div class="flex h-full w-full items-center justify-end gap-5 px-3">
+          <div class="profile-picture">
+            @if (hasProfilePic) {
+              <div *ngIf="userData.profilePic" class="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-blue-300 bg-cover bg-center text-2xl font-bold" [style.backgroundImage]="'url(' + userData.profilePic + ')'"></div>
+            } @else {
+              <div *ngIf="userData.profilePic" class="flex h-[70px] w-[70px] items-center justify-center rounded-full bg-blue-300 bg-cover bg-center text-2xl font-bold" [style.backgroundImage]="'url(' + userData.profilePic + ')'">{{ userData.profilePic }}</div>
+            }
+          </div>
+
+          <div class="flex w-full flex-col">
+            <span class="font-sans text-lg font-bold">{{ userData.name }}</span>
+            <span class="font-sans text-sm text-text">{{ userData.email }}</span>
+          </div>
+        </div>
+        <div>
+          <div (click)="showProfileActions = !showProfileActions" class="flex w-48 items-center justify-end gap-2 lg:px-10">
+            <span class="cursor-pointer transition-all delay-75 hover:text-primary">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 12H19.5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
+                <path d="M4.5 17.7692H19.5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
+                <path d="M4.5 6.23077H19.5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
+              </svg>
+            </span>
+          </div>
+
+          <div *ngIf="showProfileActions" [@fadeInOut] class="absolute ml-16 mt-3 flex h-[150px] w-[110px] rounded-lg bg-white shadow-md">
+            <div class="w-full">
+              <ul class="w-full space-y-2 font-sans text-sm">
+                <li (click)="changeProfilePicture($event)" class="w-full cursor-pointer rounded-t-lg px-2 py-2 text-xs hover:bg-violet-50">Alterar Foto</li>
+                <li class="w-full cursor-pointer px-2 py-2 text-xs hover:bg-violet-50">Remover Foto</li>
+                <!-- <li class="w-full cursor-pointer px-2 py-2 text-xs hover:bg-violet-50">Editar dados</li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        data-hs-file-upload='{
+        "url": "/upload",
+        "acceptedFiles": "image/*",
+        "maxFiles": 1,
+        "singleton": true
+      }'
+      >
+        <template data-hs-file-upload-preview="">
+          <div class="size-20">
+            <img class="w-full rounded-full object-contain" data-dz-thumbnail="" />
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-5 p-10">
+      <div class="rounded-xl bg-white p-7" *ngIf="userShareLink">
+        <div class="flex flex-col gap-1">
+          <span class="plus-jakarta-sans flex gap-3 text-xl font-bold">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10.5217 13.4798C11.2884 14.2466 12.3286 14.6779 13.4135 14.6788C13.7721 14.6738 14.1291 14.6281 14.4774 14.5426C15.1679 14.3509 15.7974 13.9849 16.3052 13.4798L17.2737 12.5125L20.1517 9.62398C20.8746 8.84914 21.2681 7.82429 21.2494 6.76536C21.2307 5.70643 20.8012 4.69609 20.0515 3.94719C19.3017 3.1983 18.2903 2.76932 17.2301 2.75064C16.17 2.73195 15.144 3.12502 14.3683 3.84703L11.4902 6.73551"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12.4449 17.3357L9.55321 20.2241C8.77213 20.9143 7.75675 21.2805 6.71446 21.248C5.67216 21.2155 4.68161 20.7868 3.94511 20.0494C3.20861 19.312 2.78174 18.3215 2.75169 17.2803C2.72163 16.2391 3.09066 15.2258 3.7834 14.4472L6.67512 11.5587L7.64358 10.5913C8.1514 10.0862 8.78087 9.72024 9.47137 9.52861C10.1661 9.34294 10.8975 9.34342 11.5919 9.52999C12.2864 9.71656 12.9193 10.0826 13.427 10.5913"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            Link de Credenciamento</span
+          >
+          <span class="text-sm">Compartilhe seu link de credenciamento com os seus clientes.</span>
+        </div>
+        <div class="flex h-full w-full flex-col items-start justify-center p-4">
+          <div class="relative mt-5 flex w-full items-center justify-end">
+            <input class="focus:border-primary-400 focus:ring-primary-200 block h-16 w-full cursor-not-allowed rounded-lg border-gray-300 bg-slate-50 pr-10 focus:ring focus:ring-opacity-50 disabled:cursor-default" type="text" [value]="userShareLink" disabled #userinput />
+            <button (click)="copyInputMessage(userinput)" class="absolute cursor-pointer px-5 focus:outline-none">
+              <span class="hover:text-accent focus:outline-none">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.3267 7.28595H10.2831C9.21991 7.28595 8.35803 8.15362 8.35803 9.22395V19.312C8.35803 20.3823 9.21991 21.25 10.2831 21.25H18.3267C19.3898 21.25 20.2517 20.3823 20.2517 19.312V9.22395C20.2517 8.15362 19.3898 7.28595 18.3267 7.28595Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M15.642 7.28596V4.688C15.642 4.17401 15.4392 3.68107 15.0781 3.31763C14.7171 2.95418 14.2275 2.75 13.7169 2.75H5.67334C5.16278 2.75 4.67314 2.95418 4.31212 3.31763C3.95111 3.68107 3.74829 4.17401 3.74829 4.688V14.7761C3.74829 15.2901 3.95111 15.783 4.31212 16.1464C4.67314 16.5099 5.16278 16.7141 5.67334 16.7141H8.358" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl bg-white shadow-sm">
+        <div class="flex items-center gap-2 p-5">
+          <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.132 15.4039C13.9898 15.4039 15.4958 13.8979 15.4958 12.0402C15.4958 10.1824 13.9898 8.67642 12.132 8.67642C10.2743 8.67642 8.76828 10.1824 8.76828 12.0402C8.76828 13.8979 10.2743 15.4039 12.132 15.4039Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M20.9834 15.094C20.5864 16.2329 19.9745 17.2853 19.181 18.1937L17.0571 17.7115C16.2517 18.4346 15.2945 18.9681 14.2559 19.2727L13.6819 21.3507C13.1438 21.4475 12.5983 21.4974 12.0517 21.5C11.3679 21.4999 10.6862 21.4228 10.0197 21.2703L9.41117 19.1236C8.50337 18.7897 7.66902 18.2828 6.95437 17.631L4.85347 18.1706C4.01977 17.1983 3.39458 16.0651 3.01662 14.8414L4.56646 13.1194C4.50763 12.7395 4.47692 12.3557 4.47462 11.9712C4.47515 11.4657 4.52902 10.9617 4.63535 10.4674L3.10846 8.87159C3.55167 7.62023 4.25608 6.4775 5.17493 5.51933L7.34471 6.05891C7.94202 5.57995 8.60757 5.19299 9.31932 4.91088L9.89335 2.78701C10.602 2.60229 11.3308 2.50589 12.0631 2.5C12.6484 2.50063 13.2325 2.55443 13.8081 2.66073L14.3592 4.77311C15.1898 5.04156 15.9668 5.45343 16.6553 5.99003L18.8365 5.42749C19.7177 6.31405 20.4124 7.36797 20.88 8.52718L19.3991 10.1344C19.6798 11.2356 19.7034 12.3865 19.4679 13.4982L20.9834 15.094Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg> -->
+          <div>
+            <h2 class="text-base font-bold">Dados Pessoais</h2>
+            <span class="text-sm">Personalize as configurações da sua conta</span>
+          </div>
+        </div>
+
+        <div class="p-5">
+          <div>
+            <form action="">
+              <div class="grid grid-cols-1 space-y-5">
+                <div class="flex w-full flex-col">
+                  <label class="text-sm" for="name">Nome:</label>
+                  <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" />
+                </div>
+
+                <div class="flex w-full flex-col">
+                  <label class="text-sm" for="email">E-mail:</label>
+                  <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" />
+                </div>
+
+                <div class="flex w-full flex-col">
+                  <label class="text-sm" for="email">Data de Nascimento:</label>
+                  <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" />
+                </div>
+
+                <div class="flex hidden w-full justify-end">
+                  <button class="w-48 rounded bg-violet-200 p-3 text-white">Salvar Alterações</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid rounded-xl bg-white p-5 shadow-sm">
+        <div>
+          <h2 class="text-base font-bold">Configurações Adicionais</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>

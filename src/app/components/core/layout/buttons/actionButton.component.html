@@ -1,0 +1,19 @@
+<section class="flex justify-center">
+  <div (click)="toggleDropdown()">
+    <div class="shadow-xs flex h-[34px] cursor-pointer items-center gap-2 rounded-md border border-gray-200 bg-white p-1 py-1 text-text focus:border-primary">
+      <span class="text-sm text-text">Selecionar Ação</span>
+      <span class="font-bold text-green-300 focus:text-red-800">
+        <img class="h-7 w-7" [src]="dropIcon" alt="Icone dropdown" />
+      </span>
+    </div>
+  </div>
+
+  <div [@fadeInOut] *ngIf="showActionModal" class="absolute mt-[38px] h-[200px] w-[170px] rounded-lg border bg-white focus:border-primary">
+    <ul class="flex flex-col text-start" *ngFor="let buttonElements of actionButtonElements; index as i">
+      <li class="flex h-[34px] cursor-default items-center gap-2 border-b border-slate-100 p-2 font-sans text-xs font-medium text-gray-700 hover:bg-slate-50 hover:transition-all hover:delay-75" (click)="clickedItem(buttonElements.name)">
+        <span *ngIf="buttonElements.icon"><img class="h-5 w-5" [src]="buttonElements.icon" alt="Icone" /></span>
+        <span>{{ buttonElements.name }}</span>
+      </li>
+    </ul>
+  </div>
+</section>

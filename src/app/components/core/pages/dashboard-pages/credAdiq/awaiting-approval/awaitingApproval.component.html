@@ -1,0 +1,72 @@
+<div class="p-4  bg-background h-screen">
+    <app-layout-breadcrumb />
+
+    <div class="  bg-white rounded-lg dark:border-gray-700">
+
+        <div class="pt-3">
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 mb-4">
+            <div>
+                <div>
+                    <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                        <thead class="bg-white">
+                            <tr>
+                                <th scope="col" class="px-6 py-4 text-gray-900 font-bold text-sm">Nome</th>
+                                <th scope="col" class="px-6 py-4 text-gray-900 font-bold text-sm">CNPJ</th>
+                                <th scope="col" class="px-6 py-4 text-gray-900 font-bold text-sm">Email</th>
+                                <th scope="col" class="px-6 py-4 text-gray-900 font-bold text-sm">Status</th>
+                                <th scope="col" class="px-6 py-4 text-gray-900 font-bold text-sm">Tipo</th>
+                                <th scope="col" class="px-6 py-4 text-gray-900 font-bold text-sm"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                            <tr class="border-b hover:bg-slate-50 cursor-pointer">
+                                <th class="px-6 py-4 text-primary">Fabiana Ivo</th>
+                                <td class="px-6 py-4 text-gray-800 font-sans">41.827.531/0001-30</td>
+                                <td class="px-6 py-4 text-gray-800 font-sans">helen&#64;email.com</td>
+                                <td class="px-6 py-4 text-gray-800 font-sans">
+                                    <span class="inline-flex items-center gap-1 rounded-lg text-gray-600 px-2 py-1 text-xs font-semibold bg-yellow-300">
+                    <img class="w-4 h-4 rounded-full" src="assets/icons/timerIcon.svg" alt="Icone de Check"> Aguardando
+                  </span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-800 font-sans">Física</td>
+
+                                <td class="flex justify-end gap-4 px-6 py-4 font-medium">
+                                    <a href="/dashboard/clients/details" class="text-primary-700">Ver Detalhes</a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                            <tr class="border-b hover:bg-slate-50 cursor-pointer">
+                                <th class="px-6 py-4 text-primary">PayUP Brasil</th>
+                                <td class="px-6 py-4 text-gray-800 font-sans">32.825.240/0001-11</td>
+                                <td class="px-6 py-4 text-gray-800 font-sans">payup&#64;email.com</td>
+                                <td class="px-6 py-4 text-gray-800 font-sans">
+                                    <span class="inline-flex items-center gap-1 rounded-lg text-gray-600 px-2 py-1 text-xs font-semibold bg-yellow-300">
+                    <img class="w-4 h-4 rounded-full" src="assets/icons/timerIcon.svg" alt="Icone de Check"> Aguardando
+                  </span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-800 font-sans">Jurídica</td>
+
+                                <td class="flex justify-end gap-4 px-6 py-4 font-medium">
+                                    <a href="/dashboard/clients/details" class="text-primary-700">Ver Detalhes</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="py-5">
+            <app-layout-pagination />
+        </div>
+
+    </div>
+
+
+</div>

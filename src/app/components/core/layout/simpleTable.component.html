@@ -1,0 +1,22 @@
+<div class="">
+  <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Nome</th>
+        <th scope="col" class="px-6 py-4 font-medium text-gray-900">Documento</th>
+        <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
+        <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
+        <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+      <tr *ngFor="let tableContent of tableList">
+        <th class="px-6 py-4 font-medium text-gray-900">{{ tableContent.clientResponsabilityName }}</th>
+        <td class="px-6 py-4">{{ tableContent.clientResponsabilityDoc| formatCpfCnpj }}</td>
+        <td></td>
+        <td></td>
+        <td class="flex justify-end gap-4 px-6 py-4 font-medium cursor-pointer text-red-500 hover:underline transition-all delay-75" (click)="removeItem(tableContent.clientResponsabilityDoc )"><span>Remover</span> </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

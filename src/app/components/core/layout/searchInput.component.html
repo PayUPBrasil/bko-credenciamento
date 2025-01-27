@@ -1,0 +1,16 @@
+<section class="flex w-full items-center justify-end gap-2 overflow-hidden">
+  <div class="z-40 w-[300px] overflow-hidden" *ngIf="showSearchBar" [@swipeAnimation]>
+    <form class="mx-auto">
+      <!-- <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label> -->
+      <div class="relative">
+        <input (input)="inputText(InputValue.value)" type="search" id="default-search" class="block h-[34px] w-full rounded-md border border-gray-300 bg-gray-50 py-1 text-sm text-gray-900 focus:border-primary focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" [placeholder]="placeholder" required #InputValue />
+      </div>
+    </form>
+  </div>
+
+  <div (click)="showSearchBar = !showSearchBar">
+    <div class="z-50 flex w-8 cursor-pointer items-center justify-center overflow-visible rounded-md border border-gray-200 py-1">
+      <img class="h-6 w-6" src="assets/icons/searchIcon.svg" alt="Icone de lupa" />
+    </div>
+  </div>
+</section>

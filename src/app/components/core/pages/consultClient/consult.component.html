@@ -1,0 +1,37 @@
+<ng-container aria-label="Pesquisar Clientes">
+  <section class="borde-red-500 flex min-h-[100vh] items-center justify-center border bg-background p-5 lg:p-0">
+    <div class="flex min-h-[35vh] flex-col items-center justify-center space-y-6 rounded-xl bg-white p-10 shadow-sm">
+      <div class="py-5 text-center">
+        <h1 class="font-sans text-xl font-medium text-black">Selecione o tipo de consulta que deseja realizar</h1>
+      </div>
+      <div class="m-auto grid w-11/12 grid-cols-1 justify-center gap-10 lg:grid-cols-2">
+        <div (click)="goToAnotherPage('pf')" class="flex h-[85px] w-[350px] cursor-pointer items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white font-medium transition-all delay-150 hover:border-primary">
+          <svg class="text-primary" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 21H7C3 21 2 20 2 16V8C2 4 3 3 7 3H17C21 3 22 4 22 8V16C22 20 21 21 17 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M14 8H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M17 16H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8.49994 11.2899C9.49958 11.2899 10.3099 10.4796 10.3099 9.47992C10.3099 8.48029 9.49958 7.66992 8.49994 7.66992C7.50031 7.66992 6.68994 8.48029 6.68994 9.47992C6.68994 10.4796 7.50031 11.2899 8.49994 11.2899Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 16.33C11.86 14.88 10.71 13.74 9.26 13.61C8.76 13.56 8.25 13.56 7.74 13.61C6.29 13.75 5.14 14.88 5 16.33" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          <span class="text-primary">Pessoa Física</span>
+        </div>
+        <div (click)="goToAnotherPage('pj')" class="flex h-[85px] w-[350px] cursor-pointer items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white font-medium transition-all delay-150 hover:border-primary">
+          <svg class="text-primary" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 22H22" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2.94995 22L2.99995 9.96999C2.99995 9.35999 3.28995 8.78004 3.76995 8.40004L10.77 2.95003C11.49 2.39003 12.5 2.39003 13.23 2.95003L20.23 8.39003C20.72 8.77003 21 9.34999 21 9.96999V22" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round" />
+            <path d="M15.5 11H8.5C7.67 11 7 11.67 7 12.5V22H17V12.5C17 11.67 16.33 11 15.5 11Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10 16.25V17.75" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10.5 7.5H13.5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          <span class="text-primary">Pessoa Jurídica</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>
+
+<!-- Conteúdo de pesquisa -->
+<ng-container> </ng-container>

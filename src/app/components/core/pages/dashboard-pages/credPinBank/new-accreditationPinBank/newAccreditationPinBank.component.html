@@ -1,0 +1,1156 @@
+@if (accreditationOption === 'PJ') {
+  <section class="mt-14 min-h-screen bg-[#eef1f6] p-4">
+    <div class="rounded-2xl bg-white">
+      <app-layout-breadcrumb [path]="path" />
+    </div>
+
+    <div>
+      <section class="flex w-full justify-center">
+        <div class="flex w-full flex-col justify-center">
+          <div class="pb-8">
+            <h1 class="hidden text-xl font-semibold text-gray-700">Preencha todos os campos para prosseguir</h1>
+          </div>
+          <form [formGroup]="accreditationForm">
+            <!-- <app-layout-progressBar [progress]="progress" /> -->
+            <div class="space-y-6">
+              <!-- Detalhes do estabelecimento -->
+
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="font-sans text-sm font-semibold sm:text-lg">Dados Básicos PJ</span>
+                      <span class="hidden text-sm sm:block">Informe os Dados Básicos do Estabelecimento</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="text-secondary-600 grid grid-cols-1 gap-4 pb-6 md:grid-cols-1">
+                  <div class="text-secondary-600 flex flex-col gap-4 px-6 pb-6">
+                    <!-- Cnpj e Razão Social -->
+                    <div class="grid grid-cols-1 items-center gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+                      <div class="flex flex-col">
+                        <label for="">CNPJ</label>
+                        <input (focusout)="getCnpjData()" type="text" class="placeholder:text-secondary-400 mb-2 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" placeholder="00.000.000/000-00" mask="00.000.000/0000-00" formControlName="cnpj" appCpfCnpjValidator />
+                        <ng-container *ngIf="this.accreditationForm.get('cnpj')?.errors">
+                          <span class="text-xs text-red-500" *ngIf="this.accreditationForm.get('cnpj')?.hasError('required')">O campo é obrigatório</span>
+                          <span class="text-xs text-red-500" *ngIf="this.accreditationForm.get('cnpj')?.hasError('cnpjInvalid')">Informe um CNPJ válido</span>
+                        </ng-container>
+                      </div>
+                      <!-- Razão Social -->
+                      <div class="flex flex-col">
+                        <label for="">Razão Social</label>
+                        <input type="text" class="mb-2 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="corporateName" />
+                        <ng-container *ngIf="this.accreditationForm.get('corporateName')?.hasError('required')">
+                          <span class="text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <!-- Nome fantasia do estabelecimento -->
+                      <div class="flex flex-col">
+                        <label for="">Nome Fantasia</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="tradeName" />
+                        <ng-container *ngIf="this.accreditationForm.get('tradeName')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('tradeName')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
+                      <div class="flex flex-col">
+                        <label for="">Inscrição Estadual</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="stateRegistration" />
+                        <ng-container *ngIf="this.accreditationForm.get('stateRegistration')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Atividade Comercial</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="commercialActivity" />
+                        <ng-container *ngIf="this.accreditationForm.get('commercialActivity')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Nome no Comprovante</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="commercialActivity" />
+                        <ng-container *ngIf="this.accreditationForm.get('commercialActivity')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Data da Abertura</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" placeholder="DD/MM/AAAA" formControlName="openingDate" mask="00/00/0000" appDateValidator />
+                        <ng-container *ngIf="this.accreditationForm.get('openingDate')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('openingDate')?.hasError('required')">O campo é obrigatório</span>
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('openingDate')?.hasError('dateInvalid')">Informe uma data válida</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
+                      <div class="flex flex-col">
+                        <label for="">MCC</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="mcc" placeholder="0000" mask="0000" />
+                        <ng-container *ngIf="this.accreditationForm.get('mcc')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('mcc')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">CNAE</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="cnae" placeholder="0000" mask="0000" />
+                        <ng-container *ngIf="this.accreditationForm.get('cnae')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('cnae')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Situação</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="situation" />
+                        <ng-container *ngIf="this.accreditationForm.get('situation')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('situation')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Natureza Jurídica</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="legalNature" />
+                        <ng-container *ngIf="this.accreditationForm.get('legalNature')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('legalNature')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5">
+                      <div class="flex flex-col">
+                        <label for="">Faturamento</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="revenue" placeholder="R$ 1.0000.00" mask="0000" />
+                        <ng-container *ngIf="this.accreditationForm.get('revenue')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('revenue')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Referência do Faturamento</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="revenueReferenceMonthYear" mask="00/0000" placeholder="MM/AAAA" />
+                        <ng-container *ngIf="this.accreditationForm.get('revenueReferenceMonthYear')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('revenueReferenceMonthYear')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Data da Constituição</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="incorporationDate" mask="00/00/0000" placeholder="DD/MM/AAAA" />
+                        <ng-container *ngIf="this.accreditationForm.get('incorporationDate')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('incorporationDate')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Telefone Comercial</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="commercialActivity" />
+                        <ng-container *ngIf="this.accreditationForm.get('commercialActivity')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">E-mail Comercial</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="commercialActivity" />
+                        <ng-container *ngIf="this.accreditationForm.get('commercialActivity')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Contrato Social -->
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <h1 class="font-sans text-lg font-semibold">Dados do Contrato Social</h1>
+                      <span class="text-sm">Informe os dados do contrato social para continuar</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="flex flex-col pb-6">
+                  <div class="grid grid-cols-1 gap-3 p-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+                    <div class="flex w-full flex-col">
+                      <div class="flex flex-col">
+                        <label for="">Número do Contrato Social</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="number" />
+                        <ng-container *ngIf="this.accreditationForm.get('number')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="flex w-full flex-col">
+                      <div class="flex flex-col">
+                        <label for="">Órgão Emissor Contrato Social</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="issuingBody" />
+                        <ng-container *ngIf="this.accreditationForm.get('issuingBody')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="flex w-full flex-col">
+                      <div>
+                        <label for="">UF Do Contrato Social</label>
+                        <select class="block h-[50px] w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="contractState">
+                          <option value="" selected disabled>Selecione uma opção</option>
+                          <option [value]="uf.acronym" *ngFor="let uf of ufService.getUfs()">{{ uf.acronym }}</option>
+                        </select>
+                        <ng-container *ngIf="this.accreditationForm.get('contractState')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="flex w-full flex-col">
+                      <div class="flex flex-col">
+                        <label for="">Data da Emissão Contrato Social</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="contractIssueDate" />
+                        <ng-container *ngIf="this.accreditationForm.get('contractIssueDate')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="flex w-full flex-col">
+                      <div>
+                        <label for="">Taxação</label>
+                        <select class="block h-[50px] w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="taxation">
+                          <option value="" selected disabled>Selecione uma opção</option>
+                          <option value="">Abc</option>
+                          <option value="">123</option>
+                        </select>
+                        <ng-container *ngIf="this.accreditationForm.get('taxation')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Endereço  -->
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="font-sans text-sm font-semibold sm:text-lg">Endereço</span>
+                      <span class="hidden font-sans text-sm sm:block">Nos dê mais detalhes sobre o seu estabelecimento</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="text-secondary-600 flex flex-col gap-4 px-5 pb-6">
+                  <!-- CEP e Logradouro -->
+                  <div class="grid grid-cols-1 items-center gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                    <div class="flex flex-col">
+                      <label for="">CEP</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" placeholder="00000-000" mask="00000-000" formControlName="zipCode" />
+                      <ng-container *ngIf="this.accreditationForm.get('zipCode')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                    <div class="flex w-full flex-col">
+                      <label for="">Logradouro</label>
+                      <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="street" />
+                      <ng-container *ngIf="this.accreditationForm.get('street')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <!-- Bairro e Cidade -->
+                  <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                    <div class="flex flex-col">
+                      <label for="">Bairro</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="neighborhood" />
+                      <ng-container *ngIf="this.accreditationForm.get('neighborhood')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                    <div class="flex flex-col">
+                      <label for="">Cidade</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="city" />
+                      <ng-container *ngIf="this.accreditationForm.get('city')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <!-- Estado e Complemento -->
+                  <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+                    <div class="flex flex-col">
+                      <label for="">Estado</label>
+                      <select class="block h-[50px] w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="state">
+                        <option value="" selected disabled>Selecione uma opção</option>
+                        <option [value]="uf.acronym" *ngFor="let uf of ufService.getUfs()">{{ uf.name }}</option>
+                      </select>
+                      <ng-container *ngIf="this.accreditationForm.get('state')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                    <div class="flex flex-col">
+                      <label for="">Número</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="addressNumber" />
+                      <ng-container *ngIf="this.accreditationForm.get('addressNumber')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+
+                    <div class="flex flex-col">
+                      <label for="">Complemento</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="complement" />
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Dados Bancários -->
+
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="font-sans text-sm font-semibold sm:text-lg">Dados Bancários</span>
+                      <span class="hidden font-sans text-sm sm:block">Informe os dados bancários ou solicite a abertura da conta na Gv8 Capital</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="p-5">
+                  <div class="text-secondary-600 flex-col gap-4 pb-6">
+                    <div class="flex justify-end">
+                      <span class="text-primary-700 hover:text-primary-500 cursor-pointer text-xs underline transition-all delay-100">Abrir conta GV8 Capital</span>
+                    </div>
+                    <div class="grid grid-cols-1 items-center gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                      <div class="flex flex-col">
+                        <label for="">Código do Banco</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="codBank" />
+                        <ng-container *ngIf="this.accreditationForm.get('codBank')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex w-full flex-col">
+                        <label for="">Agência</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" maxlength="4" formControlName="ag" />
+                        <ng-container *ngIf="this.accreditationForm.get('ag')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 items-center gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                      <div class="mt-4 flex flex-col">
+                        <label for="">Conta</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="cC" />
+                        <ng-container *ngIf="this.accreditationForm.get('cC')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="mt-4 flex w-full flex-col">
+                        <label for="">Dígito da Agência</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="agDigito" />
+                        <ng-container *ngIf="this.accreditationForm.get('agDigito')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 items-center gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+                      <div class="mt-4 flex flex-col">
+                        <label for="">Chave PIX</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="chavePix" />
+                        <ng-container *ngIf="this.accreditationForm.get('chavePix')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="mt-4 flex flex-col">
+                        <label for="">Nome do Responsável pela Conta</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="accountResponsibleName" />
+                        <ng-container *ngIf="this.accreditationForm.get('accountResponsibleName')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="mt-4 flex flex-col">
+                        <label for="">Documento do Responsável pela Conta</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="accountResponsibleDoc" />
+                        <ng-container *ngIf="this.accreditationForm.get('accountResponsibleDoc')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex w-full justify-end">
+                    <div class="rounded-lg bg-primary px-3 py-3 text-center font-sans font-bold text-white">
+                      <button>Adicionar e Registrar Outro</button>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Sócios -->
+
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="font-sans text-sm font-semibold sm:text-lg">Sócios</span>
+                      <span class="hidden font-sans text-sm sm:block">Informe os dados dos Sócios da Empresa</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="p-5">
+                  <div class="text-secondary-600 flex-col gap-4 pb-6">
+                    <div class="grid grid-cols-1 items-center gap-5 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
+                      <div class="flex w-full flex-col">
+                        <label for=""> CPF/CNPJ</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerDocument" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerDocument')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Tipo de Pessoa</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerDocument" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerDocument')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Nome</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerName" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerName')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Tipo de Documento</label>
+
+                        <select class="block h-[50px] w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="typePartnerDocument">
+                          <option value="" selected disabled>Selecione uma opção</option>
+                          <option [value]="doc.sigla" *ngFor="let doc of docService.getDocs()">{{ doc.nome }}</option>
+                        </select>
+
+                        <ng-container *ngIf="this.accreditationForm.get('typePartnerDocument')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for=""> Número Do Documento</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="typePartnerDocumentNumber" />
+                        <ng-container *ngIf="this.accreditationForm.get('typePartnerDocumentNumber')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Órgão Expedidor</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerDocumentExpedidor" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerDocumentExpedidor')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Data da Expedição</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerDocumentDateExpedidor" mask="00/00/0000" placeholder="DD/MM/AAAA" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerDocumentDateExpedidor')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Estado da Emissão</label>
+                        <select class="block h-[50px] w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="partnerDocumentUf">
+                          <option value="" selected disabled>Selecione uma opção</option>
+                          <option [value]="uf.acronym" *ngFor="let uf of ufService.getUfs()">{{ uf.acronym }}</option>
+                        </select>
+                        <ng-container *ngIf="this.accreditationForm.get('partnerDocumentUf')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Nome da Mãe</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerMotherName" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerMotherName')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Data de Nascimento</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerBornDate" mask="00/00/0000" placeholder="DD/MM/AAAA" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerBornDate')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">E-mail</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerEmail" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerEmail')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Telefone Celular</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerPhone" placeholder="(00) 00000-0000" mask="(00) 00000-0000" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerPhone')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Cargo do Sócio</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerPosition" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerPosition')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Porcentagem Societária</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="shareholdingPercentage" />
+                        <ng-container *ngIf="this.accreditationForm.get('shareholdingPercentage')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Data Inicio do Relacionamento</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerRelationshipStartDate" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerRelationshipStartDate')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Permissão de Assinatura</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerSignaturePermission" />
+                        <ng-container *ngIf="this.accreditationForm.get('partnerSignaturePermission')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <h1>ADDRES</h1>
+                    </div>
+
+                    <div class="flex w-full justify-end">
+                      <div class="rounded-lg bg-primary px-3 py-3 text-center font-sans font-bold text-white">
+                        <button>Adicionar Sócio</button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div>
+                        <h1 class="text-lg font-bold">Lista de Sócios Cadastrados</h1>
+                      </div>
+
+                      <div>
+                        <span>Joao Da Silva </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Representante da Empresa -->
+
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="font-sans text-sm font-semibold sm:text-lg">Representante</span>
+                      <span class="hidden font-sans text-sm sm:block">Informe os dados do Representante da Empresa</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="p-5">
+                  <div class="text-secondary-600 flex-col gap-4 pb-6">
+                    <div class="grid grid-cols-1 items-center gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                      <div class="flex flex-col">
+                        <label for="">CPF</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="codigoDoBanco" />
+                        <ng-container *ngIf="this.accreditationForm.get('agentDocument')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Nome</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="agentName" />
+                        <ng-container *ngIf="this.accreditationForm.get('agentName')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Data Inicio do Relacionamento</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="agentRelationshipStartDate" />
+                        <ng-container *ngIf="this.accreditationForm.get('agentRelationshipStartDate')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Data De Nascimento</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="agentBornDate" />
+                        <ng-container *ngIf="this.accreditationForm.get('agentBornDate')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Tipo de Documento</label>
+
+                        <select class="block h-[50px] w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="typeAgentDocument">
+                          <option value="" selected disabled>Selecione uma opção</option>
+                          <option [value]="doc.sigla" *ngFor="let doc of docService.getDocs()">{{ doc.nome }}</option>
+                        </select>
+                        <ng-container *ngIf="this.accreditationForm.get('typeAgentDocument')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Número do Documento</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="agentDocumentNumber" />
+                        <ng-container *ngIf="this.accreditationForm.get('agentDocumentNumber')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Órgão Expedidor</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="agentDocumentExpedidor" />
+                        <ng-container *ngIf="this.accreditationForm.get('agentDocumentExpedidor')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex w-full flex-col">
+                        <label for="">Data da Expedição</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="agentDocumentDateExpedidor" />
+                        <ng-container *ngIf="this.accreditationForm.get('agentDocumentDateExpedidor')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Procurador -->
+              <details class="group hidden rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="text-sm font-bold sm:text-lg">Procurador</span>
+                      <span class="hidden font-sans text-sm sm:block">Informe os dados do Procurador da Empresa</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="p-5">
+                  <div class="text-secondary-600 flex-col gap-4 pb-6">
+                    <div class="flex justify-end">
+                      <span class="text-primary-700 hover:text-primary-500 cursor-pointer pb-3 text-xs underline transition-all delay-100">Abrir conta GV8 Capital</span>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Documentos -->
+              <div class="group rounded-lg bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <div class="text-secondary-900 flex cursor-pointer list-none items-center justify-between p-4 text-lg font-medium">
+                  <div class="flex flex-col">
+                    <span class="font-sans text-sm font-semibold sm:text-lg">Documentos</span>
+                    <span class="hidden font-sans text-sm sm:block">Faça o Upload dos documentos</span>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div>
+                      <span class="rounded-full bg-gray-50 px-3 py-1 text-sm font-semibold text-gray-600"> Pendente </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="m-auto w-[90%] pb-3">
+                  <hr class="my-1 h-px border-0 bg-gray-100" />
+                </div>
+                <div class="p-6">
+                  <div class="mx-auto max-w-xs" dragAndDrop>
+                    <label for="example5" class="mb-1 block text-sm font-medium text-gray-700">Upload file</label>
+                    <label class="hover:border-primary-300 flex w-full cursor-pointer appearance-none items-center justify-center rounded-md border-2 border-dashed border-gray-200 p-6 transition-all">
+                      <div class="space-y-1 text-center">
+                        <div class="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                          </svg>
+                        </div>
+                        <div class="text-gray-600">
+                          <a href="#" class="text-primary-500 hover:text-primary-700 font-medium">Click to upload</a>
+                          or drag and drop
+                        </div>
+                        <p class="text-sm text-gray-500">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+                      </div>
+                      <input id="example5" type="file" class="sr-only" />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="flex w-full justify-end gap-5 pt-10">
+            <div class="w-56 rounded bg-primary py-3 text-center font-bold text-white">
+              <button>Finalizar Cadastro</button>
+            </div>
+            <div class="w-56 rounded bg-secondary px-2 py-3 text-center font-bold text-white">
+              <button>Salvar e continuar depois</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="flex justify-center bg-slate-500">
+      @if (showModalAlert) {
+        <app-layout-modal [alert]="alert" (newItemEvent)="button($event)" />
+      }
+    </div>
+  </section>
+}
+@if (accreditationOption === 'PF') {
+  <section class="mt-14 min-h-screen bg-[#eef1f6] p-4">
+    <div class="rounded-2xl bg-white">
+      <app-layout-breadcrumb [path]="path" />
+    </div>
+
+    <div>
+      <section class="flex w-full justify-center">
+        <div class="flex w-full flex-col justify-center">
+          <div class="pb-8">
+            <h1 class="hidden text-xl font-semibold text-gray-700">Preencha todos os campos para prosseguir</h1>
+          </div>
+          <form [formGroup]="accreditationForm">
+            <!-- <app-layout-progressBar [progress]="progress" /> -->
+            <div class="space-y-6">
+              <!-- Detalhes do estabelecimento -->
+
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="font-sans text-sm font-semibold sm:text-lg">Dados Básicos CADASTRO PF</span>
+                      <span class="hidden text-sm sm:block">Informe os Dados Básicos do Estabelecimento</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="text-secondary-600 grid grid-cols-1 gap-4 pb-6 md:grid-cols-1">
+                  <div class="text-secondary-600 flex flex-col gap-4 px-6 pb-6">
+                    <!-- Cnpj e Razão Social -->
+                    <div class="grid grid-cols-1 items-center gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5">
+                      <div class="flex flex-col">
+                        <label for="">CPF</label>
+                        <input (focusout)="getCnpjData()" type="text" class="placeholder:text-secondary-400 mb-2 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" placeholder="00.000.000/000-00" mask="00.000.000/0000-00" formControlName="cnpj" appCpfCnpjValidator />
+                        <ng-container *ngIf="this.accreditationForm.get('cnpj')?.errors">
+                          <span class="text-xs text-red-500" *ngIf="this.accreditationForm.get('cnpj')?.hasError('required')">O campo é obrigatório</span>
+                          <span class="text-xs text-red-500" *ngIf="this.accreditationForm.get('cnpj')?.hasError('cnpjInvalid')">Informe um CNPJ válido</span>
+                        </ng-container>
+                      </div>
+                      <!-- Razão Social -->
+                      <div class="flex flex-col">
+                        <label for="">Nome</label>
+                        <input type="text" class="mb-2 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="corporateName" />
+                        <ng-container *ngIf="this.accreditationForm.get('corporateName')?.hasError('required')">
+                          <span class="text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <!-- Nome fantasia do estabelecimento -->
+                      <div class="flex flex-col">
+                        <label for="">Nome da Mãe</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="tradeName" />
+                        <ng-container *ngIf="this.accreditationForm.get('tradeName')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('tradeName')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Sexo</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="stateRegistration" />
+                        <ng-container *ngIf="this.accreditationForm.get('stateRegistration')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <label for="">Data de Nascimento</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" placeholder="DD/MM/AAAA" formControlName="openingDate" mask="00/00/0000" appDateValidator />
+                        <ng-container *ngIf="this.accreditationForm.get('openingDate')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('openingDate')?.hasError('required')">O campo é obrigatório</span>
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('openingDate')?.hasError('dateInvalid')">Informe uma data válida</span>
+                        </ng-container>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
+                      <div class="flex flex-col">
+                        <label for="">RG</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="mcc" placeholder="0000" mask="0000" />
+                        <ng-container *ngIf="this.accreditationForm.get('mcc')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('mcc')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Órgão Emissor do RG</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="cnae" placeholder="0000" mask="0000" />
+                        <ng-container *ngIf="this.accreditationForm.get('cnae')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('cnae')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Data de Emissão do RG</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="situation" />
+                        <ng-container *ngIf="this.accreditationForm.get('situation')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('situation')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">E-mail</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="legalNature" />
+                        <ng-container *ngIf="this.accreditationForm.get('legalNature')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('legalNature')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+                      <div class="flex flex-col">
+                        <label for="">Número de Celular</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="revenue" placeholder="R$ 1.0000.00" mask="0000" />
+                        <ng-container *ngIf="this.accreditationForm.get('revenue')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('revenue')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Enviar e-mail de primeiro acesso?</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="revenueReferenceMonthYear" mask="00/0000" placeholder="MM/AAAA" />
+                        <ng-container *ngIf="this.accreditationForm.get('revenueReferenceMonthYear')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('revenueReferenceMonthYear')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex flex-col">
+                        <label for="">Cadastro de Pep?</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="incorporationDate" mask="00/00/0000" placeholder="DD/MM/AAAA" />
+                        <ng-container *ngIf="this.accreditationForm.get('incorporationDate')?.errors">
+                          <span class="mt-2 text-xs text-red-500" *ngIf="this.accreditationForm.get('incorporationDate')?.hasError('required')">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Endereço  -->
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="font-sans text-sm font-semibold sm:text-lg">Endereço</span>
+                      <span class="hidden font-sans text-sm sm:block">Nos dê mais detalhes sobre o seu estabelecimento</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="text-secondary-600 flex flex-col gap-4 px-5 pb-6">
+                  <!-- CEP e Logradouro -->
+                  <div class="grid grid-cols-1 items-center gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                    <div class="flex flex-col">
+                      <label for="">CEP</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" placeholder="00000-000" mask="00000-000" formControlName="zipCode" />
+                      <ng-container *ngIf="this.accreditationForm.get('zipCode')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                    <div class="flex w-full flex-col">
+                      <label for="">Logradouro</label>
+                      <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="street" />
+                      <ng-container *ngIf="this.accreditationForm.get('street')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <!-- Bairro e Cidade -->
+                  <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                    <div class="flex flex-col">
+                      <label for="">Bairro</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="neighborhood" />
+                      <ng-container *ngIf="this.accreditationForm.get('neighborhood')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                    <div class="flex flex-col">
+                      <label for="">Cidade</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="city" />
+                      <ng-container *ngIf="this.accreditationForm.get('city')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <!-- Estado e Complemento -->
+                  <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+                    <div class="flex flex-col">
+                      <label for="">Estado</label>
+                      <select class="block h-[50px] w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="state">
+                        <option value="" selected disabled>Selecione uma opção</option>
+                        <option [value]="uf.acronym" *ngFor="let uf of ufService.getUfs()">{{ uf.name }}</option>
+                      </select>
+                      <ng-container *ngIf="this.accreditationForm.get('state')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+                    <div class="flex flex-col">
+                      <label for="">Número</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="addressNumber" />
+                      <ng-container *ngIf="this.accreditationForm.get('addressNumber')?.hasError('required')">
+                        <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                      </ng-container>
+                    </div>
+
+                    <div class="flex flex-col">
+                      <label for="">Complemento</label>
+                      <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="complement" />
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Dados Bancários -->
+
+              <details class="group rounded-xl bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <summary class="text-secondary-900 flex cursor-pointer list-none items-center justify-between text-lg font-medium">
+                  <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
+                    <div class="flex flex-col p-4">
+                      <span class="font-sans text-sm font-semibold sm:text-lg">Dados Bancários</span>
+                      <span class="hidden font-sans text-sm sm:block">Informe os dados bancários ou solicite a abertura da conta na Gv8 Capital</span>
+                    </div>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div class="mr-5 rounded-full border border-slate-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="block h-5 w-5 transition-all duration-300 group-open:-rotate-90">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="p-5">
+                  <div class="text-secondary-600 flex-col gap-4 pb-6">
+                    <div class="grid grid-cols-1 items-center gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                      <div class="flex flex-col">
+                        <label for="">Código do Banco</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="codBank" />
+                        <ng-container *ngIf="this.accreditationForm.get('codBank')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="flex w-full flex-col">
+                        <label for="">Agência</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" maxlength="4" formControlName="ag" />
+                        <ng-container *ngIf="this.accreditationForm.get('ag')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 items-center gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+                      <div class="mt-4 flex flex-col">
+                        <label for="">Conta</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="cC" />
+                        <ng-container *ngIf="this.accreditationForm.get('cC')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                      <div class="mt-4 flex w-full flex-col">
+                        <label for="">Dígito da Agência</label>
+                        <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="agDigito" />
+                        <ng-container *ngIf="this.accreditationForm.get('agDigito')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 items-center gap-3 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+                      <div class="mt-4 flex flex-col">
+                        <label for="">Chave PIX</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="chavePix" />
+                        <ng-container *ngIf="this.accreditationForm.get('chavePix')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="mt-4 flex flex-col">
+                        <label for="">Nome do Responsável pela Conta</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="accountResponsibleName" />
+                        <ng-container *ngIf="this.accreditationForm.get('accountResponsibleName')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+
+                      <div class="mt-4 flex flex-col">
+                        <label for="">Documento do Responsável pela Conta</label>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="accountResponsibleDoc" />
+                        <ng-container *ngIf="this.accreditationForm.get('accountResponsibleDoc')?.hasError('required')">
+                          <span class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex w-full justify-end">
+                    <div class="rounded-lg bg-primary px-3 py-3 text-center font-sans font-bold text-white">
+                      <button>Adicionar e Registrar Outro</button>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Documentos -->
+              <div class="group rounded-lg bg-white shadow-[0_10px_100px_10px_rgba(0,0,0,0.05)]">
+                <div class="text-secondary-900 flex cursor-pointer list-none items-center justify-between p-4 text-lg font-medium">
+                  <div class="flex flex-col">
+                    <span class="font-sans text-sm font-semibold sm:text-lg">Documentos</span>
+                    <span class="hidden font-sans text-sm sm:block">Faça o Upload dos documentos</span>
+                  </div>
+                  <div class="text-secondary-600 flex items-center">
+                    <div>
+                      <span class="rounded-full bg-gray-50 px-3 py-1 text-sm font-semibold text-gray-600"> Pendente </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="m-auto w-[90%] pb-3">
+                  <hr class="my-1 h-px border-0 bg-gray-100" />
+                </div>
+                <div class="p-6">
+                  <div class="mx-auto max-w-xs" dragAndDrop>
+                    <label for="example5" class="mb-1 block text-sm font-medium text-gray-700">Upload file</label>
+                    <label class="hover:border-primary-300 flex w-full cursor-pointer appearance-none items-center justify-center rounded-md border-2 border-dashed border-gray-200 p-6 transition-all">
+                      <div class="space-y-1 text-center">
+                        <div class="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                          </svg>
+                        </div>
+                        <div class="text-gray-600">
+                          <a href="#" class="text-primary-500 hover:text-primary-700 font-medium">Click to upload</a>
+                          or drag and drop
+                        </div>
+                        <p class="text-sm text-gray-500">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+                      </div>
+                      <input id="example5" type="file" class="sr-only" />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="flex w-full justify-end gap-5 pt-10">
+            <div class="w-56 rounded bg-primary py-3 text-center font-bold text-white">
+              <button>Finalizar Cadastro</button>
+            </div>
+            <div class="w-56 rounded bg-secondary px-2 py-3 text-center font-bold text-white">
+              <button>Salvar e continuar depois</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="flex justify-center bg-slate-500">
+      @if (showModalAlert) {
+        <app-layout-modal [alert]="alert" (newItemEvent)="button($event)" />
+      }
+    </div>
+  </section>
+}
+@if (!accreditationOption) {
+  <div class="mt-14 min-h-screen bg-[#eef1f6] p-4">
+    <div class="flex h-screen items-center justify-center" [@fadeInOut]>
+      <div class="flex h-[250px] w-[500px] flex-col justify-center gap-3 rounded-lg bg-white px-4 text-start">
+        <label class="font-sans text-lg font-semibold">Escolha qual o tipo de cadastro você deseja criar:</label>
+        <select class="block h-[50px] w-full rounded-md shadow-sm focus:ring disabled:cursor-not-allowed disabled:bg-gray-50" (click)="accreditationOptSelect($event.target)">
+          <option value="" selected disabled>Selecione uma opção</option>
+          <option value="PF">PF</option>
+          <option value="PJ">PJ</option>
+        </select>
+      </div>
+    </div>
+  </div>
+}

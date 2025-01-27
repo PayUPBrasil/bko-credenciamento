@@ -1,0 +1,112 @@
+<div class="grid grid-cols-1">
+  <div class="flex items-center justify-between rounded-t-2xl bg-white p-5 shadow-sm">
+    <div>
+      <h1 class="font-sans text-lg font-bold text-accent">Detalhes do Estabelecimento</h1>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-5 rounded-b-2xl bg-white p-5 pt-1 shadow-sm">
+    <div class="grid grid-cols-1 gap-8 text-sm sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
+      <div class="flex flex-col gap-1">
+        <span class="font-sans font-semibold text-gray-800">Nome Fantasia</span>
+        <span class="text-sm">{{ clientDetails[0].basicData.tradeName || '-' }}</span>
+      </div>
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">Razão Social</span>
+          <span class="text-sm">{{ clientDetails[0].basicData.corporateName || '-' }}</span>
+        </div>
+      </div>
+      <div class="rounded">
+        <div class="flex flex-col gap-1">
+          <span class="font-sans font-semibold text-gray-800">Documento (CPF/CNPJ)</span>
+          <span class="text-sm">{{ clientDetails[0].basicData.document | formatCpfCnpj }}</span>
+        </div>
+      </div>
+
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">Atividade Comercial </span>
+          <span class="text-sm">{{ clientDetails[0].basicData.commercialActivity || '-' }}</span>
+        </div>
+      </div>
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">Data da Abertura </span>
+          <span class="text-sm">{{ clientDetails[0].basicData.openingDate || '-' }}</span>
+        </div>
+      </div>
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">MCC</span>
+          <span class="text-sm">{{ clientDetails[0].basicData.mcc || '-' }}</span>
+        </div>
+      </div>
+
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">Telefone Comercial</span>
+          <span class="text-sm">{{ clientDetails[0].partners[0].partnerPhone | formatPhone }}</span>
+        </div>
+      </div>
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">E-mail Comercial</span>
+          <span class="text-sm">{{ clientDetails[0].partners[0].partnerEmail || '-' }}</span>
+        </div>
+      </div>
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="title font-bold">Status</span>
+          <span class="inline-flex w-[100px] items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-slate-50" [ngClass]="{ 'bg-red-500 text-slate-100': clientDetails[0].registerStatus == 'Rejeitado', 'bg-green-500 text-slate-50': clientDetails[0].registerStatus == 'Aprovado', 'bg-gray-500 text-white': clientDetails[0].registerStatus == 'Pendente' }">
+            <img class="h-4 w-4 rounded-full" [src]="getIconSrc(clientDetails[0].registerStatus)" alt="Icone de Check" /> {{ clientDetails[0].registerStatus || '-' }}
+          </span>
+        </div>
+      </div>
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">Nº Contrato Social</span>
+          <span class="text-sm">{{ clientDetails[0].contractData.number || '-' }} </span>
+        </div>
+      </div>
+
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">Órgão Emissor Contrato Social</span>
+          <span class="text-sm">{{ clientDetails[0].contractData.issuingBody || '-' }}</span>
+        </div>
+      </div>
+
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">UF Do Contrato Social</span>
+          <span class="text-sm">{{ clientDetails[0].contractData.contractState || '-' }}</span>
+        </div>
+      </div>
+
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">Data da Emissão Contrato Social</span>
+          <span class="text-sm">{{ clientDetails[0].contractData.contractIssueDate || '-' }}</span>
+        </div>
+      </div>
+
+      <div class="rounded">
+        <div class="flex flex-col flex-nowrap gap-1">
+          <span class="font-sans font-semibold text-gray-800">Tributação</span>
+          <span class="text-sm">{{ clientDetails[0].contractData.taxation || '-' }}</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <span class="font-sans font-semibold text-gray-800">Tipo</span>
+        <span class="w-fit rounded-full p-1 text-sm font-bold text-text">{{ clientDetails[0].type || '-' }}</span>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <span class="font-sans font-semibold text-gray-800">Criado por</span>
+        <span class="w-fit rounded-full p-1 text-sm text-text">{{ createdBy || 'N/A' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

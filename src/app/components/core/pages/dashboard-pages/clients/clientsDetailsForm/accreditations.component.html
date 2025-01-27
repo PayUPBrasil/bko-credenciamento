@@ -1,0 +1,32 @@
+<div class="grid grid-cols-1">
+  <div class="flex items-center justify-between rounded-t-2xl bg-white p-5 pt-5 shadow-sm">
+    <div>
+      <h1 class="font-sans text-lg font-bold text-accent">Credenciamentos</h1>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-5 overflow-x-scroll rounded-b-2xl bg-white sm:overflow-hidden">
+    <table class="w-full border-collapse bg-white text-left text-sm text-gray-500" *ngIf="clientDetails[0] && clientDetails[0].accreditationAdiq.length > 0">
+      <thead class="bg-white">
+        <tr>
+          <th scope="col" class="px-6 py-4 font-sans text-sm font-bold text-gray-900">Adquirente</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+        <tr class="cursor-pointer border-b hover:bg-slate-50">
+          <th (click)="showDetails('adiq', clientDetails[0].basicData.crId)" class="px-6 py-4 text-sm text-primary hover:text-secondary">
+            <button>
+              <span> Adiq</span>
+            </button>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex flex-col gap-5 rounded-b-2xl bg-white p-5 pt-0 shadow-sm" *ngIf="clientDetails[0] && clientDetails[0].accreditationAdiq.length < 1">
+    <div class="grid grid-cols-1 gap-8">
+      <span class="font-sans text-sm font-semibold text-red-500">Cliente ainda não possui credenciamento em nenhuma adquirente.</span>
+    </div>
+  </div>
+</div>

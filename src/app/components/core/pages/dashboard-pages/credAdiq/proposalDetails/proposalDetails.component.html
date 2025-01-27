@@ -1,0 +1,42 @@
+<section aria-label="Detalhes da solicitação">
+  <ng-container>
+    <div [@fadeInOut] class="h-80">
+      <div>
+        <div class="flex justify-center">
+          <button class="border- hover:border-primary-700 hover:bg-primary-700 focus:ring-primary-200 disabled:border-primary-300 disabled:bg-primary-300 rounded-lg border bg-primary px-5 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all focus:ring disabled:cursor-not-allowed">Toggle Modal</button>
+        </div>
+        <div class="fixed inset-0 z-10 bg-slate-100 opacity-80"></div>
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
+          <div class="mx-auto w-full overflow-hidden rounded-lg bg-white shadow-xl sm:max-w-2xl">
+            <div class="relative p-5">
+              <div>
+                <div>
+                  <h3 class="text-secondary-900 text-lg font-medium">Detalhes da proposta: 192369</h3>
+                </div>
+                <div class="flex py-5">
+                  <div class="grid grid-cols-1 gap-3">
+                    <span class="text-sm">Id: 192369</span>
+                    <span class="text-sm">Tecnologia: E-commerce</span>
+                    <span class="text-sm">Data da Solicitação: 29/10/2024 - 09:18</span>
+                    <span class="text-sm">Solicitante: Credenciamento</span>
+                    <span class="text-sm">Status: Aprovado</span>
+                    <span class="text-sm">Tid: Aprovado</span>
+                    <span class="text-sm">Mid: Aprovado</span>
+                    <span class="text-sm">Branch ID: Aprovado</span>
+                  </div>
+                </div>
+
+                <div>
+                  <span>Cadastro do usuário durante o momento do cadastro v</span>
+                </div>
+              </div>
+              <div class="mt-5 flex justify-end gap-3"  (click)="closeModal()">
+                <button type="button" class="focus:ring-primary-200 disabled:border-primary-300 disabled:bg-primary-300 flex-1 rounded-lg border border-primary bg-primary px-4 py-2 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-primary hover:bg-primary focus:ring disabled:cursor-not-allowed">Confirmar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>

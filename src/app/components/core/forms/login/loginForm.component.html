@@ -1,0 +1,46 @@
+<section class="z-40 h-screen font-sans">
+  <div class="grid h-full grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
+    <div class="m-auto h-full w-full">
+      <form [formGroup]="loginForm" class="m-auto flex h-full max-w-lg flex-col justify-center gap-10 px-8">
+        <div>
+          <img src="/assets/imgs/logo.svg " alt="Logo da PayUp " />
+        </div>
+
+        <div>
+          <h1 class="text-xl font-bold text-black">Faça Login</h1>
+          <span class="text-sm text-text">Acesse sua conta utilizando suas credenciais de acesso.</span>
+        </div>
+        <div class="flex w-full flex-col gap-10" (keyup.enter)="doLogin()">
+          <div>
+            @if (errorMsg) {
+              <ng-container>
+                <div class="mb-4">
+                  <div class="rounded-md bg-red-50 p-4 text-sm text-red-500"><b>Ocorreu um erro:</b> {{ errorMsg }}</div>
+                </div>
+              </ng-container>
+            }
+            <label for="example5 " class="mb-2 block text-sm font-medium text-gray-700">Login:</label>
+            <div class="relative">
+              <input type="email" class="h focus:border-primary-400 focus:ring-primary-200 text-md block h-12 w-full rounded-lg border-gray-300 bg-slate-50 px-3 pr-10 shadow-sm placeholder:font-light placeholder:text-gray-300 focus:ring focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500" placeholder="email@email.com " formControlName="username" />
+            </div>
+          </div>
+          <div class="flex w-full flex-col">
+            <label for="example5 " class="mb-2 block text-sm font-medium text-gray-700">Senha:</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 right-0 flex cursor-pointer items-center px-2.5" x-data="{ tooltip: 'This is a bottom tooltip.' } " (click)="showPassword()">
+                <img class="h-5 w-5 text-gray-400" [src]="passwordIcon" alt="Icone de pergunta " />
+              </div>
+              <input [type]="inputPassType" class="focus:border-primary-400 focus:ring-primary-200 block h-12 w-full rounded-lg border-gray-300 bg-slate-50 pr-10 shadow-sm focus:ring focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500" formControlName="password" />
+            </div>
+          </div>
+        </div>
+        <div>
+          <app-layout-buttons-primary-button [data]="data" (click)="doLogin()" />
+        </div>
+      </form>
+    </div>
+    <div class="hidden w-full items-end justify-end rounded-l-3xl sm:hidden md:hidden lg:flex xl:flex 2xl:flex">
+      <div class="h-full w-[95%] rounded-l-[35px] bg-violet-500 bg-cover bg-no-repeat"></div>
+    </div>
+  </div>
+</section>

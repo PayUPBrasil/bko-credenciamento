@@ -1,0 +1,11 @@
+{
+    "editor.defaultFormatter": "HookyQR.beautify",
+    "editor.renderWhitespace": "all",
+    "editor.insertSpaces": true,
+    "editor.smartSelect.selectLeadingAndTrailingWhitespace": true,
+    "editor.trimAutoWhitespace": true,
+    "files.trimTrailingWhitespace": true,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}

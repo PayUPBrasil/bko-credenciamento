@@ -1,0 +1,77 @@
+<section class="mt-14 h-screen bg-background p-8 font-sans">
+  <div class="mt-8 flex flex-col gap-5">
+    <div>
+      <!-- Dados básicos -->
+      <div class="grid grid-cols-1">
+        <div class="flex items-center justify-between rounded-t-2xl bg-white p-5 px-6 shadow-sm">
+          <div>
+            <h1 class="text-xl font-bold text-violet-700">Detalhes do Perfil</h1>
+          </div>
+
+          <div>
+            <app-layout-button-actionButton [actionButtonElements]="actionButtonElements" (MenuClickedItem)="createANewProfile($event)" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 rounded-b-2xl bg-white p-5 pt-1 shadow-sm">
+          <div class="grid grid-cols-3 gap-8 text-sm">
+            <div class="flex flex-col gap-1">
+              <span class="title text-secondary-700 font-bold">Nome do Perfil</span>
+              <span class="text-sm">{{ (listRolesById.name || '').toLocaleUpperCase() || '--' }}</span>
+            </div>
+          </div>
+
+          <div class="rounded-lg">
+            <div class="flex flex-col flex-nowrap gap-1">
+              <span class="title text-secondary-700 font-bold">Id do Perfil</span>
+              <span class="text-sm">{{ listRolesById.id || '-' }}</span>
+            </div>
+          </div>
+
+          <div class="rounded-lg">
+            <div class="flex flex-col flex-nowrap gap-1">
+              <span class="title text-secondary-700 font-bold">Permissões do Perfil</span>
+              <app-layout-tag [Item]="listRolesById.permission" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-white">
+      <div>
+        <div>
+          <div class="p-4">
+            <h1 class="text-xl font-bold text-violet-700">Usuários que estão vinculados ao perfil</h1>
+          </div>
+          <table class="w-full border-collapse rounded-lg bg-white text-left text-sm text-gray-500">
+            <thead class="bg-white">
+              <tr>
+                <th scope="col" class="px-6 py-4 text-sm font-bold text-gray-900">Nome</th>
+                <th scope="col" class="px-6 py-4 text-sm font-bold text-gray-900">E-mail</th>
+                <!-- <th scope="col" class="px-6 py-4 text-gray-900 font-bold text-sm">Status</th> -->
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+              <tr class="cursor-default shadow-sm" *ngFor="let usuarios of listUserUsingRole">
+                <td class="px-6 py-4 font-sans text-gray-800">{{ usuarios.user.name }}</td>
+                <td class="px-6 py-4 font-sans text-gray-800">{{ usuarios.user.email }}</td>
+                <!-- <td class="px-6 py-4 text-gray-800 font-sans"> {{usuarios.email || '-'}} </td> -->
+                <td class="flex cursor-pointer justify-center gap-4 px-6 py-4 font-medium">
+                  <span class="flex justify-start bg-white p-1" (click)="removeUserFromRole(usuarios.user.id)">
+                    <img class="h-5 w-5" src="assets/icons/removeIcon.svg" alt="Icone de editar" />
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+@if (ShowNotifyModal) {
+  <app-layout-notify [notifyElements]="notifyElements" (buttonClicked)="closeNotifylManually($event)" />
+}

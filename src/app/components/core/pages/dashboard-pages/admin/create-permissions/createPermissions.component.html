@@ -1,0 +1,141 @@
+<section>
+  <div class="mt-14 h-screen bg-background p-5">
+    <div class="mr-5 flex items-center justify-between">
+      <app-layout-breadcrumb [path]="path" />
+      <app-layout-button-actionButton [actionButtonElements]="actionButtonElements" (MenuClickedItem)="createANewProfile($event)" />
+    </div>
+
+    <div class="rounded-lg bg-white p-5">
+      <div class="mb-3 flex flex-col gap-1">
+        <h1 class="text-lg font-bold">Lista de Perfis</h1>
+        <span class="text-sm">Crie ou vincule permissões a usuários</span>
+      </div>
+
+      <div>
+        <div class="mb-4 grid grid-cols-1 gap-4">
+          <div>
+            <div>
+              <table class="w-full border-collapse bg-white text-left text-xs text-gray-500">
+                <thead class="bg-white">
+                  <tr>
+                    <th scope="col" class="flex items-center gap-4 px-6 py-4 font-bold text-accent">
+                      <span> ID </span>
+                    </th>
+                    <th scope="col" class="px-6 py-4 font-bold text-gray-800">Nome</th>
+                    <th scope="col" class="px-6 py-4 font-bold text-gray-800"></th>
+                    <th scope="col" class="px-6 py-4 font-bold text-gray-800"></th>
+                  </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-100 border-t border-gray-100 font-sans text-xs" *ngFor="let roles of listRoles; let i = index">
+                  <tr class="cursor-default border-b">
+                    <th class="flex gap-3 px-6 py-4 text-primary">
+                      <!-- <input type="checkbox" [id]="'checkbox-' + i" [name]="'checkGroup-' + i" class="h-4 w-4 rounded border-gray-300 text-primary shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 focus:ring-offset-0
+                                                disabled:cursor-not-allowed disabled:text-gray-400" /> -->
+
+                      <span class="font-sans text-accent">{{ roles.id || '-' }}</span>
+                    </th>
+                    <th class="cursor-pointer px-6 py-4 text-sm font-normal text-primary transition-all delay-75 font-minText" (click)="showRoleDetails(roles.id)">{{ roles.name || '-' }}</th>
+                    <td class="px-6 py-4 text-gray-800"></td>
+                    <td class="px-6 py-4 text-gray-800"></td>
+                    <td class="px-6 py-4 text-gray-800"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+
+<ng-container *ngIf="createProfile">
+  <div class="modal" [@fadeInOut]>
+    <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-2 text-center sm:items-center sm:p-0">
+          <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+            <div class="bg-white px-2 pb-2 pt-5 sm:p-6 sm:pb-2">
+              <div class="w-full sm:flex sm:items-start">
+                <div class="mt-3 w-full text-center sm:ml-0 sm:mt-0 sm:text-left">
+                  <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Criar Perfil</h3>
+                  <span class="text-sm text-gray-500">Preencha os campos para criar um novo perfil. Depois de criado, você poderá atrelar a usuários e restringir o acesso a aplicação. </span>
+
+                  <div class="pt-4" *ngIf="errorData">
+                    <app-layout-errorAlert [error]="errorData" />
+                  </div>
+                  <div class="mt-5 w-full">
+                    <!-- Detalhes do Perfil -->
+                    <div class="flex w-full flex-col gap-5">
+                      <div class="flex flex-col gap-2 font-sans">
+                        <span class="text-sm font-bold">Nome do Perfil</span>
+                        <input type="text" class="focus:border-primary-400 focus:ring-primary-200 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:ring focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500" placeholder="Ex: Admin" #nomeDoPerfil />
+
+                        <ng-container *ngIf="nomeDoPerfil.value.length < 4">
+                          <span class="text-xs text-red-500">*O campo é obrigatório e precisa ter no mínimo 4 letras</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="rounded-lg bg-white dark:border-gray-700">
+                      <div class="flex items-center justify-between gap-3 pt-7">
+                        <div class="flex w-full justify-between">
+                          <div>
+                            <h1 class="text-md font-bold">Lista de Permissões</h1>
+                          </div>
+                        </div>
+                        <div class="flex gap-3"></div>
+                      </div>
+
+                      <div class="mb-4 mt-2 grid grid-cols-1 gap-4">
+                        <div>
+                          <div>
+                            <div class="space-y-3">
+                              <div class="grid grid-cols-1 space-y-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-2">
+                                <div class="flex items-center space-x-2" *ngFor="let permission of listPermissions; index as i">
+                                  <input (change)="checkedItemList($event, permission.name)" type="checkbox" id="example{{ i }}" class="text-primary-600 h-4 w-4 rounded border-gray-300 shadow-sm checked:border-none disabled:cursor-not-allowed disabled:text-gray-400" />
+                                  <label for="example{{ i }}" class="text-xs font-medium text-gray-700">{{ permission.name }}</label>
+                                </div>
+                              </div>
+                              <script>
+                                document.getElementById('example3').indeterminate = true
+                              </script>
+                            </div>
+
+                            <div class="pt-5">
+                              <div class="py-2">
+                                <hr />
+                              </div>
+                              <div class="flex flex-col gap-3">
+                                <span class="text-sm font-semibold">Permissões Selecionadas:</span>
+                                <ng-container *ngIf="permissionSelected.length > 0">
+                                  <app-layout-tag [Item]="permissionSelected" />
+                                </ng-container>
+
+                                <ng-container *ngIf="permissionSelected.length == 0">
+                                  <span class="font-sans text-sm text-slate-500">Nenhuma permissão foi selecionada</span>
+                                </ng-container>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="gap-5 bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <button (click)="createRole(nomeDoPerfil.value)" type="button" class="mb-2 mt-3 inline-flex h-[40px] items-center justify-center rounded-md bg-primary px-3 py-2 text-sm text-white sm:mt-0 sm:w-auto" [disabled]="nomeDoPerfil.value.length < 1 || permissionSelected.length < 1">Criar Perfil</button>
+              <button (click)="createANewProfile(false)" type="button" class="inline-flex h-[40px] items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

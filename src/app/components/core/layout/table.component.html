@@ -1,0 +1,31 @@
+<ng-container aria-label="Tabela" *ngIf="tableContent; else noItemsToShow">
+  <table class="w-full min-w-full table-fixed border-collapse bg-white text-left text-sm text-gray-500">
+    <tbody class="divide-y divide-gray-200 border-b border-l border-r border-t border-gray-200">
+      <ng-container *ngFor="let item of tableContent | keyvalue | slice: 0 : visibleItems">
+        <tr>
+          <th class="w-1/2 cursor-default px-3 py-2 text-sm font-medium text-primary" scope="row">
+            {{ item.key }}
+          </th>
+          <td class="w-1/2 border-b border-l border-t border-slate-200 px-5 text-text">{{ item.value }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</ng-container>
+
+<div class="flex h-fit w-[98%] items-center justify-center text-center" *ngIf="showArrowIcon">
+  <div class="mt-8 flex w-fit cursor-pointer items-center justify-center gap-1 text-center text-xs text-primary" (click)="updateVisibilityQuantity()">
+    <svg *ngIf="upIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+    </svg>
+    <svg *ngIf="!upIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+    </svg>
+  </div>
+</div>
+
+<ng-template #noItemsToShow>
+  <div>
+    <p>Não existem itens para mostrar...</p>
+  </div>
+</ng-template>

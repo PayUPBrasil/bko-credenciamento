@@ -1,0 +1,80 @@
+<div class="min-h-screen bg-[#eef1f6] p-8">
+  <!-- <app-layout-breadcrumb /> -->
+  <div class="mt-16 rounded-lg bg-white dark:border-gray-700">
+    <div class="flex items-center justify-between gap-3 px-5 py-7">
+      <div class="flex flex-col gap-2">
+        <h1 class="text-xl font-bold">Usuários</h1>
+        <span class="text-sm">Usuários cadastrados no sistema</span>
+      </div>
+      <div class="flex gap-3">
+        <app-layout-searchInput (InputValue)="inputValue($event)" />
+        <app-layout-button-actionButton [actionButtonElements]="actionButtonElements" (MenuClickedItem)="menuHamburgerClickedItem($event, '')" />
+      </div>
+    </div>
+
+    <div class="mb-4 grid grid-cols-1 gap-4">
+      <div>
+        <div class="overflow-x-scroll sm:overflow-x-scroll md:overflow-x-scroll lg:overflow-x-scroll xl:overflow-x-hidden 2xl:overflow-x-hidden">
+          <table class="w-full border-collapse bg-white text-left text-xs text-gray-500">
+            <thead class="bg-white font-sans">
+              <tr>
+                <th scope=" col " class="px-6 py-4 font-bold text-gray-900">Nome</th>
+                <th scope=" col " class="px-6 py-4 font-bold text-gray-900">E-mail</th>
+                <th scope=" col " class="px-6 py-4 font-bold text-gray-900">Permissão</th>
+                <th scope=" col " class="px-6 py-4 font-bold text-gray-900">Status</th>
+                <th scope=" col " class="px-6 py-4 font-bold text-gray-900"></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 border-t border-gray-100 font-sans text-xs" *ngFor="let item of userFiltered; index as i">
+              <ng-container *ngIf="!noResultsMessage">
+                <tr class="cursor-default border-b">
+                  <td class="px-6 font-bold text-primary">{{ item.name || '-' }}</td>
+                  <td class="px-6 text-text">{{ item.user }}</td>
+
+                  <td class="px-6 py-4 text-xs font-medium" [ngClass]="{ 'text-red-500': !item.role, 'text-blue-500': item.role }">
+                    <span [ngClass]="{ 'rounded-full bg-blue-50 p-2 text-blue-600': item.role }">
+                      {{ item.role || 'Sem permissão' }}
+                    </span>
+                  </td>
+
+                  <td class="px-6 py-4 text-text">
+                    <span [ngClass]="{ 'text-green-500': item.status === 'ativo', 'text-red-500': item.status === 'inativo' }">{{ item.status }}</span>
+                  </td>
+                  <td class="flex justify-center gap-4 bg-white px-6 py-4 font-medium">
+                    @if (detalhesDoUsuario) {
+                      <ng-container>
+                        <app-layouts-button-hambuger [actionButtonElements]="detalhesDoUsuario" (HamburgerClickedItem)="menuHamburgerClickedItem($event, item.id)" />
+                      </ng-container>
+                    }
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+          <ng-container *ngIf="noResultsMessage">
+            <div class="text-md flex h-[200px] w-full items-center justify-center py-10 text-center text-primary">
+              {{ noResultsMessage }}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div>
+        <app-layout-pagination [totalPages]="totalPages" [currentRoute]="'/dashboard/admin/users'" />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4"></div>
+
+    @if (showModalUserEditData) {
+      <ng-container>
+        <app-pages-admin-userEditRoleModal [userEditRole]="userEditData" (button)="closeRoleEditModal($event)" />
+      </ng-container>
+    }
+    @if (ShowNotifyModal) {
+      <ng-container>
+        <app-layout-notify [notifyElements]="notifyElements" (buttonClicked)="closeNotifyModal($event)" />
+      </ng-container>
+    }
+  </div>
+</div>

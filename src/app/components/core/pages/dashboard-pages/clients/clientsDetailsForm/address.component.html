@@ -1,0 +1,90 @@
+<div class="grid grid-cols-1">
+  <div class="flex items-center justify-between rounded-t-2xl bg-white p-5 px-5 shadow-sm">
+    <div>
+      <h1 class="px-2 font-sans text-lg font-bold text-accent">Endereço do Estabelecimento</h1>
+    </div>
+  </div>
+  <ng-container *ngIf="clientDetails[0] && clientDetails[0].address">
+    <div class="flex flex-col rounded-b-2xl bg-white p-5 pt-1 text-sm shadow-sm">
+      <div class="py-2" *ngFor="let address of clientDetails[0].address">
+        <div class="grid w-full grid-cols-1 gap-5 rounded-lg px-2 py-2 lg:grid-cols-5">
+          <div>
+            <span class="font-bold">Rua: </span>
+            <span>{{ address.street }}</span>
+          </div>
+          <div>
+            <span class="font-bold">Bairro: </span>
+            <span>{{ address.neighborhood }}</span>
+          </div>
+          <div>
+            <span class="font-bold">Cidade: </span>
+            <span>{{ address.city }}</span>
+          </div>
+          <div>
+            <span class="font-bold">UF: </span>
+            <span>{{ address.state }}</span>
+          </div>
+          <div>
+            <span class="font-bold">Complemento: </span>
+            <span>{{ address.complement }}</span>
+          </div>
+          <div>
+            <span class="font-bold">Número: </span>
+            <span>{{ address.addressNumber }}</span>
+          </div>
+          <div>
+            <span class="font-bold">CEP: </span>
+            <span>{{ address.zipCode }}</span>
+          </div>
+          <div class="hidden">
+            <span class="font-bold">Endereço principal: </span>
+            <span>{{ address.delivery_address }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="hidden grid-cols-4 gap-8">
+        <div class="flex flex-col gap-1">
+          <span class="font-sans font-semibold text-gray-800">Logradouro</span>
+          <span class="text-sm">{{ clientDetails[0].address.street }}</span>
+          <!-- <input type="text" name="" id="" value="COMERCIO TESTE"> -->
+        </div>
+        <div class="rounded">
+          <div class="flex flex-col flex-nowrap gap-1">
+            <span class="font-sans font-semibold text-gray-800">Número</span>
+            <span class="text-sm">{{ clientDetails[0].address.addressNumber }}</span>
+          </div>
+        </div>
+        <div class="rounded">
+          <div class="flex flex-col gap-1">
+            <span class="font-sans font-semibold text-gray-800">Bairro</span>
+            <span class="text-sm">{{ clientDetails[0].address.neighborhood }}</span>
+          </div>
+        </div>
+        <div class="rounded">
+          <div class="flex flex-col flex-nowrap gap-1">
+            <span class="font-sans font-semibold text-gray-800">Complemento</span>
+            <span class="text-sm">{{ clientDetails[0].address.complement }}</span>
+          </div>
+        </div>
+        <div class="rounded">
+          <div class="flex flex-col flex-nowrap gap-1">
+            <span class="font-sans font-semibold text-gray-800">Cidade</span>
+            <span class="text-sm">{{ clientDetails[0].address.city }}</span>
+          </div>
+        </div>
+        <div class="rounded">
+          <div class="flex flex-col flex-nowrap gap-1">
+            <span class="font-sans font-semibold text-gray-800">Estado</span>
+            <span class="text-sm">{{ clientDetails[0].address.state }}</span>
+          </div>
+        </div>
+        <div class="rounded">
+          <div class="flex flex-col flex-nowrap gap-1">
+            <span class="font-sans font-semibold text-gray-800">Endereço principal</span>
+            <span class="text-sm">{{ clientDetails[0].address.delivery_address }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,54 @@
+<section class="mt-14 overflow-y-hidden bg-[#eef1f6] p-4">
+  <div class="flex h-[85vh] w-full items-center justify-center">
+    <form [formGroup]="createNewUserForm" class="m-auto w-11/12 p-5 sm:w-1/2" (submit)="createNewUser()">
+      <div class="w-full rounded-lg bg-white p-5">
+        <div class="flex flex-col pb-10 pt-5">
+          <div>
+            <h1 class="text-lg font-bold">Cadastro de novo usuário</h1>
+            <span class="text-sm">Preencha os campos para cadastrar um novo usuário</span>
+          </div>
+          <div *ngIf="errorMessage" class="pt-3">
+            <div class="rounded-md bg-red-50 p-4 text-sm font-bold text-red-500">{{ errorMessage }}</div>
+          </div>
+        </div>
+
+        <div class="grid w-full grid-cols-1 gap-5 text-sm">
+          <div class="flex flex-col gap-2">
+            <span>Nome do Usuário</span>
+            <input type="text" class="placeholder:text-secondary-400 mb-2 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" placeholder="Nome" formControlName="name" />
+            <ng-container>
+              <div class="" *ngIf="this.createNewUserForm.get('name')?.touched">
+                <span class="text-xs text-red-500" *ngIf="this.createNewUserForm.get('name')?.hasError('required')">O campo é obrigatório</span>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <span>E-mail do usuário</span>
+            <input type="email" id="example1" class="placeholder:text-secondary-400 mb-2 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" placeholder="you@email.com" formControlName="email" appEmailCorporateValidator />
+            <ng-container>
+              <div class="" *ngIf="this.createNewUserForm.get('email')?.touched">
+                <span class="text-xs text-red-500" *ngIf="this.createNewUserForm.get('email')?.hasError('required')">O campo é obrigatório</span>
+                <span class="text-xs text-red-500" *ngIf="this.createNewUserForm.get('email')?.hasError('email')">Informe um e-mail válido</span>
+                <span class="text-xs text-red-500" *ngIf="this.createNewUserForm.get('email')?.hasError('invalidCorporateEmail')">O e-mail informado deve conter o domínio GV8 ou PayUP</span>
+              </div>
+            </ng-container>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="seller" class="rounded" formControlName="seller" />
+            <label for="seller" class="text-sm font-sans"> Usuário é comercial</label>
+
+          </div>
+          <div class="grid w-full grid-cols-1 items-end justify-between gap-5 p-2 lg:grid-cols-2">
+            <button (click)="backPage()" routerLinkActive="router-link-active" type="button" class="w-full rounded-md bg-red-500 px-3 py-3 text-white">Cancelar</button>
+
+
+            <button [ngClass]="{ 'bg-primary': createNewUserForm.valid, 'bg-gray-400': !createNewUserForm.valid }" [disabled]="!createNewUserForm.valid" type="submit" class="w-full rounded-md px-3 py-3 text-white">Criar usuário</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- <app-pages-admin-userEditRoleModal/> -->
+  </div>
+</section>

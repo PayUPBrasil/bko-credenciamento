@@ -1,0 +1,184 @@
+<ng-container aria-label="Tela para gerar contratos">
+  <section class="mt-[72px] flex min-h-screen flex-col items-center justify-center bg-[#eef1f6] p-8 lg:mt-[60px]">
+    <div class="flex h-full w-full flex-col items-center justify-evenly rounded-xl bg-white p-4 lg:w-full">
+      <div class="flex w-full flex-col rounded-none border-b border-slate-100 bg-white p-3 text-start">
+        <span class="text-lg font-bold">Gerar Novo Contrato</span>
+        <span class="text-sm text-text">Crie um contrato manualmente</span>
+      </div>
+
+      <form [formGroup]="newContractForm" class="mt-5 flex w-full flex-col gap-5 p-3">
+        <div>
+          <h1 class="text-base font-semibold text-primary">Dados do Contratante</h1>
+        </div>
+
+        <div>
+          <div class="grid w-full grid-cols-1 gap-3 xl:grid-cols-3">
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">CPF/CNPJ</span>
+              <input type="text" placeholder="000.000.000-00" mask="000.000.000-00 || 00.000.000/0000-00" [showMaskTyped]="true" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientDocument" appCpfCnpjValidator />
+              <ng-container *ngIf="newContractForm.get('clientDocument')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientDocument')?.hasError('required')">O campo é obrigatório</span>
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientDocument')?.hasError('cpfInvalid')">Informe um CPF válido</span>
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientDocument')?.hasError('cnpjInvalid')">Informe um CNPJ válido</span>
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientDocument')?.hasError('minlength')">Informe um documento válido</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Razão Social / Nome Completo</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientName" />
+              <ng-container *ngIf="newContractForm.get('clientName')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientName')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Tipo da Empresa</span>
+              <select name="enterpriseType" id="enterpriseType" class="block h-[50px] w-full rounded-md border-slate-200 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="enterpriseType">
+                <option value="" selected disabled>Selecione uma opção</option>
+                <option [value]="enterpriseType" *ngFor="let enterpriseType of enterpriseTypes">{{ enterpriseType }}</option>
+              </select>
+
+              <ng-container *ngIf="newContractForm.get('enterpriseType')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('enterpriseType')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Telefone Celular</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientPhone" mask="(00) 0 0000-0000" placeholder="(00) 9 9999-9999" />
+              <ng-container *ngIf="newContractForm.get('clientPhone')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientPhone')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">E-mail</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientEmail" />
+              <ng-container *ngIf="newContractForm.get('clientEmail')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientEmail')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="mt-3 h-[1px] bg-slate-100"></div>
+          <div class="mt-5">
+            <h2 class="font-sans text-base font-medium text-primary">Endereço</h2>
+          </div>
+
+          <div class="mt-5 grid w-full grid-cols-1 gap-4 xl:grid-cols-4">
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">CEP</span>
+              <input (focusout)="searchCep()" type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientZipCode" mask="00000-000" placeholder="00000-000" />
+              <ng-container *ngIf="newContractForm.get('clientZipCode')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientZipCode')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Rua</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientStreet" />
+              <ng-container *ngIf="newContractForm.get('clientStreet')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientStreet')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Bairro</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientNeighborhood" />
+              <ng-container *ngIf="newContractForm.get('clientNeighborhood')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientNeighborhood')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Cidade</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientCity" />
+              <ng-container *ngIf="newContractForm.get('clientCity')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientCity')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Estado</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientState" />
+              <ng-container *ngIf="newContractForm.get('clientState')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientState')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Número</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientNumber" />
+              <ng-container *ngIf="newContractForm.get('clientNumber')?.errors">
+                <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientNumber')?.hasError('required')">O campo é obrigatório</span>
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="px-1 text-sm">Complemento</span>
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientComplement" />
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3 h-[1px] bg-slate-100"></div>
+
+        <div>
+          <h1 class="font-sans text-base font-medium text-primary">Responsável Solidário / Sócios</h1>
+        </div>
+
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div class="flex flex-col gap-1">
+            <span class="px-1 text-sm">Nome do Responsável</span>
+            <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientResponsabilityName" />
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <span class="px-1 text-sm">CPF </span>
+            <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientResponsabilityDoc" placeholder="000.000.000-00" mask="000.000.000-00" [showMaskTyped]="true" />
+            <ng-container *ngIf="newContractForm.get('clientResponsabilityDoc')?.errors">
+              <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientResponsabilityDoc')?.hasError('cpfInvalid')">Informe um CPF válido</span>
+              <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientResponsabilityDoc')?.hasError('minlength')">Informe um CPF válido</span>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="flex w-full items-center justify-end">
+          <button (click)="addClientResponsabilityList()" class="flex items-center rounded bg-primary p-2 px-3 text-sm text-white">Adicionar Outro</button>
+        </div>
+
+        <ng-container *ngIf="clientResponsabilityList.length > 0">
+          <div class="flex flex-col gap-4 px-3">
+            <h3 class="text-lg font-medium text-primary">Responsáveis Adicionados</h3>
+            <span class="text-sm text-red-500">{{ alertMessage }}</span>
+          </div>
+          <app-simple-table [tableList]="clientResponsabilityList" (remove)="removeClientResponsability($event)" />
+        </ng-container>
+
+        <div class="mt-10 flex justify-end">
+          <button [ngClass]="{'bg-slate-300' : !newContractForm.valid, 'bg-primary' : newContractForm.valid}" [disabled]="!newContractForm.valid" class="w-48 rounded py-2 text-white" (click)="newContract()">Gerar Contrato</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal animado para download do contrato -->
+    <ng-container *ngIf="contractModal">
+      <div class="modal" [@fadeInOut]>
+        <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+          <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-2 text-center sm:items-center sm:p-0">
+              <div class="relative flex h-[280px] w-[550px] transform flex-col justify-around overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div class="z-10 flex h-full w-full items-center justify-center">
+                  <app-pages-contractModal class="h-full w-full" [newContract]="false" (closeModalEvent)="closeModal($event)" (blobExternalDownload)="downloadContractFile()" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+</ng-container>

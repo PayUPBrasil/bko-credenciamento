@@ -1,0 +1,31 @@
+<div class="h-80">
+  <div>
+    <div class="flex justify-center"></div>
+    <div class="fixed inset-0 z-10 bg-gray-700/50"></div>
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
+      <div class="mx-auto overflow-hidden rounded-lg bg-white shadow-xl sm:w-full sm:max-w-xl">
+        <div class="relative p-6">
+          <div class="flex gap-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-red-500">
+              @if (modalValues.icon) {
+                <ng-container>
+                  <img class="h-6 w-6" [src]="modalValues.icon" alt="Icone de contrato" />
+                </ng-container>
+              } @else {
+                <img class="h-6 w-6" src="assets/icons/journal.svg" alt="Icone de contrato" />
+              }
+            </div>
+            <div class="flex-1">
+              <h3 class="font-Inter text-lg font-medium text-black">{{ modalValues.title }}</h3>
+              <div class="mt-2 text-sm text-text">{{ modalValues.description }}</div>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end gap-3">
+            <button (click)="clickedButton('Fechar Confirm Modal')" type="button" class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400">Cancelar</button>
+            <button (click)="clickedButton('confirmar')" type="button" class="rounded-lg border border-primary bg-primary px-4 py-2 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-primary hover:bg-primary focus:ring focus:ring-primary disabled:cursor-not-allowed disabled:border-primary disabled:bg-primary">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
