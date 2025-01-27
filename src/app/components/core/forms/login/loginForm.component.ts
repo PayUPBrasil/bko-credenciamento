@@ -28,8 +28,8 @@ export class LoginFormComponent {
   private sessionService = inject(SessionService);
   private router = inject(Router)
   public loginForm = this.formBuilder.group({
-    username: ['credenciamento@payupbrasil.com.br', Validators.required],
-    password: ['Payup@1603', Validators.required],
+    username: ['', Validators.required],
+    password: ['', Validators.required],
   })
 
 
