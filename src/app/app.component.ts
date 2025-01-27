@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AsideComponent } from "./components/core/layout/aside.component";
-import { NavComponent } from "./components/core/layout/nav.component";
 import { LoaderComponent } from "./components/core/layout/loader.component";
 import { Router } from '@angular/router';
-
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
