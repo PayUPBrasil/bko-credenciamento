@@ -32,6 +32,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public subjectValues : any[]= []
   public QueryDate = ''
 
+
   public returnObje : any = {}
   public notifyItemModal = false
   public hasCriminalProcessToReport !: boolean

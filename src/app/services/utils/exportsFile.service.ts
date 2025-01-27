@@ -14,7 +14,7 @@ export class ExportsFileService {
 
   exportToPdf(htmlContent: string): Observable<Blob> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(`${this.apiUrl}/export-pdfx`, { htmlContent }, {
+    return this.http.post(`${this.apiUrl}/export-pdf`, { htmlContent }, {
       headers: headers,
       responseType: 'blob'
     }).pipe(

@@ -101,9 +101,7 @@ export class NewAccreditationModalComponent implements OnInit, OnDestroy {
 
         const res = await lastValueFrom(this.newAccreditationService.accreditationAdiq(dados, accreditationEnterprise, this.type, document, this.clientId))
 
-        console.log(res, 'res')
-
-        if (res.data) {
+            if (res.data) {
           this.productIcon[productCode.terminais.posTerminal.tecnologyCode] = '/assets/icons/confirmIcon.svg';
         }
 

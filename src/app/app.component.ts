@@ -10,7 +10,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AsideComponent, NavComponent, LoaderComponent, NgIf],
+  imports: [RouterOutlet, LoaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -22,7 +22,7 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe(() => {
       // this.isLoginRoute = this.router.url.includes('login') || this.router.url.includes('dashboard/admin/users') || this.router.url.includes('/dashboard/clients/details/');
-      this.isLoginRoute = this.router.url.includes('login') || this.router.url.includes('/dashboard/clients/details/') || this.router.url.includes('/ocr/result/');
+      this.isLoginRoute = this.router.url.includes('login') || this.router.url.includes('/dashboard/clients/details/');
     });
   }
 }
