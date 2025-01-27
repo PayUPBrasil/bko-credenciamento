@@ -3,9 +3,9 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
   selector: "app-layout-flagTag",
-  templateUrl: "./flagtag.component.html",
-  standalone: true,
-  imports: [NgFor]
+  templateUrl: "./flagTag.component.html",
+  imports: [NgFor],
+  standalone: true
 })
 
 export class FlagTagComponent {

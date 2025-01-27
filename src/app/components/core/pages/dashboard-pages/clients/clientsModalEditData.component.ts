@@ -3,6 +3,7 @@ import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular
 import { ButtonPrimaryComponent } from "../../../layout/buttons/button-primary.component";
 import { ReactiveFormsModule, Validators, FormBuilder } from "@angular/forms";
 import { Client } from "./types/client.interface";
+import { FlagTagComponent } from "../../../layout/flagTag.component";
 import { fadeInOut } from "../../../../animations/fadeInAnimation.component";
 import { ClientService } from "./services/clients.service";
 import { Subject, takeUntil } from "rxjs";
@@ -11,7 +12,7 @@ import { NgxMaskDirective } from "ngx-mask";
   selector: "app-pages-clientsModalEditData",
   templateUrl: "./clientsModalEditData.component.html",
   standalone:true,
-  imports: [NgFor, NgIf, ButtonPrimaryComponent, ReactiveFormsModule,  NgxMaskDirective],
+  imports: [NgFor, NgIf, ButtonPrimaryComponent, ReactiveFormsModule, FlagTagComponent, NgxMaskDirective],
   animations: [fadeInOut]
 })
 

@@ -42,7 +42,7 @@
         <ng-container *ngIf="flagEdit">
           <div class="flex flex-col gap-5">
             <h1 class="tex-lg font-bold font-sans">Bandeiras Atuais</h1>
-            <!-- <app-layout-flagTag [Item]="getFlagNames(editInputOldValues)" (ItemClicked)="clickedFlagValue($event)"/> -->
+            <app-layout-flagTag [Item]="getFlagNames(editInputOldValues)" (ItemClicked)="clickedFlagValue($event)"/>
             <h2>Adicionar Bandeiras</h2>
             <ng-container>
               <!-- <div *ngFor="let flagsToAdd of remainderFlags">

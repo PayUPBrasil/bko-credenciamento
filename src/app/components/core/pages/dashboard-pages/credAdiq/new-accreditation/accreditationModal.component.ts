@@ -1,11 +1,11 @@
-import { NgClass, NgFor, NgIf, CommonModule } from "@angular/common";
+import {  NgFor,  CommonModule } from "@angular/common";
 import { Component, inject, Input, Output, EventEmitter } from "@angular/core";
 import { TecnologyTableAdiq } from "../../../../../../services/utils/tecnologyTableAdiq.service";
 @Component({
   selector: "app-pages-accreditationModal",
   templateUrl: "./accreditationModal.component.html",
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, CommonModule]
+  imports: [ NgFor,  CommonModule]
 })
 
 export class AccreditationModalComponent {
