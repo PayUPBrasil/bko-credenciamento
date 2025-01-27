@@ -26,6 +26,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   protected document !: string;
   public contentLoaded = false
   public showElementHidden= false
+  public canClickTheButton = true
   public aiContentLoaded = true
   private destroy$ = new Subject<void>();
   public subjectValues : any[]= []
@@ -226,6 +227,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
   public stopLoadingSkeleton() : void {
     this.contentLoaded = true
+    this.canClickTheButton= true
   }
 
   ngOnDestroy(): void {
@@ -250,6 +252,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
   exportToPdf() {
 
+    this.canClickTheButton = false
     //colocar o loading para rodar ->
     const htmlContent = this.contentToExport.nativeElement.innerHTML;
     const fileName = `Consulting_Result_${this.document}_${new Date().toISOString().slice(0,10)}.pdf`;
@@ -274,6 +277,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
           setTimeout(() => window.URL.revokeObjectURL(url), 100);
         } else {
           console.error('O blob recebido não é um PDF válido ou está vazio');
+          this.canClickTheButton = true
           alert('Erro ao gerar o PDF. Por favor, tente novamente.');7
           this.notifyItemModal = true;
           this.notifyItem = [
@@ -288,6 +292,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         if(error){
+          this.canClickTheButton = true
           this.notifyItemModal = true
           this.notifyItem = [
             {
