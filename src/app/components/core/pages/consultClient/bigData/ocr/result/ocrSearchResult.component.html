@@ -48,42 +48,42 @@
           <ng-container *ngIf="contentLoaded; else noLoadedYet">
             <div *ngFor="let processData of resumeInformation">
               <ng-container>
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationCnjProcedureTypeDistribution[0].lenght > 0">
                   <span class="text-sm font-bold text-black">Distribuição de Tipos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationCnjSubjectDistribution[0].lenght > 0">
                   <span class="text-sm font-bold text-black">Distribuição de Assuntos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjSubjectDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationCourtNameDistribution[0].lenght > 0">
                   <span class="text-sm font-bold text-black">Distribuição de Nome da Corte</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCourtNameDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationCourtTypeDistribution[0].lenght > 0">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de tribunal dos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCourtTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationPartyTypeDistribution[0].lenght > 0">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de parte do indíviduo nos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationPartyTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationStateDistribution[0].lenght > 0">
                   <span class="text-sm font-bold text-black">Distribuição de Estados</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationStateDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationStatusDistribution[0].lenght > 0">
                   <span class="text-sm font-bold text-black">Distribuição dos status dos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationStatusDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationTypeDistribution[0].lenght > 0">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationTypeDistribution[0]" />
                 </div>
@@ -92,7 +92,7 @@
               <!-- Resumo do processo para que as pessoas entendam -->
 
               <ng-container>
-                <div class="mt-5 w-11/12 px-3">
+                <div class="mt-5 w-11/12">
                   <span class="text-lg font-medium"> Resumo:</span>
                   <div #resumeText class="mt-3 text-sm text-text">
                     <p>
@@ -104,7 +104,7 @@
                         </ng-container>
                       </span>
                     </p>
-                    <div class="flex gap-2">
+                    <div *ngIf="processData.TotalProcessos > 0" class="flex gap-2">
                       <p>Os processos são de esfera:</p>
                       <ng-container *ngFor="let courtTypeDistribution of processData.DistribuicaoTipoTribunal | keyvalue">
                         <p [ngClass]="{ 'text-red-500': hasCriminalProcessToReport }">{{ courtTypeDistribution.key }} ({{ courtTypeDistribution.value }}).</p>
@@ -291,42 +291,42 @@
           <ng-container *ngIf="contentLoaded; else noLoadedYet">
             <div *ngFor="let processData of resumeInformation; index as i">
               <ng-container>
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationCnjProcedureTypeDistribution[0].length > 0">
                   <span class="text-sm font-bold text-black">Distribuição de Tipos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationCnjSubjectDistribution[0].length > 0">
                   <span class="text-sm font-bold text-black">Distribuição de Assuntos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjSubjectDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationCourtNameDistribution[0].length > 0">
                   <span class="text-sm font-bold text-black">Distribuição de Nome da Corte</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCourtNameDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationCourtTypeDistribution[0].length > 0">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de tribunal dos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCourtTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationPartyTypeDistribution[0].length > 0">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de parte do indíviduo nos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationPartyTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationStateDistribution[0].length > 0">
                   <span class="text-sm font-bold text-black">Distribuição de Estados</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationStateDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationStatusDistribution[0].length > 0">
                   <span class="text-sm font-bold text-black">Distribuição dos status dos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationStatusDistribution[0]" />
                 </div>
 
-                <div class="py-2">
+                <div class="py-2" *ngIf="processInformationTypeDistribution[0].length > 0">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationTypeDistribution[0]" />
                 </div>
