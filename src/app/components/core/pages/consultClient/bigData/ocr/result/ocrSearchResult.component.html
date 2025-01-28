@@ -7,7 +7,7 @@
         </div>
         <div class="flex gap-4">
           <button (click)="newConsultingRedirect()" class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white">Nova Consulta</button>
-          <button [disabled]="!canClickTheButton" (click)="exportToPdf()" class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-white disabled:bg-slate-300 disabled:cursor-not-allowed">
+          <button [disabled]="!canClickTheButton" (click)="exportToPdf()" class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-white disabled:cursor-not-allowed disabled:bg-slate-300">
             <span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -222,11 +222,14 @@
               </ng-container>
             </span>
           </p>
+
           <div class="flex gap-2">
-            <p [ngClass]="{ 'text-red-500': hasCriminalProcessToReport }">Os processos são de esfera:</p>
-            <ng-container *ngFor="let courtTypeDistribution of processData.DistribuicaoTipoTribunal | keyvalue">
-             <span class="text-sm"> {{ courtTypeDistribution.key }} ({{ courtTypeDistribution.value }}) </span>
-            </ng-container>
+            <p *ngIf="processData.TotalProcessos > 0">
+              Os processos são de esfera:
+              <ng-container *ngFor="let courtTypeDistribution of processData.DistribuicaoTipoTribunal | keyvalue">
+                <b class="text-sm text-red-500"> {{ courtTypeDistribution.key }} ({{ courtTypeDistribution.value }}) </b>
+              </ng-container>
+            </p>
           </div>
           <p *ngIf="processData.TotalProcessos > 0">
             {{ processData.TotalProcessos == 1 ? 'Esse processo está' : 'Esses processos estão' }} distribuído{{ processData.TotalProcessos == 1 ? '' : 's' }} nos seguintes estados:
@@ -379,5 +382,5 @@
 </div>
 
 <ng-container *ngIf="notifyItemModal">
-  <app-layout-notify [notifyElements]="notifyItem" (buttonClicked)="notifyItemModal = false"/>
+  <app-layout-notify [notifyElements]="notifyItem" (buttonClicked)="notifyItemModal = false" />
 </ng-container>
