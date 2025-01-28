@@ -223,9 +223,9 @@
             </span>
           </p>
           <div class="flex gap-2">
-            <p>Os processos são de esfera:</p>
+            <p [ngClass]="{ 'text-red-500': hasCriminalProcessToReport }">Os processos são de esfera:</p>
             <ng-container *ngFor="let courtTypeDistribution of processData.DistribuicaoTipoTribunal | keyvalue">
-              <p [ngClass]="{ 'text-red-500': hasCriminalProcessToReport }">{{ courtTypeDistribution.key }} ({{ courtTypeDistribution.value }}).</p>
+             <span class="text-sm"> {{ courtTypeDistribution.key }} ({{ courtTypeDistribution.value }}) </span>
             </ng-container>
           </div>
           <p *ngIf="processData.TotalProcessos > 0">
