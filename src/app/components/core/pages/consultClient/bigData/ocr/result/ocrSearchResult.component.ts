@@ -274,6 +274,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
           link.click();
           document.body.removeChild(link);
 
+          this.canClickTheButton = true
           setTimeout(() => window.URL.revokeObjectURL(url), 100);
         } else {
           console.error('O blob recebido não é um PDF válido ou está vazio');
