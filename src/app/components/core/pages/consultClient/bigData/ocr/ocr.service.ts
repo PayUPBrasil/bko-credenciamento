@@ -108,6 +108,7 @@ export class OcrService {
     //* Methods for support PJ -->
 
     public filterBasicDataPJ(basicData:any) : Object{
+      console.log(basicData, 'basicData')
       return {
         Documento: this.formaterDocument(basicData.TaxIdNumber),
         PaisIdFiscal: basicData.TaxIdCountry,
@@ -120,7 +121,7 @@ export class OcrService {
         OrigemIdFiscal: basicData.TaxIdOrigin,
         CapitalSocial:basicData.AdditionalOutputData.Capital,
         DataUltimaAtualizacao:  this.formaterDate(basicData.LastUpdateDate),
-        TeveAlteracaoNoNomeFantasa:this.translateBooleanValue(basicData.HistoricalData.HasChangedTradeName),
+        TeveAlteracaoNoNomeFantasa:  basicData.HistoricalData ?  this.translateBooleanValue(basicData.HistoricalData.HasChangedTradeName) : '-',
         NaturezaJuridica: basicData.LegalNature.Activity + '-' + basicData.LegalNature.Code,
       }
     }
