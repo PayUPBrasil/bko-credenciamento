@@ -109,8 +109,11 @@ public checkIfFormHasErrors(): void{
   }
 
   public searchOcrInformation() : void {
+    const datasets = ['kcy', 'segundoparametro', 'terceiroparametro'];
+
     const formValues =  {... this.ocrForm.value}
-    this.route.navigate(['/dashboard/ocr/result', formValues.cnpj || formValues.cpf, 'kcy'])
+    this.route.navigate(['/dashboard/ocr/result', formValues.cnpj || formValues.cpf,datasets.join(',')
+    ])
 
     //Disbled button when button is clicked
     this.disableButton();

@@ -70,7 +70,9 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
         this.router.navigate(['/dashboard/consultar-cliente']);
       }
       this.document = params['document'];
-      this.datasets = params['datasets'];
+      const datasetsString = params['datasets'];
+      this.datasets = JSON.parse(datasetsString);
+
     });
     this.searchInformationAboutDocument();
   }
@@ -99,7 +101,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   //* Buscando informações do documento na BigData Corp
   public searchInformationAboutDocument(){
 
-    if(this.document && this.datasets.length > 0) {
+    if(this.document && this.datasets.length  > 0) {
 
       let consultingParams = {
         document:this.document,
