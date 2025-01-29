@@ -6,12 +6,13 @@ import { NgClass, NgFor, NgIf } from "@angular/common";
 import { ButtonPrimaryComponent } from "../../../../../layout/buttons/button-primary.component";
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { CpfCnpjValidatorDirective } from "../../../../../../../directives/validators/cpfcnpj-validator.directive";
+import { CheckboxComponent } from "../../../../../layout/interface-helpers/checkbox.component";
 
 @Component({
   selector: "app-pages-onboarding-form",
   templateUrl: "./onboardingForm.component.html",
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective,  ButtonPrimaryComponent, NgxMaskDirective, NgIf, NgClass],
+  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective, ButtonPrimaryComponent, NgxMaskDirective, NgIf, NgClass, CheckboxComponent],
   providers: [provideNgxMask()]
 
 })
@@ -109,7 +110,7 @@ public checkIfFormHasErrors(): void{
   }
 
   public searchOcrInformation() : void {
-    const datasets = ['kcy', 'segundoparametro', 'terceiroparametro'];
+    const datasets = ['basic_data','lawsuits_distribution_data','indebtedness_question','financial_interests','financial_risk'];
 
     const formValues =  {... this.ocrForm.value}
     this.route.navigate(['/dashboard/ocr/result', formValues.cnpj || formValues.cpf,datasets.join(',')

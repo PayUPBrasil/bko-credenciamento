@@ -72,8 +72,6 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
       this.document = params['document'];
       const datasetsString = params['datasets'];
       this.datasets = datasetsString.split(',');
-      console.log(this.datasets, 'datasets')
-
     });
     this.searchInformationAboutDocument();
   }
