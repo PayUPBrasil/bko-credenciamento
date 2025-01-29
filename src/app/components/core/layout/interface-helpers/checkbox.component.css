@@ -1,5 +1,5 @@
 :host {
-  display:flex;
+  display: flex;
 }
 
 /* From Uiverse.io by kyle1dev */
@@ -7,7 +7,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  padding: 20px 0px 0px 0px;
+  padding: 10px 0px 0px 0px;
 }
 
 .ios-checkbox {

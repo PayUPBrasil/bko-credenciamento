@@ -14,7 +14,10 @@ export class DataSetListService {
     }
   ]
 
-  private PJDatasetList = [{ basic_data:'Dados Básicos'}, {lawsuits_distribution_data: 'Distribuição de Processos' }]
+  private PJDatasetList = [{
+    basic_data:'Dados Básicos',
+    lawsuits_distribution_data: 'Distribuição de Processos'
+  }]
 
   public getPFDatasetList() {
     return this.PFDatasetList;

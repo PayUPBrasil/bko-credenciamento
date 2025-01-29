@@ -34,7 +34,7 @@
           </button>
         </div>
         <!-- <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira buscar outros datasets <a class="text-primary underline" href="https://center.bigdatacorp.com.br/login" target="_blank" rel="noreferrer"> clique aqui.</a></p> -->
-        <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira buscar outros datasets  <span class="underline cursor-pointer text-primary" (click)="datasetModal = true">clique aqui.</span></p>
+        <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira buscar outros datasets <span class="cursor-pointer text-primary underline" (click)="datasetModal = true">clique aqui.</span></p>
       </form>
     </div>
 
@@ -42,17 +42,22 @@
     <ng-container aria-label="Modal com os itens" *ngIf="datasetModal">
       <div [@fadeInOut] class="fixed z-10 flex h-full w-full items-center justify-center">
         <div class="relative h-full w-full bg-slate-500 opacity-45"></div>
-        <div class="absolute z-50 h-[250px] w-[580px] rounded-lg bg-white p-5">
-          <div class="flex w-full items-start justify-between">
-            <div>
-              <h3 class="font-bold text-primary">Selecione os datasets que deseja consultar</h3>
+        <div class="absolute z-50 h-[250px] max-h-[300px] min-h-[250px] w-[580px] rounded-lg bg-white p-5">
+          <div class="flex h-full w-full flex-col items-start justify-around">
+            <div class="flex w-full items-center justify-between">
+              <h3 class="font-bold text-lg text-primary">Selecione os datasets que deseja consultar</h3>
+              <div>
+                <span>
+                  <img (click)="closeDataSetModal()" class="size-5 cursor-pointer" src="assets/icons/closeIcon.svg" alt="Icone para fechar o modal" />
+                </span>
+              </div>
             </div>
-            <div><span>
-              <img (click)="closeDataSetModal()" class="size-5 cursor-pointer" src="assets/icons/closeIcon.svg" alt="Icone para fechar o modal">
-            </span></div>
-          </div>
-          <div>
-            <app-layout-checkbox (checkboxItemClicked)="clickedItemOnCheckbox($event)" [checkboxValues]="listDatasetByType" />
+            <div>
+              <app-layout-checkbox (checkboxItemClicked)="clickedItemOnCheckbox($event)" [checkboxValues]="listDatasetByType" />
+            </div>
+            <div class="mt-5 flex w-full justify-end">
+              <button class="w-48 cursor-pointer rounded-lg bg-accent p-2 text-white">Salvar Definições</button>
+            </div>
           </div>
         </div>
       </div>
