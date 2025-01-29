@@ -7,6 +7,11 @@ export interface Root {
   Evidences: Evidences
 }
 
+
+export interface ConsultingParamsBigData {
+  datasets?: string[],
+  document:string | number
+}
 export interface Result {
   MatchKeys: string
   BasicData: BasicData

@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../../../../../../environments/environment.development";
 import { HttpClient } from "@angular/common/http";
-import { BasicData } from "./types/bigData.interface";
+import { BasicData, ConsultingParamsBigData } from "./types/bigData.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +18,11 @@ export class OcrService {
 
 
   //* BigData
-  public searchInformationAtBigDataCorp(consultingParams:any) : Observable<any>  {
+  public searchInformationAtBigDataCorp(consultingParams:ConsultingParamsBigData) : Observable<any>  {
 
     const body = {
-      document: consultingParams,
+      document: consultingParams.document,
+      datasets: consultingParams.datasets
     }
       return this.http.post(`${this.url}/ocr`, body)
   }

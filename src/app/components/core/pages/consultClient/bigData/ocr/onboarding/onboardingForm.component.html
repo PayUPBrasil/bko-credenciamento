@@ -27,7 +27,7 @@
             </ng-container>
           </ng-container>
         </div>
-        <div class="bottom-0 py-10">
+        <div class="bottom-0 flex gap-2 py-10">
           <button (click)="searchOcrInformation()" type="button" [disabled]="buttonContinueData.disabled !== false" [ariaLabel]="buttonContinueData.aria_label" [title]="buttonContinueData.title" [ngClass]="{ 'cursor-not-allowed bg-slate-400 text-white': buttonContinueData.disabled == true, 'cursor-pointer bg-accent text-white': buttonContinueData.disabled === false }" class="flex h-[48px] w-full items-center justify-center gap-2 rounded-lg border p-3 text-white">
             <span *ngIf="buttonContinueData.loadingStatus !== 'visible'" class="text-white">{{ buttonContinueData.title }}</span>
             <div *ngIf="buttonContinueData.loadingStatus === 'visible'" class="border-[rgba(0,0,0, .1)] h-[25px] w-[25px] animate-spin rounded-[50%] border-[5px] border-solid border-l-secondary transition-all delay-1000"></div>
@@ -37,4 +37,8 @@
       </form>
     </div>
   </section>
+</ng-container>
+
+<ng-container>
+  <!-- Modal com as opções de data sets -->
 </ng-container>

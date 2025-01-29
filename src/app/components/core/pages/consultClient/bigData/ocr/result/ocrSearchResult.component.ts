@@ -24,6 +24,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   private exportsFileService = inject(ExportsFileService)
 
   protected document !: string;
+  protected datasets : any[] = []
   public contentLoaded = false
   public showElementHidden= false
   public canClickTheButton = true
@@ -69,6 +70,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
         this.router.navigate(['/dashboard/consultar-cliente']);
       }
       this.document = params['document'];
+      this.datasets = params['datasets'];
     });
     this.searchInformationAboutDocument();
   }
@@ -96,8 +98,15 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
   //* Buscando informações do documento na BigData Corp
   public searchInformationAboutDocument(){
-    if(this.document) {
-      this.ocrService.searchInformationAtBigDataCorp(this.document).pipe(
+
+    if(this.document && this.datasets.length > 0) {
+
+      let consultingParams = {
+        document:this.document,
+        datasets: this.datasets,
+      }
+
+      this.ocrService.searchInformationAtBigDataCorp(consultingParams).pipe(
         takeUntil(this.destroy$)
       )
       .subscribe({

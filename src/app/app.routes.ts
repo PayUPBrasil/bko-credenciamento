@@ -76,7 +76,7 @@ export const routes: Routes = [
       },
 
       {
-        path: 'ocr/result/:document',
+        path: 'ocr/result/:document/:datasets',
         loadComponent: () => import('./components/core/pages/consultClient/bigData/ocr/result/ocrSearchResult.component').then(m => m.ocrSearchResultComponent)
       },
 
