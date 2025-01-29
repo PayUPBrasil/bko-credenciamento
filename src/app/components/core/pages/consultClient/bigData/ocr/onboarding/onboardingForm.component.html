@@ -55,7 +55,7 @@
               </div>
             </div>
             <div>
-              <app-layout-checkbox (checkboxItemClicked)="clickedItemOnCheckbox($event)" [checkboxValues]="listDatasetByType" />
+              <app-layout-checkbox (checkboxItemClicked)="clickedItemOnCheckbox($event)" [checkboxValues]="listDatasetByType" [checkboxValueAlreadyExists]="datasets" />
             </div>
             <div class="mt-5 flex w-full justify-end">
               <button type="button" (click)="closeDataSetModal()" [disabled]="datasets.length < 1" class="w-48 cursor-pointer rounded-lg bg-accent p-2 text-white disabled:bg-slate-300">Salvar Definições</button>

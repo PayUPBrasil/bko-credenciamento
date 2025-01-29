@@ -27,7 +27,7 @@ export class onboardingFormComponent implements OnInit{
   private route = inject(Router)
   public ocrForm !: FormGroup;
   public inputsList : OcrFormInputs[] = [];
-  public datasetModal = true;
+  public datasetModal = false;
   public listDatasetByType !: object[]
 
   public datasets : string[] = []
@@ -57,6 +57,7 @@ ngOnInit(): void {
         }
       })
       this.createForm();
+      return
 }
 
 public createForm(): void {

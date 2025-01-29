@@ -1,7 +1,7 @@
 <ng-container>
   <div class="checkbox-container">
-    <label class="ios-checkbox blue" *ngFor="let item of checkboxValues[0] | keyvalue">
-      <input type="checkbox" (click)="clickedCheckboxItem(item.key)" />
+    <label class="ios-checkbox blue" *ngFor="let item of checkboxValues[0] | keyvalue; index as i">
+      <input [checked]="checkboxValueAlreadyExists[i]" type="checkbox" (click)="clickedCheckboxItem(item.key)" />
       <div class="checkbox-wrapper">
         <div class="checkbox-bg"></div>
         <svg fill="none" viewBox="0 0 24 24" class="checkbox-icon">
