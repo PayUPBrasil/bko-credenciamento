@@ -112,6 +112,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
+          console.log(response, 'verificando as respostas que são retornadas pela API em uma consulta com outros datasets')
           if(response) {
             this.QueryDate = response.QueryDate //* Data em que a consulta foi realizada
             let type  = this.checkTypeByReturnBigData(response.Result[0].BasicData.TaxIdNumber)

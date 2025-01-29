@@ -119,8 +119,6 @@ public checkIfFormHasErrors(): void{
   }
 
   public searchOcrInformation() : void {
-
-    console.log(this.datasets, 'verificando os datasets escolhidos durante a busca')
     const formValues =  {... this.ocrForm.value}
     if(this.datasets && formValues.cnpj || formValues.cpf) {
       console.log(this.datasets.join(','), 'dados dos datasets escolhidos')
