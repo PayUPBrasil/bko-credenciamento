@@ -1,5 +1,6 @@
 import { KeyValuePipe, NgFor } from "@angular/common";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { CheckBoxService } from "./checkbox.service";
 
 @Component({
   selector: "app-layout-checkbox",
@@ -10,27 +11,30 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 })
 
 export class CheckboxComponent implements OnInit {
-  ngOnInit(): void {
-    console.log(this.checkboxValues)
-    console.warn(this.checkboxValueAlreadyExists)
-  }
+
   @Input() checkboxValues : object[]= [];
-  @Input() checkboxValueAlreadyExists : string[] = []
   @Output() checkboxItemClicked = new EventEmitter<Array<string>>(  );
 
-  private valueSelected : string[] = []
-  public clickedCheckboxItem(item:string) : void {
-    console.log(this.checkboxValueAlreadyExists, 'checkboxValueAlreadyExists')
-    this.valueSelected.includes(item) ? this.valueSelected = this.removeItemFromList( this.valueSelected,item) : this.valueSelected.push(item) ;
-    this.checkboxItemClicked.emit(this.valueSelected);
+
+  checkboxService = inject(CheckBoxService)
+  public valueSelected : string[] = []
+
+  ngOnInit(): void {
+    console.log(this.checkboxValues)
+    console.log(this.valueSelected, 'valueSelected')
   }
 
-  public removeItemFromList(list:any[], item:string) : string[]  {
-    return list.filter(i => i!== item);
+  public clickedCheckboxItem(item: string): void {
+    this.checkboxService.valueSelected.includes(item)
+      ? this.checkboxService.valueSelected = this.removeItemFromList(this.checkboxService.valueSelected, item)
+      : this.checkboxService.valueSelected.push(item);
+      this.checkboxItemClicked.emit(this.checkboxService.valueSelected);
+  }
+
+  private removeItemFromList(list: string[], item: string): string[] {
+    return list.filter(i => i !== item);
   }
 
   //* Adicionando os valores já previamente selecionados quando o usuário já tiver feito isso
-
-
 
 }

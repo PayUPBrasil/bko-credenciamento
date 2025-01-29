@@ -131,8 +131,6 @@ public checkIfFormHasErrors(): void{
     this.disableButton();
   }
 
-
-
   public disableButton(): void {
     this.buttonContinueData.disabled = true
     this.buttonContinueData.loadingStatus = "visible"
@@ -142,7 +140,6 @@ public checkIfFormHasErrors(): void{
     this.route.navigate(['/dashboard/consultar-cliente'])
 
   }
-
 
   public closeDataSetModal(){
     this.datasetModal = !this.datasetModal
