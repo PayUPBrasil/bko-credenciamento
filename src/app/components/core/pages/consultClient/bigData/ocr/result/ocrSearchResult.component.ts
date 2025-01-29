@@ -255,9 +255,6 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
 
 
-
-
-
   @ViewChild('contentToExport') contentToExport!: ElementRef;
 
 
