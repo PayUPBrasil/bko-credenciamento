@@ -20,7 +20,7 @@ module.exports = {
         minText: ['Inter'],
       },
       colors: {
-        accent:'#4e2ec7',
+        accent: '#4e2ec7',
         primary: '#4B4DED',
         secondary: '#45d6fc',
         background: '#eef1f6',
