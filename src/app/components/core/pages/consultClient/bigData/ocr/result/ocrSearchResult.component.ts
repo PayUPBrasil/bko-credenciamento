@@ -69,9 +69,15 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
       if(!params['document']){
         this.router.navigate(['/dashboard/consultar-cliente']);
       }
+
       this.document = params['document'];
-      const datasetsString = params['datasets'];
-      this.datasets = datasetsString.split(',');
+
+      if(!params['datasets']){
+        this.router.navigate([`/dashboard/ocr/result/${this.document}/`]);
+      } else if(params['datasets']) {
+        const datasetsString = params['datasets'];
+        this.datasets = datasetsString.split(',');
+      }
     });
     this.searchInformationAboutDocument();
   }
@@ -104,7 +110,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
       let consultingParams = {
         document:this.document,
-        datasets: this.datasets,
+        datasets: this.datasets || '',
       }
 
       this.ocrService.searchInformationAtBigDataCorp(consultingParams).pipe(
