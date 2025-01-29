@@ -32,6 +32,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public subjectValues : any[]= []
   public QueryDate = ''
+  public totalProcess = false
 
 
   public returnObje : any = {}
@@ -118,6 +119,9 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
+          if(response.Result[0].LawsuitsDistributionData.TotalLawsuits > 0){
+            this.totalProcess = true
+          }
           console.log(response, 'verificando as respostas que são retornadas pela API em uma consulta com outros datasets')
           if(response) {
             this.QueryDate = response.QueryDate //* Data em que a consulta foi realizada
