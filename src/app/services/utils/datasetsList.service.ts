@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
   providedIn: 'root'
 })
 
-export class DataSetService {
+export class DataSetListService {
   private PFDatasetList = [
   '  basic_data','lawsuits_distribution_data','indebtedness_question','financial_interests','financial_risk'
   ]

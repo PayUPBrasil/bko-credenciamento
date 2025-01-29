@@ -7,6 +7,7 @@ import { NgClass, NgFor, NgIf } from "@angular/common";
 import { CpfCnpjValidatorDirective } from "../../../../../../../directives/validators/cpfcnpj-validator.directive";
 import { CheckboxComponent } from "../../../../../layout/interface-helpers/checkbox.component";
 import { fadeInOut } from "../../../../../../animations/fadeInAnimation.component";
+import { DataSetListService } from "../../../../../../../services/utils/datasetsList.service";
 
 @Component({
   selector: "app-pages-onboarding-form",
@@ -27,6 +28,8 @@ export class onboardingFormComponent implements OnInit{
   public ocrForm !: FormGroup;
   public inputsList : OcrFormInputs[] = [];
   public datasetModal = true;
+  public listDatasetByType !: string[]
+  public dataSetListService = inject(DataSetListService)
 
   public buttonContinueData = {
     title: 'Continuar Consulta',
@@ -44,8 +47,10 @@ ngOnInit(): void {
           this.type = params['type'];
           if(params['type'] == 'pf'){
             this.inputsList = this.createPfInputsToEdit()
+            this.listDatasetByType = this.dataSetListService.getPFDatasetList()
           } else {
             this.inputsList =  this.createPjInputsToEdit()
+            this.listDatasetByType = this.dataSetListService.getPJDatasetList()
           }
         }
       })
