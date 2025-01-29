@@ -19,7 +19,6 @@ export class OcrService {
 
   //* BigData
   public searchInformationAtBigDataCorp(consultingParams:ConsultingParamsBigData) : Observable<any>  {
-
     const body = {
       document: consultingParams.document,
       datasets: consultingParams.datasets
@@ -30,7 +29,6 @@ export class OcrService {
     //* Gemini
 
   public searchTermWithAI(terms:string) : Observable<any> {
-    // console.log(terms, 'terms')
     const body = {
       prompt: terms
     }

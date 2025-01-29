@@ -7,7 +7,7 @@ export interface Root {
   Evidences: Evidences
 }
 
-
+//*Parametros de consulta no bigDataCorp (datasets e documento a ser consultado)
 export interface ConsultingParamsBigData {
   datasets?: string[],
   document:string | number
