@@ -15,10 +15,8 @@ export class CheckboxComponent {
   @Input() checkboxValues : object[]= [];
   @Output() checkboxItemClicked = new EventEmitter<Array<string>>(  );
 
-
   checkboxService = inject(CheckBoxService)
   public valueSelected : string[] = []
-
 
   public clickedCheckboxItem(item: string): void {
     this.checkboxService.valueSelected.includes(item)
