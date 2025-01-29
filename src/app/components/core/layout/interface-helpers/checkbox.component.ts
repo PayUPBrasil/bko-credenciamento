@@ -1,5 +1,5 @@
 import { KeyValuePipe, NgFor } from "@angular/common";
-import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input,  Output } from "@angular/core";
 import { CheckBoxService } from "./checkbox.service";
 
 @Component({
@@ -10,7 +10,7 @@ import { CheckBoxService } from "./checkbox.service";
   imports: [NgFor, KeyValuePipe]
 })
 
-export class CheckboxComponent implements OnInit {
+export class CheckboxComponent {
 
   @Input() checkboxValues : object[]= [];
   @Output() checkboxItemClicked = new EventEmitter<Array<string>>(  );
@@ -19,10 +19,6 @@ export class CheckboxComponent implements OnInit {
   checkboxService = inject(CheckBoxService)
   public valueSelected : string[] = []
 
-  ngOnInit(): void {
-    console.log(this.checkboxValues)
-    console.log(this.valueSelected, 'valueSelected')
-  }
 
   public clickedCheckboxItem(item: string): void {
     this.checkboxService.valueSelected.includes(item)
@@ -34,7 +30,5 @@ export class CheckboxComponent implements OnInit {
   private removeItemFromList(list: string[], item: string): string[] {
     return list.filter(i => i !== item);
   }
-
-  //* Adicionando os valores já previamente selecionados quando o usuário já tiver feito isso
 
 }
