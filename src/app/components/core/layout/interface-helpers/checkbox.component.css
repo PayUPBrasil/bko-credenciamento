@@ -1,19 +1,25 @@
+:host {
+  display:flex;
+}
+
 /* From Uiverse.io by kyle1dev */
 .checkbox-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   padding: 20px 0px 0px 0px;
-  border-radius: 16px;
 }
 
 .ios-checkbox {
-  --checkbox-size: 28px;
+  --checkbox-size: 20px;
   --checkbox-color: #3b82f6;
   --checkbox-bg: #dbeafe;
   --checkbox-border: #93c5fd;
 
   position: relative;
-  display: inline-block;
+  display: flex;
+  gap: 8px;
+  align-items: center;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -34,7 +40,7 @@
 .checkbox-bg {
   position: absolute;
   inset: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 2px solid var(--checkbox-border);
   background: white;
   transition: all 0.2s ease;

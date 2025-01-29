@@ -3,17 +3,18 @@ import { ReactiveFormsModule, Validators, FormBuilder, FormGroup } from "@angula
 import { ActivatedRoute, Router } from "@angular/router";
 import { OcrFormInputs } from "../types/ocr.interface";
 import { NgClass, NgFor, NgIf } from "@angular/common";
-import { ButtonPrimaryComponent } from "../../../../../layout/buttons/button-primary.component";
-import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
+ import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { CpfCnpjValidatorDirective } from "../../../../../../../directives/validators/cpfcnpj-validator.directive";
 import { CheckboxComponent } from "../../../../../layout/interface-helpers/checkbox.component";
+import { fadeInOut } from "../../../../../../animations/fadeInAnimation.component";
 
 @Component({
   selector: "app-pages-onboarding-form",
   templateUrl: "./onboardingForm.component.html",
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective, ButtonPrimaryComponent, NgxMaskDirective, NgIf, NgClass, CheckboxComponent],
-  providers: [provideNgxMask()]
+  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective,  NgxMaskDirective, NgIf, NgClass, CheckboxComponent],
+  providers: [provideNgxMask()],
+  animations:[fadeInOut]
 
 })
 
@@ -25,6 +26,7 @@ export class onboardingFormComponent implements OnInit{
   private route = inject(Router)
   public ocrForm !: FormGroup;
   public inputsList : OcrFormInputs[] = [];
+  public datasetModal = true;
 
   public buttonContinueData = {
     title: 'Continuar Consulta',
@@ -133,4 +135,7 @@ public checkIfFormHasErrors(): void{
   }
 
 
+  public closeDataSetModal(){
+    this.datasetModal = !this.datasetModal
+  }
 }
