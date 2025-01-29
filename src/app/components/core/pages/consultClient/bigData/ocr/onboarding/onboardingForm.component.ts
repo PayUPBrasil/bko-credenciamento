@@ -28,7 +28,7 @@ export class onboardingFormComponent implements OnInit{
   public ocrForm !: FormGroup;
   public inputsList : OcrFormInputs[] = [];
   public datasetModal = true;
-  public listDatasetByType !: string[]
+  public listDatasetByType !: object[]
   public dataSetListService = inject(DataSetListService)
 
   public buttonContinueData = {

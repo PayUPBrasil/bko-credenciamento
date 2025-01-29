@@ -1,16 +1,19 @@
-import { NgFor } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { KeyValuePipe, NgFor } from "@angular/common";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 @Component({
   selector: "app-layout-checkbox",
   templateUrl: "./checkbox.component.html",
   styleUrls:['./checkbox.component.css'],
   standalone: true,
-  imports: [NgFor]
+  imports: [NgFor, KeyValuePipe]
 })
 
-export class CheckboxComponent {
-  @Input() checkboxValues : string[]= [];
+export class CheckboxComponent implements OnInit {
+  ngOnInit(): void {
+    console.log(this.checkboxValues)
+  }
+  @Input() checkboxValues : object[]= [];
   @Output() checkboxItemClicked = new EventEmitter<Array<string>>(  );
 
   private valueSelected : string[] = []
@@ -19,7 +22,7 @@ export class CheckboxComponent {
     this.checkboxItemClicked.emit(this.valueSelected);
   }
 
-  public removeItemFromList(list:string[], item:string) : string[]  {
+  public removeItemFromList(list:any[], item:string) : string[]  {
     return list.filter(i => i!== item);
   }
 }
