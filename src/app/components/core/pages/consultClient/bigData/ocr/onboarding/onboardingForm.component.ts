@@ -29,6 +29,8 @@ export class onboardingFormComponent implements OnInit{
   public inputsList : OcrFormInputs[] = [];
   public datasetModal = true;
   public listDatasetByType !: object[]
+
+  public datasets : string[] = []
   public dataSetListService = inject(DataSetListService)
 
   public buttonContinueData = {
@@ -117,11 +119,14 @@ public checkIfFormHasErrors(): void{
   }
 
   public searchOcrInformation() : void {
-    const datasets = ['basic_data','lawsuits_distribution_data','indebtedness_question','financial_interests','financial_risk'];
 
+    console.log(this.datasets, 'verificando os datasets escolhidos durante a busca')
     const formValues =  {... this.ocrForm.value}
-    this.route.navigate(['/dashboard/ocr/result', formValues.cnpj || formValues.cpf,datasets.join(',')
-    ])
+    if(this.datasets && formValues.cnpj || formValues.cpf) {
+      console.log(this.datasets.join(','), 'dados dos datasets escolhidos')
+      this.route.navigate(['/dashboard/ocr/result', formValues.cnpj || formValues.cpf,this.datasets.join(',')
+      ])
+    }
 
     //Disbled button when button is clicked
     this.disableButton();
@@ -146,6 +151,6 @@ public checkIfFormHasErrors(): void{
 
   public clickedItemOnCheckbox(event:any)
   {
-    console.log(event);
+    this.datasets = event
   }
 }
