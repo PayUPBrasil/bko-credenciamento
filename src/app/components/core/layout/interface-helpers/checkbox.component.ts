@@ -15,7 +15,11 @@ export class CheckboxComponent {
 
   private valueSelected : string[] = []
   public clickedCheckboxItem(item:string) {
-    this.valueSelected.push(item);
+    this.valueSelected.includes(item) ? this.valueSelected = this.removeItemFromList( this.valueSelected,item)  : this.valueSelected.push(item) ;
     this.checkboxItemClicked.emit(this.valueSelected);
+  }
+
+  public removeItemFromList(list:string[], item:string) {
+    return list.filter(i => i!== item);
   }
 }
