@@ -14,12 +14,12 @@ export class CheckboxComponent {
   @Output() checkboxItemClicked = new EventEmitter<Array<string>>(  );
 
   private valueSelected : string[] = []
-  public clickedCheckboxItem(item:string) {
-    this.valueSelected.includes(item) ? this.valueSelected = this.removeItemFromList( this.valueSelected,item)  : this.valueSelected.push(item) ;
+  public clickedCheckboxItem(item:string) : void {
+    this.valueSelected.includes(item) ? this.valueSelected = this.removeItemFromList( this.valueSelected,item) : this.valueSelected.push(item) ;
     this.checkboxItemClicked.emit(this.valueSelected);
   }
 
-  public removeItemFromList(list:string[], item:string) {
+  public removeItemFromList(list:string[], item:string) : string[]  {
     return list.filter(i => i!== item);
   }
 }
