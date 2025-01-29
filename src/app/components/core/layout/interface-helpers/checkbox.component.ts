@@ -1,5 +1,5 @@
 import { NgFor } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
   selector: "app-layout-checkbox",
@@ -10,5 +10,12 @@ import { Component } from "@angular/core";
 })
 
 export class CheckboxComponent {
-    items = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  @Input() checkboxValues : string[]= [];
+  @Output() checkboxItemClicked = new EventEmitter<Array<string>>(  );
+
+  private valueSelected : string[] = []
+  public clickedCheckboxItem(item:string) {
+    this.valueSelected.push(item);
+    this.checkboxItemClicked.emit(this.valueSelected);
+  }
 }

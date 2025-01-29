@@ -33,7 +33,8 @@
             <div *ngIf="buttonContinueData.loadingStatus === 'visible'" class="border-[rgba(0,0,0, .1)] h-[25px] w-[25px] animate-spin rounded-[50%] border-[5px] border-solid border-l-secondary transition-all delay-1000"></div>
           </button>
         </div>
-        <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira buscar outros datasets <a class="text-primary underline" href="https://center.bigdatacorp.com.br/login" target="_blank" rel="noreferrer"> clique aqui.</a></p>
+        <!-- <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira buscar outros datasets <a class="text-primary underline" href="https://center.bigdatacorp.com.br/login" target="_blank" rel="noreferrer"> clique aqui.</a></p> -->
+        <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira buscar outros datasets  <span class="underline cursor-pointer text-primary" (click)="datasetModal = true">clique aqui.</span></p>
       </form>
     </div>
 
@@ -51,7 +52,7 @@
             </span></div>
           </div>
           <div>
-            <app-layout-checkbox />
+            <app-layout-checkbox (checkboxItemClicked)="clickedItemOnCheckbox($event)" [checkboxValues]="['basic_data','lawsuits_distribution_data','indebtedness_question','financial_interests','financial_risk']" />
           </div>
         </div>
       </div>

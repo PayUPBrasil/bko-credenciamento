@@ -138,4 +138,9 @@ public checkIfFormHasErrors(): void{
   public closeDataSetModal(){
     this.datasetModal = !this.datasetModal
   }
+
+  public clickedItemOnCheckbox(event:any)
+  {
+    console.log(event);
+  }
 }
