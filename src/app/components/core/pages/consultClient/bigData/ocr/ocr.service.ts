@@ -180,7 +180,7 @@ export class OcrService {
               case 'JUDGE':
                   return 'Juiz';
               case 'INMATE':
-                  return 'Presidiário';
+                  return 'Detento';
               case 'OTHER':
                   return 'Outros';
               default:
