@@ -107,7 +107,6 @@ export class OcrService {
     //* Methods for support PJ -->
 
     public filterBasicDataPJ(basicData:any) : Object{
-      console.log(basicData, 'basicData')
       return {
         Documento: this.formaterDocument(basicData.TaxIdNumber),
         PaisIdFiscal: basicData.TaxIdCountry,

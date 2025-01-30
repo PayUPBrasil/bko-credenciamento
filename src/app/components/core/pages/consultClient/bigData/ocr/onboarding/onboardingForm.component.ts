@@ -3,11 +3,12 @@ import { ReactiveFormsModule, Validators, FormBuilder, FormGroup } from "@angula
 import { ActivatedRoute, Router } from "@angular/router";
 import { OcrFormInputs } from "../types/ocr.interface";
 import { NgClass, NgFor, NgIf } from "@angular/common";
- import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
+import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { CpfCnpjValidatorDirective } from "../../../../../../../directives/validators/cpfcnpj-validator.directive";
 import { CheckboxComponent } from "../../../../../layout/interface-helpers/checkbox.component";
 import { fadeInOut } from "../../../../../../animations/fadeInAnimation.component";
 import { DataSetListService } from "../../../../../../../services/utils/datasetsList.service";
+import { CheckBoxService } from "../../../../../layout/interface-helpers/checkbox.service";
 
 @Component({
   selector: "app-pages-onboarding-form",
@@ -24,6 +25,7 @@ export class onboardingFormComponent implements OnInit{
   private activateRoute = inject(ActivatedRoute)
   protected type !: string;
   private fb = inject(FormBuilder)
+  private checkboxService = inject(CheckBoxService)
   private route = inject(Router)
   public ocrForm !: FormGroup;
   public inputsList : OcrFormInputs[] = [];
@@ -138,6 +140,7 @@ public checkIfFormHasErrors(): void{
   }
 
   public changeConsultingType(){
+    this.clearDatasets()
     this.route.navigate(['/dashboard/consultar-cliente'])
 
   }
@@ -149,5 +152,9 @@ public checkIfFormHasErrors(): void{
   public clickedItemOnCheckbox(event:any)
   {
     this.datasets = event
+  }
+
+  public clearDatasets() : void {
+    this.checkboxService.valueSelected = []
   }
 }

@@ -50,8 +50,11 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public processInformationStatusDistribution : any[]  = []
   public processInformationTypeDistribution : any[]  = []
 
+
+
   public basicDataInformation : any [] = []
   public resumeInformation : any [] = []
+  public kcyInformation : any[] = []
   public financialInterestsInformation : any [] = []
   public IndebtednessQuestionInformation : any [] = []
   public financialRiskInformation : any [] = []
@@ -158,7 +161,6 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
       this.financialInterestsInformation = [this.ocrService.filterFinancialInterestsInformationPF(response.Result[0].FinancialInterests)]
       this.financialRiskInformation = [this.ocrService.filterFinancialRiskPF(response.Result[0].FinancialRisk)]
 
-      console.log(response.Result[0].LawsuitsDistributionData, 'Informações sobre processos judiciais');
       response.Result[0].LawsuitsDistributionData.CnjSubjectDistribution ? this.processInformationCnjSubjectDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CnjSubjectDistribution)] : this.processInformationCnjSubjectDistribution = ['']
       response.Result[0].LawsuitsDistributionData.CnjProcedureTypeDistribution ? this.processInformationCnjProcedureTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CnjProcedureTypeDistribution)] : this.processInformationCnjProcedureTypeDistribution = ['']
       response.Result[0].LawsuitsDistributionData.CourtLevelDistribution ? this.processInformationCourtLevelDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CourtLevelDistribution)] : this.processInformationCourtLevelDistribution = ['']
@@ -176,7 +178,6 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
       response.Result[0].BasicData ? this.basicDataInformation = [this.ocrService.filterBasicDataPJ(response.Result[0].BasicData)] : [];
 
-      console.log(response.Result[0].LawsuitsDistributionData, 'Informações sobre processos judiciais');
 
       //*Tratando os processos judiciais separadamente por assunto retornado via bigData.
       response.Result[0].LawsuitsDistributionData.CnjSubjectDistribution ? this.processInformationCnjSubjectDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CnjSubjectDistribution)] : this.processInformationCnjSubjectDistribution = ['']
@@ -231,7 +232,6 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe({
       next: (result) => {
-        console.log(result, 'verificano o resultado retornado pela IA')
         this.cache[term] = result.data.result;
         this.loadingTerms.delete(term);
       },
