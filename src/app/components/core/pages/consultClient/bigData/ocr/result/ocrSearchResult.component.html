@@ -16,6 +16,7 @@
           </button>
         </div>
       </div>
+
       <div>
         <div class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6">
           <div class="flex flex-col">
@@ -31,7 +32,25 @@
             </ng-template>
           </div>
         </div>
-        <div class="0 mt-5 flex flex-col gap-5 rounded-2xl border bg-white p-4 px-6" [ngClass]="{ 'border-red-100': hasCriminalProcessToReport, 'border-slate-100': !hasCriminalProcessToReport }">
+
+        <div class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6" *ngIf="1 == 1">
+          <div class="flex flex-col justify-between">
+            <div class="flex flex-col py-5">
+              <span class=" font-bold text-slate-800">KYC - Conheça seu Cliente </span>
+            </div>
+            <div class="border-red-500 border w-full h-full">
+                <ng-container>
+                  <div class="py-2" *ngIf="processInformationCnjProcedureTypeDistribution[0]">
+                    <span class="text-sm font-bold text-black">Distribuição de Tipos</span>
+                    <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
+                  </div>
+                </ng-container>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mt-5 flex flex-col gap-5 rounded-2xl border bg-white p-4 px-6" [ngClass]="{ 'border-red-100': hasCriminalProcessToReport, 'border-slate-100': !hasCriminalProcessToReport }">
           <div class="flex justify-between">
             <div class="flex flex-col" *ngIf="totalProcess">
               <span class="pt-5 font-bold text-slate-800">Dados de Distribuição de Processos Judiciais</span>
@@ -166,7 +185,7 @@
           </div>
         </div>
 
-        <div *ngIf="financialInterestsInformation[0]" class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6">
+        <div class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6" *ngIf="financialInterestsInformation[0]">
           <span class="font-bold text-slate-800">Interesses Financeiros</span>
           <ng-container *ngIf="contentLoaded; else noLoadedYet">
             <app-layout-table [visibleItems]="4" [tableContent]="financialInterestsInformation[0]" />
@@ -178,7 +197,7 @@
           </div>
         </div>
 
-        <div *ngIf="financialRiskInformation[0]" class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6">
+        <div class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6" *ngIf="financialRiskInformation[0]">
           <div class="flex flex-col">
             <span class="font-bold text-slate-800">Risco Financeiro</span>
             <span class="text-sm text-text">Relativo ao Score do cliente no mercado financeiro.</span>
