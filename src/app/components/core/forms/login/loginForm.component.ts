@@ -86,6 +86,14 @@ export class LoginFormComponent {
                 this.errorMsg = "Você não tem permissão para acessar o sistema, por favor, comunique seu superior."
                 break;
 
+              case "Senha inválida!":
+                this.errorMsg = "Senha inválida!"
+                break;
+
+              case "O campo *Usuário* deve ser válido":
+                this.errorMsg = "Usuário incorreto!"
+                break;
+
               default: this.errorMsg = "Não foi possível realizar o login, contate o administrador do sistema."
                 break;
             }
