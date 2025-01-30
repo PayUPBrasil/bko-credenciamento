@@ -23,7 +23,7 @@ export class OcrService {
       document: consultingParams.document,
       datasets: consultingParams.datasets
     }
-      return this.http.post(`${this.url}/ocr`, body)
+      return this.http.post(`${this.url}/ocr/bigData`, body)
   }
 
     //* Gemini
