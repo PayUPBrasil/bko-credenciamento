@@ -45,9 +45,9 @@
               <span class="text-sm text-red-500">Cliente não possui bandeiras no momento...</span>
             </ng-template>
 
-            <div class="flex flex-col gap-5">
+            <div class="flex flex-col gap-3">
               <span>Adicionar Bandeiras</span>
-              <select [disabled]="remainderFlags.length < 1" class="disabled:bg-slate-200 w-full rounded-lg border border-slate-300" (change)="addFlagClicked($event)" #selectFlag>
+              <select [disabled]="remainderFlags.length < 1" class="w-full rounded-lg border border-slate-300 disabled:bg-slate-200" (change)="addFlagClicked($event)" #selectFlag>
                 <option *ngIf="remainderFlags.length > 0" value="" selected disabled>Selecione uma bandeira</option>
                 <option *ngIf="remainderFlags.length < 1" value="" selected disabled>Todas as bandeiras já foram selecionadas</option>
                 <option *ngFor="let remain of remainderFlags" [value]="remain">{{ remain }}</option>
@@ -55,7 +55,7 @@
             </div>
 
             <div class="mt-5 flex justify-end gap-4">
-              <button class="h-[40px] rounded-lg border bg-accent px-3 text-white" (click)="saveNewFlags()">Salvar Alteração</button>
+              <button class="h-[40px] rounded-lg border bg-accent px-3 text-white" (click)="saveAlterations()">Salvar Alteração</button>
               <button class="h-[40px] rounded-lg border bg-red-500 px-3 text-white" (click)="closeEditModal()">Cancelar</button>
             </div>
           </div>

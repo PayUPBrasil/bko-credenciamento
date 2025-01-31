@@ -66,6 +66,9 @@ export class ClientsModalEditDataComponent implements OnInit{
     let hasChanges = false;
     let changedFields: { fieldName: string; newValue: any }[] = [];
 
+
+
+    //* Method to see if the form has chenged
     this.editInputOldValues.forEach((value, index) => {
       const fieldName = this.editInputsList[index];
       const newValue = formsValues[fieldName];
@@ -77,9 +80,18 @@ export class ClientsModalEditDataComponent implements OnInit{
       }
     });
 
+
+    // Verificando alterações na bandeira
+
+    const originalFlags = this.clientDetails.flags || [];
+    if (JSON.stringify(originalFlags.sort()) !== JSON.stringify(this.flagsByNames.sort())) {
+      hasChanges = true;
+      changedFields.push({ fieldName: 'codProdutos', newValue: this.flagsByNames });
+    }
+
     //Função para habilitar o botão de salvar apenas se existirem alterações
     if(hasChanges && changedFields.length > 0){
-      console.log('existe alterações')
+      console.log('existe alterações', changedFields)
       this.submitFormButtonElement.disabled = false
     } else {
       this.submitFormButtonElement.disabled = true
@@ -162,6 +174,7 @@ export class ClientsModalEditDataComponent implements OnInit{
   public saveAlterations():void{
 
     let alterations = this.checkForAlterations();
+    console.log(alterations,'tentando verificar as alterações que aconteceram')
     let crId = this.clientDetails.basicData.crId;
 
     for(let i = 0; i < alterations.changedFields.length; i++){
@@ -432,10 +445,6 @@ export class ClientsModalEditDataComponent implements OnInit{
 
   }
 
-
-  public saveNewFlags(){
-    console.log('novas flags para salvar', this.flagsByNames)
-  }
 
   public getFlagCode(flagCode:string[]) : number[]{
     const flagMap: { [key: string]: number } = {
