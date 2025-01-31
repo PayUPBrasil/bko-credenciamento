@@ -9,12 +9,13 @@ import { TableComponent } from "../../../../../layout/table.component";
 import { Root } from "../types/bigData.interface";
 import { ExportsFileService } from "../../../../../../../services/utils/exportsFile.service";
 import { NotifyComponent } from "../../../../../layout/notifyAlert.component";
+import { ActionButtonComponent } from "../../../../../layout/buttons/actionButton.component";
 
 @Component({
   selector: "app-pages-ocr-result",
   templateUrl: "./ocrSearchResult.component.html",
   standalone: true,
-  imports: [FormatCpfCnpjPipe, NgxSkeletonLoaderModule, NgIf, NgFor, KeyValuePipe, TableComponent, DatePipe, NgClass, NotifyComponent]
+  imports: [FormatCpfCnpjPipe, NgxSkeletonLoaderModule, NgIf, NgFor, KeyValuePipe, TableComponent, DatePipe, NgClass, NotifyComponent, ActionButtonComponent]
 })
 
 export class ocrSearchResultComponent implements OnInit, OnDestroy {

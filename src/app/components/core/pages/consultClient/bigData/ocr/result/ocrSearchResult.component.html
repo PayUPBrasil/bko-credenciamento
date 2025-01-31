@@ -6,14 +6,16 @@
           <h1 class="text-lg font-bold">Resultado da Consulta - {{ document | formatCpfCnpj }}</h1>
         </div>
         <div class="flex gap-4">
-          <button (click)="newConsultingRedirect()" class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white">Nova Consulta</button>
-          <button [disabled]="!canClickTheButton" (click)="exportToPdf()" class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-white disabled:cursor-not-allowed disabled:bg-slate-300">
+          <app-layout-button-actionButton [actionButtonElements]="[]"/>
+          <button (click)="newConsultingRedirect()" class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white" title="Nova Consulta" >Nova Consulta</button>
+          <button [disabled]="!canClickTheButton" (click)="exportToPdf()" class="flex  h-[34px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-white disabled:cursor-not-allowed disabled:bg-slate-300" title="Fazer Download">
             <span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
               </svg>
             </span>
           </button>
+
         </div>
       </div>
 
