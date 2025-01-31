@@ -9,13 +9,15 @@ import { TableComponent } from "../../../../../layout/table.component";
 import { Root } from "../types/bigData.interface";
 import { ExportsFileService } from "../../../../../../../services/utils/exportsFile.service";
 import { NotifyComponent } from "../../../../../layout/notifyAlert.component";
-import { ActionButtonComponent } from "../../../../../layout/buttons/actionButton.component";
+import { fadeInOut } from "../../../../../../animations/fadeInAnimation.component";
+import { ComboboxModalComponent } from "../../../../../layout/comboboxModal.component";
 
 @Component({
   selector: "app-pages-ocr-result",
   templateUrl: "./ocrSearchResult.component.html",
   standalone: true,
-  imports: [FormatCpfCnpjPipe, NgxSkeletonLoaderModule, NgIf, NgFor, KeyValuePipe, TableComponent, DatePipe, NgClass, NotifyComponent, ActionButtonComponent]
+  imports: [FormatCpfCnpjPipe, NgxSkeletonLoaderModule, NgIf, NgFor, KeyValuePipe, TableComponent, DatePipe, NgClass, NotifyComponent, ComboboxModalComponent],
+  animations: [fadeInOut]
 })
 
 export class ocrSearchResultComponent implements OnInit, OnDestroy {
@@ -34,7 +36,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public subjectValues : any[]= []
   public QueryDate = ''
   public totalProcess = false
-  public linkQueryModal = false
+  public linkQueryModal = true
 
 
   public returnObje : any = {}
@@ -52,6 +54,18 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public processInformationStatusDistribution : any[]  = []
   public processInformationTypeDistribution : any[]  = []
 
+public modalFormConfiguration =
+  {
+    title: 'Pesquisar Cliente',
+    description: 'Busque o cliente que você deseja vincular esta consulta.',
+    type: 'text',
+    required: true,
+    disabled: true,
+    value: '',
+    form: {
+      formName:'searchClient',
+    }
+  }
 
 
   public basicDataInformation : any [] = []
