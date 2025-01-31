@@ -1,6 +1,6 @@
 <ng-container aria-label="Editar Cadastro">
   <section [@fadeInOut] class="fixed inset-0 z-50 flex items-center justify-center bg-gray-700/50 p-4">
-    <div class="h-full w-full max-w-lg overflow-y-auto overflow-x-hidden rounded-lg bg-white shadow-xl sm:max-w-xl md:max-w-2xl lg:h-fit lg:max-w-3xl xl:max-w-5xl">
+    <div class="h-full w-full max-w-lg overflow-y-auto overflow-x-hidden rounded-lg bg-white shadow-xl sm:max-w-xl md:max-w-2xl lg:h-fit lg:max-w-3xl xl:max-w-xl">
       <div class="space-y-4 p-4 sm:p-6">
         <div class="flex items-start justify-between">
           <div class="pb-5">
@@ -36,12 +36,10 @@
         <ng-container *ngIf="flagEdit">
           <div class="flex flex-col gap-5">
             <app-layout-flagTag [Item]="flagsByNames" (ItemClicked)="clickedFlagValue($event)" />
-            <h2>Adicionar Bandeiras</h2>
-            <ng-container>
-              <!-- <div *ngFor="let flagsToAdd of remainderFlags">
-                <app-layout-flagTag [Item]="getFlagNames(editInputOldValues)" />
-              </div> -->
-            </ng-container>
+            <div class="mt-5 flex justify-end gap-4">
+              <button class="h-[40px] min-w-48 rounded-lg border bg-accent text-white" (click)="closeEditModal()">Cancelar</button>
+              <button class="h-[40px] min-w-48 rounded-lg border bg-accent text-white">Salvar Alteração</button>
+            </div>
           </div>
         </ng-container>
       </div>
