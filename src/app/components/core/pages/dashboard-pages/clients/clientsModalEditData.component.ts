@@ -385,7 +385,7 @@ export class ClientsModalEditDataComponent implements OnInit{
   private getEnabledFlags(): Array<string> {
     this.flagEdit = true;
     this.getFlagNames(this.clientDetails.codProdutos[0].codes)
-
+    this.identifyRemainderFlags()
     return Object.keys(this.clientDetails.codProdutos[0].codes);
   }
 
@@ -403,12 +403,20 @@ export class ClientsModalEditDataComponent implements OnInit{
       return flag !== e
     })
 
-    this.remainderFlags = this.codProdutoAdiqService.getCodProdutoList().filter((tdsAsBandeiras:any) => {
-      console.log(tdsAsBandeiras.nomeProduto, 'tdsAsBandeiras')
-      return !this.flagsByNames.includes(tdsAsBandeiras.nomeProduto)
-    }).map((flag:any) => flag.nomeProduto)
+    this.identifyRemainderFlags()
 
 
+  }
+
+  //* Method who show the remaining flags to user add
+
+  private identifyRemainderFlags() : void {
+    this.remainderFlags = this.codProdutoAdiqService.getCodProdutoList().filter((allFlags:any) => {
+      if(allFlags.nomeProduto !== 'TODAS AS BANDEIRAS'){
+        return !this.flagsByNames.includes(allFlags.nomeProduto)
+      }
+      return
+    }).map((flag:any) => { return flag.nomeProduto})
   }
 
   public saveNewFlags(){

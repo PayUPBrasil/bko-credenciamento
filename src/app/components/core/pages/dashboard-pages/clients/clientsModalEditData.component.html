@@ -36,18 +36,27 @@
         <ng-container *ngIf="flagEdit">
           <div class="flex flex-col gap-5">
             <span>Bandeiras Atuais</span>
-            <app-layout-flagTag [Item]="flagsByNames" (ItemClicked)="clickedFlagValue($event)" />
+
+            <ng-container *ngIf="flagsByNames.length > 0; else noActualFlags">
+              <app-layout-flagTag [Item]="flagsByNames" (ItemClicked)="clickedFlagValue($event)" />
+            </ng-container>
+
+            <ng-template #noActualFlags>
+              <span class="text-sm text-red-500">Cliente não possui bandeiras no momento...</span>
+            </ng-template>
 
             <div class="flex flex-col gap-5">
               <span>Adicionar Bandeiras</span>
-              <app-layout-flagTag [Item]="remainderFlags" (ItemClicked)="clickedFlagValue($event)" />
+              <select class="w-full border border-red-500">
+                <option value="" selected disabled>Selecione uma bandeira</option>
+                <option [value]="remain" *ngFor="let remain of remainderFlags">{{ remain }}</option>
+              </select>
             </div>
 
             <div class="mt-5 flex justify-end gap-4">
               <button class="h-[40px] rounded-lg border bg-accent px-3 text-white" (click)="saveNewFlags()">Salvar Alteração</button>
               <button class="h-[40px] rounded-lg border bg-red-500 px-3 text-white" (click)="closeEditModal()">Cancelar</button>
             </div>
-
           </div>
         </ng-container>
       </div>
