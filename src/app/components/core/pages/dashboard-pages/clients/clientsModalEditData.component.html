@@ -47,10 +47,10 @@
 
             <div class="flex flex-col gap-5">
               <span>Adicionar Bandeiras</span>
-              <select class="w-full rounded-lg border border-red-500" (change)="addFlagClicked($event)" #selectFlag>
-                <option *ngFor="let remain of remainderFlags" [value]="remain">{{ remain }}</option>
+              <select [disabled]="remainderFlags.length < 1" class="disabled:bg-slate-200 w-full rounded-lg border border-slate-300" (change)="addFlagClicked($event)" #selectFlag>
                 <option *ngIf="remainderFlags.length > 0" value="" selected disabled>Selecione uma bandeira</option>
-                <option *ngIf="remainderFlags.length < 1" value="" selected disabled>Todas as Bandeiras estão selecionadas</option>
+                <option *ngIf="remainderFlags.length < 1" value="" selected disabled>Todas as bandeiras já foram selecionadas</option>
+                <option *ngFor="let remain of remainderFlags" [value]="remain">{{ remain }}</option>
               </select>
             </div>
 
