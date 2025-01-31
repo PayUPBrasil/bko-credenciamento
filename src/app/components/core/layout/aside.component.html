@@ -2,7 +2,7 @@
   <aside [@slideInOut]="isSidebarOpen ? 'open' : 'closed'" id="logo-sidebar" class="fixed left-0 top-0 z-30 h-full min-h-screen w-[242px] -translate-x-full rounded-t-xl bg-white pt-16 font-sans transition-transform sm:translate-x-0 dark:border-gray-700 dark:bg-gray-800" aria-label="Sidebar">
     <div class="h-full overflow-y-auto bg-white px-0 pb-4 dark:bg-gray-800">
       <ul *ngIf="session$ | async as sessao; else menuNaoLogado" class="flex h-full flex-col justify-between space-y-2">
-        <div class="absolute right-0 z-50 cursor-pointer rounded-full bg-white text-accent hidden" [ngClass]="{ '-mr-0': isSidebarOpen == true, '-mt-0 mr-10': isSidebarOpen == false }" (click)="toggleSidebar()">
+        <div class="absolute right-0 z-50 cursor-pointer rounded-full bg-white text-accent " [ngClass]="{ '-mr-0': isSidebarOpen == true, '-mt-0 mr-10': isSidebarOpen == false }" (click)="toggleSidebar()">
           <!-- Quando o menu estiver fechado, mostrar esse ícone -->
           <ng-container *ngIf="isSidebarOpen == false">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +33,7 @@
             </a>
           </li>
 
-          <li class="hidden p-2 text-sm">
+          <li class=" p-2 text-sm">
             <a routerLinkActive="bg-primary text-white" routerLink="/dashboard/todos-os-clientes" class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-primary hover:text-white dark:text-white">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.9281 19.6343H20.0657C20.2539 19.6375 20.4401 19.5951 20.6083 19.5106C20.7766 19.4261 20.9218 19.3021 21.0316 19.1491C21.1413 18.9962 21.2124 18.8189 21.2386 18.6325C21.2649 18.4461 21.2455 18.2561 21.1822 18.0788C20.637 16.9119 19.7739 15.9223 18.692 15.2236C17.6101 14.5248 16.3531 14.1451 15.0652 14.1281" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -66,7 +66,7 @@
 
           <!-- Credenciamento Adiq -->
 
-          <li class="hidden p-2 text-sm" *ngIf="hasAccess(['admin', 'master', 'Criar Credenciamento'])">
+          <li class=" p-2 text-sm" *ngIf="hasAccess(['admin', 'master', 'Criar Credenciamento'])">
             <button (click)="toggleShowAdiqOptions()" type="button" class="group flex w-full items-center rounded-lg p-1 font-sans text-base transition duration-75 hover:bg-primary hover:text-white" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages">
               <span>
                 <img class="h-4 w-4" src="assets/icons/adiqLogo.svg" alt="Logo da entrepay" />
@@ -102,7 +102,7 @@
                 </a>
               </li>
 
-              <li class="hidden">
+              <li class="">
                 <a routerLinkActive="bg-primary text-white" routerLink="/dashboard/credAdiq/check-proposal" class="group flex w-full items-center gap-2 rounded-lg p-2 pl-2 font-sans text-sm transition duration-75 hover:bg-primary hover:text-white">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-accent">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -168,7 +168,7 @@
                     <span>Usuários</span>
                   </a>
                 </li>
-                <li class="hidden">
+                <li class="">
                   <a routerLinkActive="bg-primary text-white" routerLink="/dashboard/credAdiq/aguardando-aprovacao" class="group flex w-full items-center rounded-lg p-2 pl-5 font-sans text-sm transition duration-75"> Aguardando Aprovação </a>
                 </li>
 
