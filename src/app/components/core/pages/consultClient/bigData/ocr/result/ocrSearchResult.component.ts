@@ -26,24 +26,25 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   private ocrService = inject(OcrService)
   private exportsFileService = inject(ExportsFileService)
 
-  protected document !: string;
-  protected datasets : any[] = []
   public contentLoaded = false
   public showElementHidden= false
   public canClickTheButton = true
   public aiContentLoaded = true
+  public totalProcess = false
+  public linkQueryModal = false
+  public notifyItemModal = false
+  public notifyItem !: any;
+
+
+  public QueryDate = ''
+
   private destroy$ = new Subject<void>();
   public subjectValues : any[]= []
-  public QueryDate = ''
-  public totalProcess = false
-  public linkQueryModal = true
-
-
+  protected document !: string;
+  protected datasets : any[] = []
   public returnObje : any = {}
-  public notifyItemModal = false
   public hasCriminalProcessToReport !: boolean
 
-  public notifyItem !: any;
   public processInformationCnjProcedureTypeDistribution : any[]  = []
   public processInformationCnjSubjectDistribution : any[]  = []
   public processInformationCourtLevelDistribution : any[]  = []
