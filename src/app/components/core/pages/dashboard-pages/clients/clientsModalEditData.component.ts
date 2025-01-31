@@ -8,6 +8,7 @@ import { fadeInOut } from "../../../../animations/fadeInAnimation.component";
 import { ClientService } from "./services/clients.service";
 import { Subject, takeUntil } from "rxjs";
 import { NgxMaskDirective } from "ngx-mask";
+import { CodProdutoAdiqService } from "../../../../../services/utils/codProdutoAdiq.service";
 @Component({
   selector: "app-pages-clientsModalEditData",
   templateUrl: "./clientsModalEditData.component.html",
@@ -25,18 +26,21 @@ export class ClientsModalEditDataComponent implements OnInit{
   public editInputTitles: string[] = [];
   public editInputOldValues: any[] = [];
   public flagsByNames : string[] = []
-  private fb = inject(FormBuilder)
   public updateClientDataForm!: any;
-  public flagEdit = false;
   public inputType = 'text';
-  private clientService = inject(ClientService)
   private destroy$ = new Subject<void>();
+  public flagEdit = false;
   public enableSubmit = false
   public hasError = false;
   public maskByInput !: any;
-  public remainderFlags !:any
+  public remainderFlags : any[] = []
+
+  private codProdutoAdiqService = inject(CodProdutoAdiqService)
+  private fb = inject(FormBuilder)
+  private clientService = inject(ClientService)
+
   public submitFormButtonElement =
-    {
+  {
       title: 'Salvar Alterações',
       color: 'text-white',
       bg_color: 'bg-red-500 hover:bg-red-600',
@@ -399,11 +403,11 @@ export class ClientsModalEditDataComponent implements OnInit{
       return flag !== e
     })
 
-    console.log(e, 'flag clicada')
-    // this.remainderFlags =
+    this.remainderFlags = this.codProdutoAdiqService.getCodProdutoList().filter((tdsAsBandeiras:any) => {
+      console.log(tdsAsBandeiras.nomeProduto, 'tdsAsBandeiras')
+      return !this.flagsByNames.includes(tdsAsBandeiras.nomeProduto)
+    }).map((flag:any) => flag.nomeProduto)
 
-
-    console.log(this.flagsByNames, 'valores atualizados das bandeiras')
 
   }
 
