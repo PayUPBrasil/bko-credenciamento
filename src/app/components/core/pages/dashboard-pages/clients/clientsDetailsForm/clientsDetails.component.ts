@@ -108,7 +108,7 @@ export class ClientsDetailsComponent implements OnInit {
         this.showEditDataModal = true
         break;
 
-      case 'Adicionar Informação':
+      case 'Adicionar Nota':
         this.showNoteEditor = true
         break;
 
@@ -297,7 +297,7 @@ export class ClientsDetailsComponent implements OnInit {
 
         {
           icon: '/assets/icons/pincel.svg',
-          name: 'Adicionar Informação',
+          name: 'Adicionar Nota',
           path: '/dashboard/admin/create-permissions'
         },
 
@@ -326,7 +326,7 @@ export class ClientsDetailsComponent implements OnInit {
 
         {
           icon: '/assets/icons/pincel.svg',
-          name: 'Adicionar Informação',
+          name: 'Adicionar Nota',
           path: '/dashboard/admin/add-information'
         },
 

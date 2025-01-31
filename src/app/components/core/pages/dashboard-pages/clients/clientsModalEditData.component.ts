@@ -24,6 +24,7 @@ export class ClientsModalEditDataComponent implements OnInit{
   public editInputsList: string[] = [];
   public editInputTitles: string[] = [];
   public editInputOldValues: any[] = [];
+  public flagsByNames : string[] = []
   private fb = inject(FormBuilder)
   public updateClientDataForm!: any;
   public flagEdit = false;
@@ -361,6 +362,7 @@ export class ClientsModalEditDataComponent implements OnInit{
   //* Methods for working with flag editing
 
   public getFlagNames(flagNumbers: number[]): string[] {
+    console.log(flagNumbers, 'vendo o que foi recebido no método de flag')
     const flagMap: { [key: number]: string } = {
       1: 'VISA CREDITO',
       2: 'VISA DEBITO',
@@ -370,29 +372,35 @@ export class ClientsModalEditDataComponent implements OnInit{
       23: 'ELO DEBITO',
       28: 'HIPERCARD',
     };
-    return flagNumbers.map(num => flagMap[num] || 'Unknown Flag');
+    return this.flagsByNames = flagNumbers.map(num => flagMap[num] || 'Unknown Flag');
+
   }
+
 
   private getEnabledFlags(): Array<string> {
     this.flagEdit = true;
-    this.editInputOldValues = Object.values(this.clientDetails.codProdutos[0].codes);
+    this.getFlagNames(this.clientDetails.codProdutos[0].codes)
     this.remainderFlags = this.editInputOldValues;
     return Object.keys(this.clientDetails.codProdutos[0].codes);
   }
 
   public editFlagsValues() : void{
-    let actualFlags = this.getEnabledFlags();
+    this.getEnabledFlags();
   }
 
-  public clickedFlagValue(e:any) : void{
-  console.log(e)
-  let arrFlags = [e] //*-> Armazenando os valores das flags clicadas no array para capturar os valores.
-  let flagCode = this.getFlagCode(arrFlags);
-  console.log(flagCode, 'flagCode informado')
-  this.remainderFlags = this.remainderFlags.filter((flag:any) => flag !== flagCode[0]); //*-> Removendo a flag clicada do array de flags restantes.
-  console.log(this.remainderFlags, 'remainderFlags')
-}
+  public clickedFlagValue(e: any): void {
+    let arrFlags = [e];
+    // let flagCode = this.getFlagCode(arrFlags);
 
+    // console.log(flagCode[0], 'capturando o código da bandeira conforme interação ')
+
+    this.flagsByNames = (this.flagsByNames).filter((flag:any) => {
+      return flag !== e
+    })
+
+    console.log(this.flagsByNames, 'valores atualizados das bandeiras')
+
+  }
 
   public getFlagCode(flagCode:string[]) : number[]{
     const flagMap: { [key: string]: number } = {
@@ -404,8 +412,6 @@ export class ClientsModalEditDataComponent implements OnInit{
       'ELO DEBITO': 23 ,
       'HIPERCARD': 28 ,
     };
-    console.log(flagCode, 'Nomes das flags')
-
     return flagCode.map(string => flagMap[string]);
   }
 
