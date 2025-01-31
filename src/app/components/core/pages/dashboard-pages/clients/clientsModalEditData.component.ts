@@ -86,7 +86,7 @@ export class ClientsModalEditDataComponent implements OnInit{
     const originalFlags = this.clientDetails.flags || [];
     if (JSON.stringify(originalFlags.sort()) !== JSON.stringify(this.flagsByNames.sort())) {
       hasChanges = true;
-      changedFields.push({ fieldName: 'codProdutos', newValue: this.flagsByNames });
+      changedFields.push({ fieldName: 'codProdutos.codes', newValue: this.getFlagCode(this.flagsByNames) });
     }
 
     //Função para habilitar o botão de salvar apenas se existirem alterações
@@ -99,33 +99,6 @@ export class ClientsModalEditDataComponent implements OnInit{
 
     return { hasChanges, changedFields };
   }
-
-
-  // public findFieldPath(obj: any, fieldName: string, currentPath: string = ''): string | null {
-
-  //   console.log("===================================")
-  //   console.log('em findFieldPath')
-  //   console.log(obj, fieldName, currentPath)
-  //   console.log("===================================")
-
-  //   let fieldNameWithoutNumbers = fieldName.replace(/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\s]+$/ ,'')
-
-  //   if (Array.isArray(obj)) {
-  //     for (let i = 0; i < obj.length; i++) {
-  //       const result = this.findFieldPath(obj[i], fieldNameWithoutNumbers, `${currentPath}[${i}]`);
-  //       if (result) return result;
-  //     }
-  //   } else if (typeof obj === 'object' && obj !== null) {
-  //     for (let key in obj) {
-  //       if (key === fieldNameWithoutNumbers) {
-  //         return currentPath ? `${currentPath}.${key}` : key;
-  //       }
-  //       const result = this.findFieldPath(obj[key], fieldNameWithoutNumbers, currentPath ? `${currentPath}.${key}` : key);
-  //       if (result) return result;
-  //     }
-  //   }
-  //   return null;
-  // }
 
 
   public findFieldPath(obj: any, fieldName = 'partnerPhone', currentPath: string = ''): string | null {
@@ -184,6 +157,7 @@ export class ClientsModalEditDataComponent implements OnInit{
         alterations.changedFields[i].newValue =  this.maskDateCEP(alterations.changedFields[i].newValue);
       }
     }
+
     if(alterations.hasChanges){
       this.clientService.updateClientData(alterations, crId)
       .pipe(takeUntil(this.destroy$))
