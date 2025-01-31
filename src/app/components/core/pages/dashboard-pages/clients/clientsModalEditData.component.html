@@ -47,9 +47,10 @@
 
             <div class="flex flex-col gap-5">
               <span>Adicionar Bandeiras</span>
-              <select class="w-full border border-red-500">
+              {{remainderFlags}}
+              <select class="w-full border border-red-500 rounded-lg" (change)="addFlagClicked($event)" #selectFlag>
                 <option value="" selected disabled>Selecione uma bandeira</option>
-                <option [value]="remain" *ngFor="let remain of remainderFlags">{{ remain }}</option>
+                <option *ngFor="let remain of remainderFlags" [value]="remain">{{ remain }}</option>
               </select>
             </div>
 

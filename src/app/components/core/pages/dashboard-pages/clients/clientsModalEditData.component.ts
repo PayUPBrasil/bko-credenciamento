@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from "@angular/common";
-import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { ButtonPrimaryComponent } from "../../../layout/buttons/button-primary.component";
 import { ReactiveFormsModule, Validators, FormBuilder } from "@angular/forms";
 import { Client } from "./types/client.interface";
@@ -405,7 +405,6 @@ export class ClientsModalEditDataComponent implements OnInit{
 
     this.identifyRemainderFlags()
 
-
   }
 
   //* Method who show the remaining flags to user add
@@ -418,6 +417,21 @@ export class ClientsModalEditDataComponent implements OnInit{
       return
     }).map((flag:any) => { return flag.nomeProduto})
   }
+
+
+  @ViewChild('selectFlag') selectFlag:any;
+
+  public addFlagClicked(flag:any){
+    let flagValue = flag.target as HTMLSelectElement;
+
+    this.flagsByNames.push(flagValue.value)
+    this.identifyRemainderFlags()
+
+    // Limpando o select a cada interação para que o evento chenge funcione corretamente
+    this.selectFlag.nativeElement.value = ''
+
+  }
+
 
   public saveNewFlags(){
     console.log('novas flags para salvar', this.flagsByNames)
