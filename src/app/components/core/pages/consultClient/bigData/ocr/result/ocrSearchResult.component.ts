@@ -34,6 +34,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public subjectValues : any[]= []
   public QueryDate = ''
   public totalProcess = false
+  public linkQueryModal = false
 
 
   public returnObje : any = {}
@@ -267,6 +268,9 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   }
 
 
+  public linkQueryState(){
+    this.linkQueryModal = !this.linkQueryModal
+  }
 
 
   @ViewChild('contentToExport') contentToExport!: ElementRef;

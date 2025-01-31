@@ -6,16 +6,32 @@
           <h1 class="text-lg font-bold">Resultado da Consulta - {{ document | formatCpfCnpj }}</h1>
         </div>
         <div class="flex gap-4">
-          <app-layout-button-actionButton [actionButtonElements]="[]"/>
-          <button (click)="newConsultingRedirect()" class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white" title="Nova Consulta" >Nova Consulta</button>
-          <button [disabled]="!canClickTheButton" (click)="exportToPdf()" class="flex  h-[34px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-white disabled:cursor-not-allowed disabled:bg-slate-300" title="Fazer Download">
-            <span>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-            </span>
-          </button>
-
+          <button (click)="newConsultingRedirect()" class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white" title="Nova Consulta">Nova Consulta</button>
+          <div class="grid grid-cols-2 items-center gap-2">
+            <button [disabled]="!canClickTheButton" (click)="exportToPdf()" class="flex h-[34px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-white disabled:cursor-not-allowed disabled:bg-slate-300" title="Fazer Download">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              </span>
+            </button>
+            <button (click)="linkQueryState()" class="flex h-[34px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white" title="Vincular consulta">
+              <span>
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.125 14.7185C8.525 14.7185 4.505 17.6469 4.505 21.245" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M12.125 11.4603C12.9877 11.4623 13.8317 11.2084 14.55 10.7308C15.2683 10.2531 15.8287 9.57326 16.1602 8.77718C16.4918 7.98111 16.5795 7.10462 16.4124 6.25866C16.2453 5.4127 15.8309 4.63531 15.2215 4.02488C14.6122 3.41445 13.8353 2.99843 12.9893 2.82948C12.1432 2.66053 11.2661 2.74624 10.4688 3.07576C9.67155 3.40528 8.99002 3.96381 8.51049 4.68063C8.03097 5.39746 7.775 6.24036 7.775 7.10265C7.775 8.25664 8.23298 9.36351 9.04848 10.1804C9.86397 10.9974 10.9704 11.4577 12.125 11.4603Z"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path d="M16.4883 14.9834V20.9801" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
+                  <path d="M13.495 17.9883H19.495" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
+                </svg>
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -38,19 +54,18 @@
         <div class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6" *ngIf="1 == 1">
           <div class="flex flex-col justify-between">
             <div class="flex flex-col py-5">
-              <span class=" font-bold text-slate-800">KYC - Conheça seu Cliente </span>
+              <span class="font-bold text-slate-800">KYC - Conheça seu Cliente </span>
             </div>
-            <div class="border-red-500 border w-full h-full">
-                <ng-container>
-                  <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCnjProcedureTypeDistribution[0]">
-                    <span class="text-sm font-bold text-black">Distribuição de Tipos</span>
-                    <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
-                  </div>
-                </ng-container>
+            <div class="h-full w-full border border-red-500">
+              <ng-container>
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCnjProcedureTypeDistribution[0]">
+                  <span class="text-sm font-bold text-black">Distribuição de Tipos</span>
+                  <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
+                </div>
+              </ng-container>
             </div>
           </div>
         </div>
-
 
         <div class="mt-5 flex flex-col gap-5 rounded-2xl border bg-white p-4 px-6" [ngClass]="{ 'border-red-100': hasCriminalProcessToReport, 'border-slate-100': !hasCriminalProcessToReport }">
           <div class="flex justify-between">
@@ -69,42 +84,42 @@
           <ng-container *ngIf="contentLoaded; else noLoadedYet">
             <div *ngFor="let processData of resumeInformation">
               <ng-container>
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCnjProcedureTypeDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCnjProcedureTypeDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição de Tipos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCnjSubjectDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCnjSubjectDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição de Assuntos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjSubjectDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCourtNameDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCourtNameDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição de Nome da Corte</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCourtNameDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCourtTypeDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCourtTypeDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de tribunal dos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCourtTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationPartyTypeDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationPartyTypeDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de parte do indíviduo nos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationPartyTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationStateDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationStateDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição de Estados</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationStateDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationStatusDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationStatusDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição dos status dos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationStatusDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationTypeDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationTypeDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationTypeDistribution[0]" />
                 </div>
@@ -312,42 +327,42 @@
           <ng-container *ngIf="contentLoaded; else noLoadedYet">
             <div *ngFor="let processData of resumeInformation; index as i">
               <ng-container>
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCnjProcedureTypeDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCnjProcedureTypeDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição de Tipos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCnjSubjectDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCnjSubjectDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição de Assuntos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCnjSubjectDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCourtNameDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCourtNameDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição de Nome da Corte</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCourtNameDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationCourtTypeDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationCourtTypeDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de tribunal dos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationCourtTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationPartyTypeDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationPartyTypeDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de parte do indíviduo nos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationPartyTypeDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationStateDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationStateDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição de Estados</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationStateDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationStatusDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationStatusDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição dos status dos processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationStatusDistribution[0]" />
                 </div>
 
-                <div class="py-2 flex flex-col gap-2" *ngIf="processInformationTypeDistribution[0]">
+                <div class="flex flex-col gap-2 py-2" *ngIf="processInformationTypeDistribution[0]">
                   <span class="text-sm font-bold text-black">Distribuição dos tipos de processos</span>
                   <app-layout-table [visibleItems]="50" [tableContent]="processInformationTypeDistribution[0]" />
                 </div>
