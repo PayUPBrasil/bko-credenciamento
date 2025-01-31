@@ -341,7 +341,8 @@ export class ClientsModalEditDataComponent implements OnInit{
     window.location.reload();
   }
 
-  //* Criando o formulário dinamicamente de acordo com os dados que o usuário solicitou alteração
+  //* Creating the form dynamically according to the data the user request to chenge
+
 
   public createDynamicForm(): void {
     const formGroup: { [key: string]: any } = {};
@@ -380,7 +381,7 @@ export class ClientsModalEditDataComponent implements OnInit{
   private getEnabledFlags(): Array<string> {
     this.flagEdit = true;
     this.getFlagNames(this.clientDetails.codProdutos[0].codes)
-    this.remainderFlags = this.editInputOldValues;
+
     return Object.keys(this.clientDetails.codProdutos[0].codes);
   }
 
@@ -398,8 +399,16 @@ export class ClientsModalEditDataComponent implements OnInit{
       return flag !== e
     })
 
+    console.log(e, 'flag clicada')
+    // this.remainderFlags =
+
+
     console.log(this.flagsByNames, 'valores atualizados das bandeiras')
 
+  }
+
+  public saveNewFlags(){
+    console.log('novas flags para salvar', this.flagsByNames)
   }
 
   public getFlagCode(flagCode:string[]) : number[]{

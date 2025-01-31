@@ -35,11 +35,19 @@
         <!-- Editar bandeiras -->
         <ng-container *ngIf="flagEdit">
           <div class="flex flex-col gap-5">
+            <span>Bandeiras Atuais</span>
             <app-layout-flagTag [Item]="flagsByNames" (ItemClicked)="clickedFlagValue($event)" />
-            <div class="mt-5 flex justify-end gap-4">
-              <button class="h-[40px] min-w-48 rounded-lg border bg-accent text-white" (click)="closeEditModal()">Cancelar</button>
-              <button class="h-[40px] min-w-48 rounded-lg border bg-accent text-white">Salvar Alteração</button>
+
+            <div class="flex flex-col gap-5">
+              <span>Adicionar Bandeiras</span>
+              <app-layout-flagTag [Item]="remainderFlags" (ItemClicked)="clickedFlagValue($event)" />
             </div>
+
+            <div class="mt-5 flex justify-end gap-4">
+              <button class="h-[40px] rounded-lg border bg-accent px-3 text-white" (click)="saveNewFlags()">Salvar Alteração</button>
+              <button class="h-[40px] rounded-lg border bg-red-500 px-3 text-white" (click)="closeEditModal()">Cancelar</button>
+            </div>
+
           </div>
         </ng-container>
       </div>
