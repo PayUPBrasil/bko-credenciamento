@@ -35,7 +35,7 @@
         <!-- Editar bandeiras -->
         <ng-container *ngIf="flagEdit">
           <div class="flex flex-col gap-5">
-            <span>Bandeiras Atuais</span>
+            <!-- <span>Bandeiras Atuais</span> -->
 
             <ng-container *ngIf="flagsByNames.length > 0; else noActualFlags">
               <app-layout-flagTag [Item]="flagsByNames" (ItemClicked)="clickedFlagValue($event)" />
@@ -48,8 +48,9 @@
             <div class="flex flex-col gap-5">
               <span>Adicionar Bandeiras</span>
               <select class="w-full rounded-lg border border-red-500" (change)="addFlagClicked($event)" #selectFlag>
-                <option value="" selected disabled>Selecione uma bandeira</option>
                 <option *ngFor="let remain of remainderFlags" [value]="remain">{{ remain }}</option>
+                <option *ngIf="remainderFlags.length > 0" value="" selected disabled>Selecione uma bandeira</option>
+                <option *ngIf="remainderFlags.length < 1" value="" selected disabled>Todas as Bandeiras estão selecionadas</option>
               </select>
             </div>
 
