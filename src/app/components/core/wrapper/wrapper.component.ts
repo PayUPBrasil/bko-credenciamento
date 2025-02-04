@@ -13,9 +13,9 @@ import { NgClass } from "@angular/common";
 
 export class WrapperComponent {
   isSideBarOpen = true;
+  expandScreen = true
 
   toggleSideBarSatus(event:any){
-    console.log('Toggle SideBar evento acionado');
-    // this.isSideBarOpen = false;
+      this.expandScreen = !this.expandScreen
   }
 }

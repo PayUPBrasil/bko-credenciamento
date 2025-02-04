@@ -5,6 +5,6 @@
 @if (isSideBarOpen) {
   <app-layout-aside (sideBarState)="toggleSideBarSatus($event)" />
 }
-<div class="ml-0" [ngClass]="{ 'sm:ml-0': isSideBarOpen }">
+<div [ngClass]="{ 'sm:ml-60': expandScreen }">
   <router-outlet />
 </div>
