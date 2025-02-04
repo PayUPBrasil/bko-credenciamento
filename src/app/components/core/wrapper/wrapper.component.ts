@@ -12,9 +12,10 @@ import { NgClass } from "@angular/common";
 })
 
 export class WrapperComponent {
-  isSideBarOpen = true
+  isSideBarOpen = true;
 
   toggleSideBarSatus(event:any){
-    this.isSideBarOpen =!this.isSideBarOpen;
+    console.log('Toggle SideBar evento acionado');
+    // this.isSideBarOpen = false;
   }
 }
