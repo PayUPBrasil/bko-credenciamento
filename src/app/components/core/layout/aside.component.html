@@ -2,7 +2,7 @@
   <aside [@slideInOut]="isSidebarOpen ? 'open' : 'closed'" id="logo-sidebar" class="fixed left-0 top-0 z-30 h-full min-h-screen w-[242px] -translate-x-full rounded-t-xl bg-white pt-16 font-sans transition-transform sm:translate-x-0 dark:border-gray-700 dark:bg-gray-800">
     <div class="h-full overflow-y-auto bg-white px-0 pb-4 dark:bg-gray-800">
       <ul *ngIf="session$ | async as sessao; else menuNaoLogado" class="flex h-full flex-col justify-between space-y-2">
-        <div class="absolute w-full justify-end flex right-0 z-50 cursor-pointer rounded-full bg-white text-accent" [ngClass]="{ '-mr-0': isSidebarOpen == true, '-mr-7 -mt-0': isSidebarOpen == false }" (click)="toggleSidebar()">
+        <div class="absolute right-0 z-50 flex w-full cursor-pointer justify-end rounded-full bg-white text-accent" [ngClass]="{ '-mr-0': isSidebarOpen == true, '-mr-7 -mt-0': isSidebarOpen == false }" (click)="toggleSidebar()">
           <!-- Quando o menu estiver fechado, mostrar esse ícone -->
           <ng-container *ngIf="!isSidebarOpen">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
