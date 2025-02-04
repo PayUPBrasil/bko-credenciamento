@@ -50,7 +50,6 @@ export class AsideComponent {
       next: (session) => {
         if (session?.id) {
           this.decodedToken = jwtDecode(session?.id)
-          console.log(typeof(this.decodedToken), 'tipo do token decodificado')
         }
       },
       error: (error) => console.error(error),
