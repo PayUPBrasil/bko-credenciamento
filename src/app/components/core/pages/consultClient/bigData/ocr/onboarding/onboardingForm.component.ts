@@ -3,7 +3,6 @@ import { ReactiveFormsModule, Validators, FormBuilder, FormGroup } from "@angula
 import { ActivatedRoute, Router } from "@angular/router";
 import { OcrFormInputs } from "../types/ocr.interface";
 import { NgClass, NgFor, NgIf } from "@angular/common";
-import { ButtonPrimaryComponent } from "../../../../../layout/buttons/button-primary.component";
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { CpfCnpjValidatorDirective } from "../../../../../../../directives/validators/cpfcnpj-validator.directive";
 
@@ -11,7 +10,7 @@ import { CpfCnpjValidatorDirective } from "../../../../../../../directives/valid
   selector: "app-pages-onboarding-form",
   templateUrl: "./onboardingForm.component.html",
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective,  ButtonPrimaryComponent, NgxMaskDirective, NgIf, NgClass],
+  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective,   NgxMaskDirective, NgIf, NgClass],
   providers: [provideNgxMask()]
 
 })
