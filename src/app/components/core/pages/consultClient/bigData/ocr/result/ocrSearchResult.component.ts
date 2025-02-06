@@ -26,7 +26,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   protected document !: string;
   public contentLoaded = false
   public showElementHidden= false
-  public canClickTheButton = true
+  public canClickTheButton = false
   public aiContentLoaded = true
   private destroy$ = new Subject<void>();
   public subjectValues : any[]= []
