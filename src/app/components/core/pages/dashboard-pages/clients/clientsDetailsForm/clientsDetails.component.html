@@ -173,7 +173,7 @@
   </ng-container>
 }
 
-@if (showNoteEditor) {
+@if (!showNoteEditor) {
   <ng-container>
     <app-pages-note (closeNoteEditor)="showNoteEditor = !showNoteEditor" />
   </ng-container>
