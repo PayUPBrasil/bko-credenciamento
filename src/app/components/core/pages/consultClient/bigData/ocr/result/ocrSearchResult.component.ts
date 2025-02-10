@@ -196,7 +196,11 @@ public modalFormConfiguration =
 
     } else if(type == 'pj'){
 
-      response.Result[0].BasicData ? this.basicDataInformation = [this.ocrService.filterBasicDataPJ(response.Result[0].BasicData)] : [];
+      if( response.Result[0].BasicData && response.Result[0].BasicData.TaxIdStatus !== "CNPJ DOES NOT EXIST IN RECEITA FEDERAL DATABASE"){
+          this.basicDataInformation = [this.ocrService.filterBasicDataPJ(response.Result[0].BasicData)]
+      } else {
+        this.basicDataInformation = ['']
+      }
 
 
       //*Tratando os processos judiciais separadamente por assunto retornado via bigData.

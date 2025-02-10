@@ -117,7 +117,7 @@ export class OcrService {
         IdadeDaAberturaDoCNPJ: basicData.Age,
         StatusIdFiscal: basicData.TaxIdStatus,
         OrigemIdFiscal: basicData.TaxIdOrigin,
-        CapitalSocial:basicData.AdditionalOutputData.Capital,
+        CapitalSocial: basicData.AdditionalOutputData.Capital ?  basicData.AdditionalOutputData.Capital : '-',
         DataUltimaAtualizacao:  this.formaterDate(basicData.LastUpdateDate),
         TeveAlteracaoNoNomeFantasa:  basicData.HistoricalData ?  this.translateBooleanValue(basicData.HistoricalData.HasChangedTradeName) : '-',
         NaturezaJuridica: basicData.LegalNature.Activity + '-' + basicData.LegalNature.Code,
