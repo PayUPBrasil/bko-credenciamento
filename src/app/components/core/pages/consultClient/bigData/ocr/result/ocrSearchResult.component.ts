@@ -30,7 +30,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
   public contentLoaded = false
   public showElementHidden= false
-  public canClickTheButton = true
+  public canClickTheButton = false
   public aiContentLoaded = true
   public totalProcess = false
   public linkQueryModal = false
@@ -146,6 +146,7 @@ public modalFormConfiguration =
           }
           console.log(response, 'verificando as respostas que são retornadas pela API em uma consulta com outros datasets')
           if(response) {
+            console.log('tive uma resposta e por isso devo parar de carregar e liberar esse btn')
             this.QueryDate = response.QueryDate //* Data em que a consulta foi realizada
             let type  = this.checkTypeByReturnBigData(response.Result[0].BasicData.TaxIdNumber)
 
