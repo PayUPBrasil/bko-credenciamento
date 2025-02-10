@@ -1,4 +1,4 @@
-import { Component, ElementRef,  inject, OnDestroy, OnInit,  ViewChild } from "@angular/core";
+import { Component, ElementRef,  EventEmitter,  inject, OnDestroy, OnInit,  Output,  ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormatCpfCnpjPipe } from "../../../../../../../pipes/format-cpf-cnpj.pipe";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
@@ -22,9 +22,11 @@ import { ComboboxModalComponent } from "../../../../../layout/comboboxModal.comp
 
 export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
+  @Output() cleanQuery = new EventEmitter<void>()
   private activatedRoute = inject(ActivatedRoute)
   private ocrService = inject(OcrService)
   private exportsFileService = inject(ExportsFileService)
+
 
   public contentLoaded = false
   public showElementHidden= false
@@ -121,6 +123,7 @@ public modalFormConfiguration =
   }
 
   public newConsultingRedirect(){
+    this.cleanQuery.emit();
     this.router.navigate(['/dashboard/consultar-cliente']);
   }
 
@@ -128,8 +131,7 @@ public modalFormConfiguration =
   public searchInformationAboutDocument(){
 
     if(this.document && this.datasets.length  > 0) {
-
-      let consultingParams = {
+       let consultingParams = {
         document:this.document,
         datasets: this.datasets || '',
       }

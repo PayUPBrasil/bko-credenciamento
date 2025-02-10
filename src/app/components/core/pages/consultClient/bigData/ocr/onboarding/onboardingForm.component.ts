@@ -58,6 +58,7 @@ ngOnInit(): void {
           }
         }
       })
+      console.log(this.datasets,'verificando os datasets ao iniciar o componente')
       this.createForm();
       return
 }
