@@ -146,11 +146,25 @@ public modalFormConfiguration =
           }
           console.log(response, 'verificando as respostas que são retornadas pela API em uma consulta com outros datasets')
           if(response) {
-            console.log('tive uma resposta e por isso devo parar de carregar e liberar esse btn')
-            this.QueryDate = response.QueryDate //* Data em que a consulta foi realizada
+
+            this.QueryDate = response.QueryDate
             let type  = this.checkTypeByReturnBigData(response.Result[0].BasicData.TaxIdNumber)
 
-            if(type == 'pf'){
+           if( response.Result[0].BasicData && response.Result[0].BasicData.TaxIdStatus === "CNPJ DOES NOT EXIST IN RECEITA FEDERAL DATABASE"){
+            console.log('não posso clicar no botão e nem exportar nada pois os dados nao existem')
+            this.canClickTheButton = false
+              this.basicDataInformation = ['']
+              this.processInformationCnjProcedureTypeDistribution   = ['']
+              this.processInformationCnjSubjectDistribution   = ['']
+              this.processInformationCourtLevelDistribution   = ['']
+              this.processInformationCourtNameDistribution   = ['']
+              this.processInformationCourtTypeDistribution   = ['']
+              this.processInformationPartyTypeDistribution   = ['']
+              this.processInformationStateDistribution   = ['']
+              this.processInformationStatusDistribution   = ['']
+              this.processInformationTypeDistribution   = ['']
+
+            } else if (type == 'pf'){
               this.createTabelWithDataByType('pf', response);
             } else if(type == 'pj'){
               this.createTabelWithDataByType('pj', response);
@@ -196,11 +210,7 @@ public modalFormConfiguration =
 
     } else if(type == 'pj'){
 
-      if( response.Result[0].BasicData && response.Result[0].BasicData.TaxIdStatus !== "CNPJ DOES NOT EXIST IN RECEITA FEDERAL DATABASE"){
-          this.basicDataInformation = [this.ocrService.filterBasicDataPJ(response.Result[0].BasicData)]
-      } else {
-        this.basicDataInformation = ['']
-      }
+      response.Result[0].BasicData ? this.basicDataInformation = [this.ocrService.filterBasicDataPJ(response.Result[0].BasicData)] : [];
 
 
       //*Tratando os processos judiciais separadamente por assunto retornado via bigData.
@@ -275,7 +285,7 @@ public modalFormConfiguration =
 
   public stopLoadingSkeleton() : void {
     this.contentLoaded = true
-    this.canClickTheButton= true
+    // this.canClickTheButton= true
   }
 
   ngOnDestroy(): void {
