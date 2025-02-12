@@ -202,7 +202,14 @@ export class OcrService {
 
 
     protected formaterDate(date:string) {
-      return new Date(date).toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+      console.log(date, 'vericicando a data')
+      return new Intl.DateTimeFormat('pt-BR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        timeZone: 'UTC'
+      }).format(new Date(Date.parse(date)));
+
     }
 
     protected formaterDocument(document: string): string {
