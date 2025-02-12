@@ -4,7 +4,7 @@ import { FormatCpfCnpjPipe } from "../../../../../../../pipes/format-cpf-cnpj.pi
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { DatePipe, KeyValuePipe, NgClass, NgFor, NgIf } from "@angular/common";
 import { OcrService } from "../ocr.service";
-import { debounceTime, distinctUntilChanged,  Subject, takeUntil } from "rxjs";
+import { debounceTime, distinctUntilChanged,  Subject, takeUntil, tap } from "rxjs";
 import { TableComponent } from "../../../../../layout/table.component";
 import { Root } from "../types/bigData.interface";
 import { ExportsFileService } from "../../../../../../../services/utils/exportsFile.service";
@@ -253,13 +253,12 @@ public modalFormConfiguration =
   }
 
   public forceRefresh() {
-    const document = '64.127.872/0001-06'
-
-    console.log('cliquei no forceRefresh')
-    this.ocrService.forceNewSearchAtBigDataCorp(document).pipe().subscribe(
+    if(this.document)
+    this.ocrService.forceNewSearchAtBigDataCorp(this.document).pipe(
+  tap(res => {console.log(res, 'vericicando  a response no tap')})).subscribe(
       {
         next: (response) => {
-         console.log(response, 'Force refresh')
+           if(response.status == 204) window.location.reload();
         },
         error: (error) => {
           // Handle error

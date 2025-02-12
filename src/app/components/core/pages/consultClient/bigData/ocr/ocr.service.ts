@@ -32,7 +32,7 @@ export class OcrService {
     const body = {
       document: document
     }
-    return this.http.post(`${this.url}/ocr/bigData/force`, body)
+    return this.http.post<any>(`${this.url}/ocr/bigData/force`, body, {observe:'response'})
   }
 
 
