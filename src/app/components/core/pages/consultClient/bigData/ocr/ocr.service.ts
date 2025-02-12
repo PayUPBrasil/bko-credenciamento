@@ -162,7 +162,7 @@ export class OcrService {
     }
 
     protected translateFinancialActivityLevel(value:any) {
-     return value == 'VERY HIGH' ? 'Alto' : value
+     return value == 'VERY HIGH' || value == 'HIGH' ? 'Alto' : value == 'VERY LOW' ? "Baixíssimo" : value == 'LOW' ? 'Baixo' : value
     }
 
     protected translatePartyDistribution(values: any[]) {

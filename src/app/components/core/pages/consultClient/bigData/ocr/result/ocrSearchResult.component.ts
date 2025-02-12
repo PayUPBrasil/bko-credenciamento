@@ -141,6 +141,7 @@ public modalFormConfiguration =
       )
       .subscribe({
         next: (response) => {
+          console.log(response, 'verificando a resposta da bigdata no controller')
           if(response.Result[0].LawsuitsDistributionData.TotalLawsuits > 0){
             this.totalProcess = true
           }
