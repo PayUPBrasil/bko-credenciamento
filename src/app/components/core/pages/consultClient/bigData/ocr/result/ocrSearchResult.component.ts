@@ -142,6 +142,7 @@ public modalFormConfiguration =
       .subscribe({
         next: (response) => {
           if(response.Result[0].LawsuitsDistributionData.TotalLawsuits > 0){
+            console.log('vou adicinoar a visibilidade do modal de dados de distribuicao de processos judiciais pois  o total de processos é maior que zero')
             this.totalProcess = true
           }
           console.log(response, 'verificando as respostas que são retornadas pela API em uma consulta com outros datasets')
@@ -170,6 +171,7 @@ public modalFormConfiguration =
               this.createTabelWithDataByType('pj', response);
             }
           this.stopLoadingSkeleton()
+          this.canClickTheButton= true
          } else {
           throw new Error('Falha ao buscar informações do documento');
          }
