@@ -253,6 +253,22 @@ public modalFormConfiguration =
     return  this.hasCriminalProcessToReport
   }
 
+  public forceRefresh() {
+    const document = '64.127.872/0001-06'
+
+    console.log('cliquei no forceRefresh')
+    this.ocrService.forceNewSearchAtBigDataCorp(document).pipe().subscribe(
+      {
+        next: (response) => {
+         console.log(response, 'Force refresh')
+        },
+        error: (error) => {
+          // Handle error
+          console.error(error, 'verificando o erro')
+        }
+      }
+    )
+  }
 
   //* Buscando termo juridico com AI
 

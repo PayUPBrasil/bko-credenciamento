@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../../../../../../environments/environment.development";
 import { HttpClient } from "@angular/common/http";
 import { BasicData, ConsultingParamsBigData } from "./types/bigData.interface";
+import { ObjectEncodingOptions } from "fs";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,16 @@ export class OcrService {
     }
       return this.http.post(`${this.url}/ocr/bigData`, body)
   }
+
+
+  public forceNewSearchAtBigDataCorp(document:string) : Observable<any> {
+    const body = {
+      document: document
+    }
+    return this.http.post(`${this.url}/ocr/bigData/force`, body)
+  }
+
+
 
     //* Gemini
 
