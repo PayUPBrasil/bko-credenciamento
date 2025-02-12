@@ -154,15 +154,15 @@ public modalFormConfiguration =
             console.log('não posso clicar no botão e nem exportar nada pois os dados nao existem')
             this.canClickTheButton = false
               this.basicDataInformation = ['']
-              this.processInformationCnjProcedureTypeDistribution   = ['']
-              this.processInformationCnjSubjectDistribution   = ['']
-              this.processInformationCourtLevelDistribution   = ['']
-              this.processInformationCourtNameDistribution   = ['']
-              this.processInformationCourtTypeDistribution   = ['']
-              this.processInformationPartyTypeDistribution   = ['']
-              this.processInformationStateDistribution   = ['']
-              this.processInformationStatusDistribution   = ['']
-              this.processInformationTypeDistribution   = ['']
+              this.processInformationCnjProcedureTypeDistribution   = []
+              this.processInformationCnjSubjectDistribution   = []
+              this.processInformationCourtLevelDistribution   = []
+              this.processInformationCourtNameDistribution   = []
+              this.processInformationCourtTypeDistribution   = []
+              this.processInformationPartyTypeDistribution   = []
+              this.processInformationStateDistribution   = []
+              this.processInformationStatusDistribution   = []
+              this.processInformationTypeDistribution   = []
 
             } else if (type == 'pf'){
               this.createTabelWithDataByType('pf', response);
