@@ -202,8 +202,7 @@ export class OcrService {
 
 
     protected formaterDate(date:string) {
-      console.log(date, 'vericicando a data')
-      return new Intl.DateTimeFormat('pt-BR', {
+       return new Intl.DateTimeFormat('pt-BR', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
