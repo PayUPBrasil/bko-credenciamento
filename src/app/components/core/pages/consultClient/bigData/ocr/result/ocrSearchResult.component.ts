@@ -142,17 +142,14 @@ public modalFormConfiguration =
       .subscribe({
         next: (response) => {
           if(response.Result[0].LawsuitsDistributionData.TotalLawsuits > 0){
-            console.log('vou adicinoar a visibilidade do modal de dados de distribuicao de processos judiciais pois  o total de processos é maior que zero')
             this.totalProcess = true
           }
-          console.log(response, 'verificando as respostas que são retornadas pela API em uma consulta com outros datasets')
           if(response) {
 
             this.QueryDate = response.QueryDate
             let type  = this.checkTypeByReturnBigData(response.Result[0].BasicData.TaxIdNumber)
 
            if( response.Result[0].BasicData && response.Result[0].BasicData.TaxIdStatus === "CNPJ DOES NOT EXIST IN RECEITA FEDERAL DATABASE"){
-            console.log('não posso clicar no botão e nem exportar nada pois os dados nao existem')
             this.canClickTheButton = false
               this.basicDataInformation = ['']
               this.processInformationCnjProcedureTypeDistribution   = []
@@ -306,10 +303,7 @@ public modalFormConfiguration =
     // this.canClickTheButton= true
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+
 
 
 
@@ -326,8 +320,7 @@ public modalFormConfiguration =
   @ViewChild('contentToExport') contentToExport!: ElementRef;
 
 
-  exportToPdf() {
-
+  public exportToPdf() {
     this.canClickTheButton = false
     //colocar o loading para rodar ->
     const htmlContent = this.contentToExport.nativeElement.innerHTML;
@@ -383,6 +376,11 @@ public modalFormConfiguration =
         }
     });
 
+}
+
+ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
 }
 
 }
