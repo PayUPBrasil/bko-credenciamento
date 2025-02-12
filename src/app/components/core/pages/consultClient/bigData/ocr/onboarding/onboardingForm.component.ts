@@ -21,6 +21,7 @@ import { CheckBoxService } from "../../../../../layout/interface-helpers/checkbo
 })
 
 export class onboardingFormComponent implements OnInit{
+[x: string]: any;
 
   private activateRoute = inject(ActivatedRoute)
   protected type !: string;
@@ -84,11 +85,11 @@ public createForm(): void {
 }
 
 public checkIfFormHasErrors(): void{
-  if(this.ocrForm.invalid) {
-    console.log('Formulário com erros')
+  const controls = Object.keys(this.ocrForm.controls)
+  const inputL = this.ocrForm.get(controls[0])
+  if(this.ocrForm.invalid || inputL?.value.length < 11) {
     this.buttonContinueData.disabled = true;
   } else {
-    console.log('agora o formulário não tem mais erros')
    this.buttonContinueData.disabled = false;
   }
 
