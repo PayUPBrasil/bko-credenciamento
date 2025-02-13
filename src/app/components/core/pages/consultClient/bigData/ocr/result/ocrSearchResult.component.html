@@ -11,7 +11,7 @@
           <button (click)="newConsultingRedirect()"
             class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white"
             title="Nova Consulta">Nova Consulta</button>
-          <div class="grid grid-cols-3 items-center gap-2">
+          <div class="grid grid-cols-2 items-center gap-2">
             <button [disabled]="!canClickTheButton" (click)="exportToPdf()"
               class="flex h-[34px] items-center justify-center group gap-2 rounded-lg bg-primary p-2 text-white disabled:cursor-not-allowed disabled:bg-slate-300"
               title="Fazer Download">
@@ -46,7 +46,7 @@
             </button>
 
             <button (click)="linkQueryState()"
-              class="flex h-[34px] items-center group justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white"
+              class="flex h-[34px] items-center group justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white hidden"
               title="Vincular consulta">
               <span>
                 <svg class="size-4" viewBox="0 0 24 24" fill="none"
@@ -137,7 +137,7 @@
                   <p class="text-text">
                     {{ isAKnowPerson ?
                     'Ele tem altas chances de ser uma pessoa publicamente exposta.' :
-                    'Ele tem baixas chances de ser uma pessoa públicamente exposta.'}} Além disso,
+                    'Ele tem baixas chances de ser uma pessoa públicamente exposta.'}} Além disso, identificamos que o cliente tem presençã em x redes sociais, X e X.
                   </p>
                 </div>
               </div>
