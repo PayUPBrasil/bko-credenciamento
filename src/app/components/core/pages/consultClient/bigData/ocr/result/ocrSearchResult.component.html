@@ -113,7 +113,7 @@
                   <p class="text-text"> Ao buscar informações gerais sobre o cliente,
                     encontramos alguns itens que podem ser considerados.
                   </p>
-                  <div class="gap-1" *ngIf="newsList">
+                   <div class="gap-1" *ngIf="newsList.length > 0">
                     <p class="text-text mb-3 -mt-3">O cliente pesquisado aparece em
                       algumas reportagens, sendo algumas delas: <span
                         class="text-xs">(clique no título para acessar a
@@ -154,8 +154,8 @@
 
         <div class="mt-5 flex flex-col gap-5 rounded-2xl border bg-white p-4 px-6"
           [ngClass]="{ 'border-red-100': hasCriminalProcessToReport, 'border-slate-100': !hasCriminalProcessToReport }">
-          <div class="flex justify-between">
-            <div class="flex flex-col" *ngIf="totalProcess">
+          <div class="flex justify-between"  *ngIf="totalProcess">
+            <div class="flex flex-col">
               <span class="pt-5 font-bold text-slate-800">Dados de Distribuição de
                 Processos Judiciais</span>
               <span class="text-sm text-text">Detalhes sobre processos judiciais do
