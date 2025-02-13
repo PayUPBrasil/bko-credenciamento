@@ -172,7 +172,7 @@ public modalFormConfiguration =
             this.stopLoadingSkeleton()
             this.createKycResume(response);
             this.canClickTheButton= true
-             this.newsList =   response.Result[0].MediaProfileAndExposure.NewsItems
+             this.newsList =   response.Result[0].MediaProfileAndExposure.NewsItems.slice(0, 4);
          } else {
           throw new Error('Falha ao buscar informações do documento');
          }
