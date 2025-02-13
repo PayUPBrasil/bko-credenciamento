@@ -36,6 +36,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public linkQueryModal = false
   public notifyItemModal = false
   public notifyItem !: any;
+  public isAKnowPerson = false
 
 
   public QueryDate = ''
@@ -79,6 +80,7 @@ public modalFormConfiguration =
   public IndebtednessQuestionInformation : any [] = []
   public financialRiskInformation : any [] = []
   public kcyContent = ''
+  public quantityNewsItems = ''
   public resultSearchTerm : any[]= []
 
   private searchTerms = new Subject<string>();
@@ -172,7 +174,6 @@ public modalFormConfiguration =
             this.stopLoadingSkeleton()
             this.createKycResume(response);
             this.canClickTheButton= true
-             this.newsList =   response.Result[0].MediaProfileAndExposure.NewsItems.slice(0, 4);
          } else {
           throw new Error('Falha ao buscar informações do documento');
          }
@@ -185,20 +186,15 @@ public modalFormConfiguration =
   }
 
 
+
+
+
   public createKycResume(response:any) {
+    this.newsList =   response.Result[0].MediaProfileAndExposure.NewsItems.slice(0, 4);
+    this.newsList.length > 0 ? this.isAKnowPerson = true  : false
 
-    // console.log(response, 'verificando a response dentro do método responsável por criar o KycResume')
-
-    // const mediaProfileAndExposure = response.Result[0].MediaProfileAndExposure
-    // console.log(mediaProfileAndExposure, 'mediaProfileAndExposure')
-
-    // const domains = response.Result[0].Domains
-    // console.log(domains, 'domains')
-
-    // const text = `O cliente ${this.ocrService.formaterDocument(response.Result[0].BasicData.TaxIdNumber)} possui ${mediaProfileAndExposure.NewsItems.length} noticiais vinculadas a ele.
-
-    // `
-    //  this.kcyContent =  text;
+    this.quantityNewsItems = response.Result[0].MediaProfileAndExposure.EntityStatistics.NewsByRangeDate.TotalNews;
+    console.log('quntidade de materias atreladas ao cliente', response.Result[0].MediaProfileAndExposure.EntityStatistics.NewsByRangeDate.TotalNews)
   }
 
   public checkTypeByReturnBigData(document:string) : string{
