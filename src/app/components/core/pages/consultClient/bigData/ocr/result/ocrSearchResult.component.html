@@ -23,9 +23,9 @@
                 </svg>
               </span>
               <div
-              class="absolute text-xs bg-black z-10 rounded min-w-32 hidden group-hover:block  h-auto mt-20 p-1">
-              <span>Exportar Resultado</span>
-            </div>
+                class="absolute text-xs  bg-gradient-to-r from-purple-500 to-pink-500 z-10 rounded min-w-32 hidden group-hover:block  h-auto mt-20 p-1">
+                <span>Exportar Resultado</span>
+              </div>
             </button>
 
             <button (click)="forceRefresh()"
@@ -40,13 +40,13 @@
               </span>
 
               <div
-                class="absolute text-xs bg-black z-10 rounded min-w-32 hidden group-hover:block  h-auto mt-20 p-1">
+                class="absolute text-xs  bg-gradient-to-r from-purple-500 to-pink-500 z-10 rounded min-w-32 hidden group-hover:block  h-auto mt-20 p-1">
                 <span>Forçar Atualização</span>
               </div>
             </button>
 
             <button (click)="linkQueryState()"
-              class="flex h-[34px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white"
+              class="flex h-[34px] items-center group justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white"
               title="Vincular consulta">
               <span>
                 <svg class="size-4" viewBox="0 0 24 24" fill="none"
@@ -66,6 +66,11 @@
                     stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
                 </svg>
               </span>
+
+              <div
+                class="absolute text-xs  bg-gradient-to-r from-purple-500 to-pink-500 mr-16 z-10 rounded min-w-32 hidden group-hover:block  h-auto mt-20 p-1">
+                <span>Vincular Resultado</span>
+              </div>
             </button>
           </div>
         </div>
@@ -96,23 +101,16 @@
         </div>
 
         <div
-          class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6 hidden"
+          class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6  "
           *ngIf="1 == 1">
           <div class="flex flex-col justify-between">
             <div class="flex flex-col py-5">
               <span class="font-bold text-slate-800">KYC - Conheça seu Cliente </span>
             </div>
             <div class="h-full w-full border border-red-500">
-              <ng-container>
-                <div class="flex flex-col gap-2 py-2"
-                  *ngIf="processInformationCnjProcedureTypeDistribution[0]">
-                  <span class="text-sm font-bold text-black"
-                    *ngIf="processInformationCnjProcedureTypeDistribution[0]">Distribuição
-                    de Tipos</span>
-                  <app-layout-table [visibleItems]="50"
-                    [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
-                </div>
-              </ng-container>
+              <div>
+                <h1>O cliente</h1>
+              </div>
             </div>
           </div>
         </div>
@@ -348,6 +346,7 @@
           </div>
         </div>
       </div>
+
     </div>
 
     <div class="py-5 text-sm text-red-500">Consulta realizada em: {{ QueryDate | date:
