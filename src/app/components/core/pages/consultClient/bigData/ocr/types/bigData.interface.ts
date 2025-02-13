@@ -19,6 +19,12 @@ export interface Result {
   LawsuitsDistributionData: LawsuitsDistributionData | any;
   FinancialRisk: FinancialRisk
   FinancialInterests: FinancialInterests
+  MediaProfileAndExposure: MediaProfileAndExposure
+
+}
+
+export interface MediaProfileAndExposure {
+
 }
 
 export interface BasicData {

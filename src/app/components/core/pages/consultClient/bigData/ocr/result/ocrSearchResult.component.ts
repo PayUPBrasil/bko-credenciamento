@@ -44,6 +44,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public subjectValues : any[]= []
   protected document !: string;
   protected datasets : any[] = []
+  protected newsList: any[] = []
   public returnObje : any = {}
   public hasCriminalProcessToReport !: boolean
 
@@ -77,7 +78,7 @@ public modalFormConfiguration =
   public financialInterestsInformation : any [] = []
   public IndebtednessQuestionInformation : any [] = []
   public financialRiskInformation : any [] = []
-
+  public kcyContent = ''
   public resultSearchTerm : any[]= []
 
   private searchTerms = new Subject<string>();
@@ -153,7 +154,7 @@ public modalFormConfiguration =
            if( response.Result[0].BasicData && response.Result[0].BasicData.TaxIdStatus === "CNPJ DOES NOT EXIST IN RECEITA FEDERAL DATABASE"){
             this.canClickTheButton = false
               this.basicDataInformation = ['']
-              this.processInformationCnjProcedureTypeDistribution   = []
+              this.processInformationCnjProcedureTypeDistribution = []
               this.processInformationCnjSubjectDistribution   = []
               this.processInformationCourtLevelDistribution   = []
               this.processInformationCourtNameDistribution   = []
@@ -168,8 +169,10 @@ public modalFormConfiguration =
             } else if(type == 'pj'){
               this.createTabelWithDataByType('pj', response);
             }
-          this.stopLoadingSkeleton()
-          this.canClickTheButton= true
+            this.stopLoadingSkeleton()
+            this.createKycResume(response);
+            this.canClickTheButton= true
+             this.newsList =   response.Result[0].MediaProfileAndExposure.NewsItems
          } else {
           throw new Error('Falha ao buscar informações do documento');
          }
@@ -179,6 +182,23 @@ public modalFormConfiguration =
         }
       })
     }
+  }
+
+
+  public createKycResume(response:any) {
+
+    // console.log(response, 'verificando a response dentro do método responsável por criar o KycResume')
+
+    // const mediaProfileAndExposure = response.Result[0].MediaProfileAndExposure
+    // console.log(mediaProfileAndExposure, 'mediaProfileAndExposure')
+
+    // const domains = response.Result[0].Domains
+    // console.log(domains, 'domains')
+
+    // const text = `O cliente ${this.ocrService.formaterDocument(response.Result[0].BasicData.TaxIdNumber)} possui ${mediaProfileAndExposure.NewsItems.length} noticiais vinculadas a ele.
+
+    // `
+    //  this.kcyContent =  text;
   }
 
   public checkTypeByReturnBigData(document:string) : string{

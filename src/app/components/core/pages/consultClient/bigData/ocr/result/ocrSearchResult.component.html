@@ -105,12 +105,35 @@
           *ngIf="1 == 1">
           <div class="flex flex-col justify-between">
             <div class="flex flex-col py-5">
-              <span class="font-bold text-slate-800">KYC - Conheça seu Cliente </span>
+              <span class="font-bold text-slate-800">KYC - Conheça seu Cliente</span>
             </div>
-            <div class="h-full w-full border border-red-500">
+            <div class="h-full w-full">
               <div>
-                <h1>O cliente</h1>
+                <div class="flex gap-3 flex-col">
+                  <p class="text-text"> Ao buscar informações gerais sobre o cliente,
+                    encontramos alguns itens que podem ser considerados.
+                  </p>
+                  <div class="gap-1" *ngIf="newsList">
+                    <p class="text-text mb-3 -mt-3">O cliente pesquisado aparece em algumas reportagens, sendo elas: (clique no título para acessar a matéria)</p>
+                    <ng-container *ngFor="let news of newsList">
+                      <div class="text-sm" *ngIf="newsList">
+                        <a class="underline text-primary" [href]="news.Url"
+                          target="_blank" rel="norefer">{{news.Title}}</a>
+                      </div>
+                    </ng-container>
+
+                  </div>
+
+                  <!-- <p class="text-text">
+
+                    Além disso, localizamos X redes sociais associadas ao cliente. || Não
+                    localizamos redes sociais vinculadas ao cliente.
+
+                    Ele possui sites ativos: [Lista de sites] || Ele não tem sites ativos.
+                  </p> -->
+                </div>
               </div>
+
             </div>
           </div>
         </div>

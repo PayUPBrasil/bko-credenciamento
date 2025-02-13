@@ -73,6 +73,8 @@ export class OcrService {
     );
   }
 
+
+
   public filterFinancialInterestsInformationPF(financialInterestsInformation:any) :Object {
     return {
       NivelAtividadeFinanceira:this.translateFinancialActivityLevel(financialInterestsInformation.FinancialActivityLevel),
@@ -211,7 +213,7 @@ export class OcrService {
 
     }
 
-    protected formaterDocument(document: string): string {
+    public formaterDocument(document: string): string {
       const cleanDoc = document.replace(/\D/g, '');
 
       if (cleanDoc.length === 11) {
