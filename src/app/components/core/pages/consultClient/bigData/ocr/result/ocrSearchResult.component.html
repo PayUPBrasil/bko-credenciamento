@@ -114,10 +114,9 @@
                     encontramos alguns itens que podem ser considerados.
                   </p>
                   <div class="gap-1" *ngIf="newsList.length > 0">
-                    <p class="text-text mb-3 -mt-3">O cliente pesquisado aparece em
-                      algumas reportagens ({{quantityNewsItems}}), sendo algumas delas:</p>
+                    <p class="text-text mb-3 -mt-3">O cliente pesquisado aparece em {{quantityNewsItems}} reportagens, sendo algumas delas:</p>
 
-                    <div class="gap-2 ">
+                    <div class="gap-2">
                       <ng-container *ngFor="let news of newsList">
                         <div class="text-sm flex gap-1 text-primary items-center"
                           *ngIf="newsList">
@@ -134,18 +133,14 @@
                         </div>
                       </ng-container>
                     </div>
-
                   </div>
-
                   <p class="text-text">
                     {{ isAKnowPerson ?
-                    'O cliente em questão tem altas chances de ser uma pessoa publicamente exposta.'
-                    :
-                    'O cliente em questão tem baixas chances de ser uma pessoa públicamente exposta.'}}
+                    'Ele tem altas chances de ser uma pessoa publicamente exposta.' :
+                    'Ele tem baixas chances de ser uma pessoa públicamente exposta.'}} Além disso,
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
