@@ -200,10 +200,8 @@ public modalFormConfiguration =
     console.log(response.Result[0].AppsNetworksAndPlatforms, 'vendo o que aparece em AppsNetworksAndPlatforms')
 
     this.totalSocialNetworks = response.Result[0].AppsNetworksAndPlatforms.TotalSocialNetworks
-    // this.socialNetworksName = [];
     this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms)
     this.TotalSearchResults = response.Result[0].AppsNetworksAndPlatforms.TotalSearchResults
-
   }
 
   protected addSocialNameToArrList(socialNetworks: any) {
