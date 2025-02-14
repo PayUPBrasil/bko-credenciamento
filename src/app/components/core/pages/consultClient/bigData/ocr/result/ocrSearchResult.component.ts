@@ -37,7 +37,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public notifyItemModal = false
   public notifyItem !: any;
   public isAKnowPerson = false
-
+  public TotalSearchResults = 0
 
   public QueryDate = ''
 
@@ -202,6 +202,7 @@ public modalFormConfiguration =
     this.totalSocialNetworks = response.Result[0].AppsNetworksAndPlatforms.TotalSocialNetworks
     // this.socialNetworksName = [];
     this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms)
+    this.TotalSearchResults = response.Result[0].AppsNetworksAndPlatforms.TotalSearchResults
 
   }
 
@@ -228,10 +229,7 @@ public modalFormConfiguration =
       HasTwitterProfile,
     };
 
-    console.log(objValues, 'objValues');
-
     if (Object.keys(objValues)) {
-
       this.socialNetworksName.push(
         Object.keys(objValues)
           .filter((item) => objValues[item as keyof typeof objValues] === true)
@@ -240,7 +238,6 @@ public modalFormConfiguration =
     }
   }
 public getSocialNetworkName(name:string) {
-  console.log(name, 'name')
   switch(name){
     case 'HasFacebookProfile': return 'Facebook';
     case 'HasGithubProfile': return 'Github';
