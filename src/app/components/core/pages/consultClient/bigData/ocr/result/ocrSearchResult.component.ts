@@ -189,8 +189,6 @@ public modalFormConfiguration =
 
 
 
-
-
   public createKycResume(response:any) {
     this.newsList =   response.Result[0].MediaProfileAndExposure.NewsItems.slice(0, 4);
     this.newsList.length > 0 ? this.isAKnowPerson = true  : false

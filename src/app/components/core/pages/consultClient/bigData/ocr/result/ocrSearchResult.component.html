@@ -287,7 +287,7 @@
                          <div class="flex gap-3 flex-col">
                           <div class="gap-1 " *ngIf="newsList.length > 0">
                             <p class="text-text mb-3 -mt-3">
-                              O cliente pesquisado aparece em   {{quantityNewsItems}} reportagens, incluindo:
+                              O cliente pesquisado aparece em {{quantityNewsItems}} reportagens, incluindo:
                             </p>
 
                             <div class="gap-2">
@@ -302,7 +302,8 @@
                                   </svg>
                                   <a class="underline"
                                     [href]="news.Url"
-                                    target="_blank" rel="norefer">{{news.Title}}</a>
+                                    target="_blank" rel="norefer">{{news.Title}}
+                                  </a>
                                 </div>
                               </ng-container>
                             </div>
