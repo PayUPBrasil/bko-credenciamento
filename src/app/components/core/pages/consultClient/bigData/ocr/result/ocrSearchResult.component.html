@@ -100,7 +100,6 @@
           </div>
         </div>
 
-
         <div class="mt-5 flex flex-col gap-5 rounded-2xl border bg-white p-4 px-6"
           [ngClass]="{ 'border-red-100': hasCriminalProcessToReport, 'border-slate-100': !hasCriminalProcessToReport }">
           <div class="flex justify-between" *ngIf="totalProcess">
@@ -224,8 +223,6 @@
                       </ng-container>
                     </div>
 
-
-
                     <p class="mt-2 break-words" *ngIf="processData.TotalProcessos > 0">
                       {{ processData.TotalProcessos == 1 ? 'Esse processo está' :
                       'Esses processos estão' }} distribuído{{ processData.TotalProcessos
@@ -284,46 +281,51 @@
                     </p>
 
                     <div class="h-full w-full mt-10" *ngIf="hasKYCInformation">
-                         <div class="flex gap-3 flex-col">
-                          <div class="gap-1 " *ngIf="newsList.length > 0">
-                            <p class="text-text mb-3 -mt-3">
-                              O cliente pesquisado aparece em {{quantityNewsItems}} reportagens, incluindo:
-                            </p>
+                      <div class="flex gap-3 flex-col">
+                        <div class="gap-1 " *ngIf="newsList.length > 0">
+                          <p class="text-text mb-3 -mt-3">
+                            O cliente pesquisado aparece em {{quantityNewsItems}}
+                            reportagens, incluindo:
+                          </p>
 
-                            <div class="gap-2">
-                              <ng-container *ngFor="let news of newsList">
-                                <div class="text-sm flex gap-1 text-primary items-center"
-                                  *ngIf="newsList">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                    class="size-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                                  </svg>
-                                  <a class="underline"
-                                    [href]="news.Url"
-                                    target="_blank" rel="norefer">{{news.Title}}
-                                  </a>
-                                </div>
-                              </ng-container>
-                            </div>
+                          <div class="gap-2">
+                            <ng-container *ngFor="let news of newsList">
+                              <div class="text-sm flex gap-1 text-primary items-center"
+                                *ngIf="newsList">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                  viewBox="0 0 24 24" stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="size-4">
+                                  <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                </svg>
+                                <a class="underline"
+                                  [href]="news.Url"
+                                  target="_blank" rel="norefer">{{news.Title}}
+                                </a>
+                              </div>
+                            </ng-container>
                           </div>
-                          <p class="text-text text-sm">
-                            {{ isAKnowPerson ?
-                            'Este cliente possui altas chances de ser uma pessoa publicamente exposta.' :
-                            'Este cliente possui baixas chances de ser uma pessoa públicamente exposta.'}}
+                        </div>
+                        <p class="text-text text-sm">
+                          {{ isAKnowPerson ?
+                          'Este cliente possui altas chances de ser uma pessoa publicamente exposta.'
+                          :
+                          'Este cliente possui baixas chances de ser uma pessoa públicamente exposta.'}}
 
-                            <ng-container  *ngIf="socialNetworksName.length > 0">
-                              Além disso, identificamos que o cliente está presente em
+                          <ng-container *ngIf="socialNetworksName.length > 0">
+                            Além disso, identificamos que o cliente está presente em
                             {{totalSocialNetworks}} redes sociais:
                             <ng-container *ngFor="let social of socialNetworksName">
                               <span> ({{ social }}) </span>
-                            </ng-container> e foi mencionado em  {{ TotalSearchResults }} resultados de pesquisa. No entanto, não há postagens de mídia social identificadas pela pesquisa para mostrar.
-                         </ng-container>
-                          </p>
-                        </div>
+                            </ng-container> e foi mencionado em {{ TotalSearchResults }}
+                            resultados de pesquisa. No entanto, não há postagens de mídia
+                            social identificadas pela pesquisa para mostrar.
+                          </ng-container>
+                        </p>
                       </div>
-                 </div>
+                    </div>
+                  </div>
                 </div>
               </ng-container>
             </div>
