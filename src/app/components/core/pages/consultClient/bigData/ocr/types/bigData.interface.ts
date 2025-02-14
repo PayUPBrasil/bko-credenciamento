@@ -20,12 +20,14 @@ export interface Result {
   FinancialRisk: FinancialRisk
   FinancialInterests: FinancialInterests
   MediaProfileAndExposure: MediaProfileAndExposure
-
+  apps_networks_and_platforms:AppsNetworksAndPlatforms
 }
 
 export interface MediaProfileAndExposure {
 
 }
+
+export interface AppsNetworksAndPlatforms {}
 
 export interface BasicData {
   TaxIdNumber: string
