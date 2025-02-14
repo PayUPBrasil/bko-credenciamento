@@ -237,8 +237,6 @@
                       ? 'do processo são' : 'dos processos são' }}:
                     </p>
                     <!-- Ajustar a visibilidade da tabela aqui -->
-
-
                     <span
                       *ngFor="let subjectDistribuition of processData.DistribuicaoAssunto | keyvalue; let last = last">
                       <span class="group relative mb-1 mr-1 inline-block"
@@ -285,10 +283,8 @@
                       </ng-container>
                     </p>
 
-                    <div class="h-full w-full mt-10">
-                      <div>
-                        <div class="flex gap-3 flex-col">
-
+                    <div class="h-full w-full mt-10" *ngIf="hasKYCInformation">
+                         <div class="flex gap-3 flex-col">
                           <div class="gap-1 " *ngIf="newsList.length > 0">
                             <p class="text-text mb-3 -mt-3">
                               O cliente pesquisado aparece em   {{quantityNewsItems}} reportagens, incluindo:
@@ -313,22 +309,20 @@
                           </div>
                           <p class="text-text text-sm">
                             {{ isAKnowPerson ?
-                            'Ele possui altas chances de ser uma pessoa publicamente exposta.' :
-                            'Ele possui baixas chances de ser uma pessoa públicamente exposta.'}}
-                            Além disso, identificamos que o cliente está presente em
+                            'Este cliente possui altas chances de ser uma pessoa publicamente exposta.' :
+                            'Este cliente possui baixas chances de ser uma pessoa públicamente exposta.'}}
+
+                            <ng-container  *ngIf="socialNetworksName.length > 0">
+                              Além disso, identificamos que o cliente está presente em
                             {{totalSocialNetworks}} redes sociais:
                             <ng-container *ngFor="let social of socialNetworksName">
                               <span> ({{ social }}) </span>
                             </ng-container> e foi mencionado em  {{ TotalSearchResults }} resultados de pesquisa. No entanto, não há postagens de mídia social identificadas pela pesquisa para mostrar.
+                         </ng-container>
                           </p>
                         </div>
                       </div>
-                    </div>
-
-
-
-
-                  </div>
+                 </div>
                 </div>
               </ng-container>
             </div>

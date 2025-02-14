@@ -38,6 +38,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public notifyItem !: any;
   public isAKnowPerson = false
   public TotalSearchResults = 0
+  public hasKYCInformation = false
 
   public QueryDate = ''
 
@@ -193,6 +194,7 @@ public modalFormConfiguration =
   public createKycResume(response:any) {
     this.newsList =   response.Result[0].MediaProfileAndExposure.NewsItems.slice(0, 4);
     this.newsList.length > 0 ? this.isAKnowPerson = true  : false
+    this.hasKYCInformation = true
 
     this.quantityNewsItems = response.Result[0].MediaProfileAndExposure.EntityStatistics.NewsByRangeDate.TotalNews;
     console.log('quntidade de materias atreladas ao cliente', response.Result[0].MediaProfileAndExposure.EntityStatistics.NewsByRangeDate.TotalNews)
