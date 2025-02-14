@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './services/guards/authGuard.service';
 import { PermissionsGuard } from './services/guards/permissionsGuard.service';
+import { PagenotfoundComponent } from './components/core/layout/pageNotFound/pagenotfound.component';
 
 
 export const routes: Routes = [
@@ -138,6 +139,11 @@ export const routes: Routes = [
         loadComponent: () => import('./components/core/pages/profile/profile.component').then(m => m.ProfileComponent),
         canActivateChild: [PermissionsGuard]
       },
+
+
     ]
   },
+  { path: '**', pathMatch: 'full',
+    component: PagenotfoundComponent },
+
 ];
