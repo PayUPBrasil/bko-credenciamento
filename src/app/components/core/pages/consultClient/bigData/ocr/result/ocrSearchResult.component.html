@@ -237,7 +237,8 @@
                     <span
                       *ngFor="let subjectDistribuition of processData.DistribuicaoAssunto | keyvalue; let last = last">
                       <span class="group relative mb-1 mr-1 inline-block"
-                        (mouseenter)="onMouseEnter(subjectDistribuition.key)">
+                      (click)="onMouseEnter(subjectDistribuition.key)" (mouseenter)="onMouseEnter(subjectDistribuition.key)"
+                        >
                         <span
                           class="relative cursor-default text-accent underline  hover:text-accent">
                           {{ subjectDistribuition.key }}
