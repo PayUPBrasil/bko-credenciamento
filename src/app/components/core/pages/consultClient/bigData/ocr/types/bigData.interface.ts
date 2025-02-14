@@ -21,9 +21,13 @@ export interface Result {
   FinancialInterests: FinancialInterests
   MediaProfileAndExposure: MediaProfileAndExposure
   apps_networks_and_platforms:AppsNetworksAndPlatforms
+  KycData:KYC
 }
 
 export interface MediaProfileAndExposure {
+
+}
+export interface KYC {
 
 }
 
