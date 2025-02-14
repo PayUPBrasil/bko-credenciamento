@@ -89,7 +89,8 @@ public modalFormConfiguration =
 
   private router = inject(Router)
   public tableContent = []
-
+  public totalSocialNetworks: any;
+  public socialNetworksName : any[] = [];
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       if(!params['document']){
@@ -195,9 +196,65 @@ public modalFormConfiguration =
 
     this.quantityNewsItems = response.Result[0].MediaProfileAndExposure.EntityStatistics.NewsByRangeDate.TotalNews;
     console.log('quntidade de materias atreladas ao cliente', response.Result[0].MediaProfileAndExposure.EntityStatistics.NewsByRangeDate.TotalNews)
+
+    console.log(response.Result[0].AppsNetworksAndPlatforms, 'vendo o que aparece em AppsNetworksAndPlatforms')
+
+    this.totalSocialNetworks = response.Result[0].AppsNetworksAndPlatforms.TotalSocialNetworks
+    // this.socialNetworksName = [];
+    this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms)
+
   }
 
-  public checkTypeByReturnBigData(document:string) : string{
+  protected addSocialNameToArrList(socialNetworks: any) {
+    const {
+      HasFacebookProfile,
+      HasGithubProfile,
+      HasInstagramProfile,
+      HasLinkedInProfile,
+      HasMercadoLivrePresence,
+      HasOLXPresence,
+      HasPinterestProfile,
+      HasTwitterProfile,
+    } = socialNetworks;
+
+    const objValues = {
+      HasFacebookProfile,
+      HasGithubProfile,
+      HasInstagramProfile,
+      HasLinkedInProfile,
+      HasMercadoLivrePresence,
+      HasOLXPresence,
+      HasPinterestProfile,
+      HasTwitterProfile,
+    };
+
+    console.log(objValues, 'objValues');
+
+    if (Object.keys(objValues)) {
+
+      this.socialNetworksName.push(
+        Object.keys(objValues)
+          .filter((item) => objValues[item as keyof typeof objValues] === true)
+          .map((item) => this.getSocialNetworkName(item))
+      );
+    }
+  }
+public getSocialNetworkName(name:string) {
+  console.log(name, 'name')
+  switch(name){
+    case 'HasFacebookProfile': return 'Facebook';
+    case 'HasGithubProfile': return 'Github';
+    case 'HasInstagramProfile': return 'Instagram';
+    case 'HasLinkedInProfile': return 'LinkedIn';
+    case 'HasMercadoLivrePresence': return 'Mercado Livre';
+    case 'HasOLXPresence': return 'OLX';
+    case 'HasPinterestProfile': return 'Pinterest';
+    case 'HasTwitterProfile': return 'Twitter';
+    default: return '';
+  }
+}
+
+public checkTypeByReturnBigData(document:string) : string{
     let cleanDocument = document.replace(/\D/g, '');
     const TYPE_PF = 'pf';
     const TYPE_PJ = 'pj';
@@ -398,5 +455,8 @@ ngOnDestroy(): void {
   this.destroy$.next();
   this.destroy$.complete();
 }
+
+
+
 
 }

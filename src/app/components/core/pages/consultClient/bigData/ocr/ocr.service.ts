@@ -3,7 +3,6 @@ import { Observable } from "rxjs";
 import { environment } from "../../../../../../../environments/environment.development";
 import { HttpClient } from "@angular/common/http";
 import { BasicData, ConsultingParamsBigData } from "./types/bigData.interface";
-import { ObjectEncodingOptions } from "fs";
 
 @Injectable({
   providedIn: 'root'
