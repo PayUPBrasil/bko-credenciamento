@@ -58,7 +58,7 @@ export class OcrService {
         Idade: basicData.Age,
         PaisNascimento: basicData.BirthCountry,
         NomeMae: basicData.MotherName,
-        NomePai: basicData.FatherName,
+        // NomePai: basicData.FatherName,
         StatusIdFiscal: basicData.TaxIdStatus,
         OrigemIdFiscal: basicData.TaxIdOrigin,
         RegiaoFiscalIdFiscal: basicData.TaxIdFiscalRegion,
