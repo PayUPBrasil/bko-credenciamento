@@ -218,9 +218,9 @@
                       <p>Os processos são de esfera:</p>
                       <ng-container
                         *ngFor="let courtTypeDistribution of processData.DistribuicaoTipoTribunal | keyvalue">
-                        <p [ngClass]="{ 'text-red-500': hasCriminalProcessToReport }">{{
+                        <p class="after:content-[','] after:mr-1 last:after:content-['.'] last:after:mr-0" [ngClass]="{ 'text-red-500 ': hasCriminalProcessToReport }">{{
                           courtTypeDistribution.key }} ({{ courtTypeDistribution.value
-                          }}).</p>
+                          }})</p>
                       </ng-container>
                     </div>
 
