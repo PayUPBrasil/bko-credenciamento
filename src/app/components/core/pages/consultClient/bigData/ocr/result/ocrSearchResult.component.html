@@ -132,7 +132,7 @@
 
                 <!-- Criar um toogle para ocultar esses itens -->
 
-                <div class="border-red-500 border" *ngIf="seeMore">
+                <div *ngIf="seeMore">
 
                   <div class="flex flex-col gap-2 py-2"
                     *ngIf="processInformationCnjSubjectDistribution[0]">
@@ -205,13 +205,13 @@
                     <div
                       class="mt-8 flex w-fit cursor-pointer items-center justify-center gap-1 text-center text-xs text-primary"
                         >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                      <svg *ngIf="!seeMore" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                         class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                       </svg>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                      <svg *ngIf="seeMore" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                         class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
