@@ -199,7 +199,7 @@
                 </div>
                 <!-- Criar o botão do toggle -->
 
-                <div (click)="seeMoreItems()">
+                <div *ngIf="totalProcess" (click)="seeMoreItems()">
 
                   <div class="flex h-fit w-[98%] items-center justify-center text-center">
                     <div
