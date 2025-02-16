@@ -108,7 +108,7 @@ export class OcrService {
       DistribuicaoNivelTribunal: processInformation.CourtLevelDistribution,
       DistribuicaoNomeTribunal: processInformation.CourtNameDistribution,
       DistribuicaoTipoTribunal: processInformation.CourtTypeDistribution,
-      DistribuicaoTipoParte: processInformation.PartyTypeDistribution,
+      DistribuicaoTipoParte: this.translateRoles(processInformation.PartyTypeDistribution),
       DistribuicaoEstado: processInformation.StateDistribution,
       DistribuicaoStatus: processInformation.StatusDistribution,
       TotalProcessos:processInformation.TotalLawsuits,
@@ -145,7 +145,7 @@ export class OcrService {
         DistribuicaoNivelTribunal: processInformation.CourtLevelDistribution,
         DistribuicaoNomeTribunal: processInformation.CourtNameDistribution,
         DistribuicaoTipoTribunal: processInformation.CourtTypeDistribution,
-        DistribuicaoTipoParte: processInformation.PartyTypeDistribution,
+        DistribuicaoTipoParte: this.translateRoles(processInformation.PartyTypeDistribution),
         DistribuicaoEstado: processInformation.StateDistribution,
         DistribuicaoStatus: processInformation.StatusDistribution,
         TotalProcessos:processInformation.TotalLawsuits,
@@ -211,6 +211,26 @@ export class OcrService {
       }).format(new Date(Date.parse(date)));
 
     }
+
+    public translateRoles(roles: { [key: string]: number }): { [key: string]: number } {
+      const translations: { [key: string]: string } = {
+        'AUTHOR': 'Autor',
+        'CLAIMANT': 'Reclamante',
+        'CLAIMED': 'Reclamado',
+        'DEFENDANT': 'Réu',
+        'LAWYER': 'Advogado',
+        'OTHER': 'Outro'
+      };
+
+      const translatedRoles: { [key: string]: number } = {};
+      for (const key in roles) {
+        const translatedKey = translations[key] || key;
+        translatedRoles[translatedKey] = roles[key];
+      }
+
+      return translatedRoles;
+    }
+
 
     public formaterDocument(document: string): string {
       const cleanDoc = document.replace(/\D/g, '');
