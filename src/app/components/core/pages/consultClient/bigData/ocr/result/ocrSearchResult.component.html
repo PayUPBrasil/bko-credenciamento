@@ -208,7 +208,8 @@
                         nos quais desempenha os seguintes papéis:
                         <ng-container
                           *ngFor="let partyDistribuition of processData.DistribuicaoTipoParte | keyvalue">
-                          <b class="text-accent">{{ partyDistribuition.key }} de ({{
+
+                          <b class="text-accent after:content-[','] after:mr-2 last:after:content-['.'] last:after:mr-0">{{ partyDistribuition.key }} ({{
                             partyDistribuition.value }}) </b>
                         </ng-container>
                       </span>
