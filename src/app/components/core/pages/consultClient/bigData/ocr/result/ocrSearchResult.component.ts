@@ -39,6 +39,7 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public isAKnowPerson = false
   public TotalSearchResults = 0
   public hasKYCInformation = false
+  public seeMore = false
 
   public QueryDate = ''
 
@@ -92,6 +93,8 @@ public modalFormConfiguration =
   public tableContent = []
   public totalSocialNetworks: any;
   public socialNetworksName : any[] = [];
+
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       if(!params['document']){
@@ -118,6 +121,12 @@ public modalFormConfiguration =
     ).subscribe(term => {
       this.searchTermWithAI(term);
     });
+  }
+
+
+  //* Mostra ou oculta tabelas que estão agrupadas no front-end
+  public seeMoreItems() {
+      this.seeMore = !this.seeMore;
   }
 
   onMouseEnter(term: any): void {

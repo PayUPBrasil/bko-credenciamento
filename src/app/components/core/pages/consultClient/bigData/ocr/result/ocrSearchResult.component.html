@@ -102,6 +102,7 @@
 
         <div class="mt-5 flex flex-col gap-5 rounded-2xl border bg-white p-4 px-6"
           [ngClass]="{ 'border-red-100': hasCriminalProcessToReport, 'border-slate-100': !hasCriminalProcessToReport }">
+
           <div class="flex justify-between" *ngIf="totalProcess">
             <div class="flex flex-col">
               <span class="pt-5 font-bold text-slate-800">Dados de Distribuição de
@@ -129,67 +130,95 @@
                     [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
                 </div>
 
-                <div class="flex flex-col gap-2 py-2"
-                  *ngIf="processInformationCnjSubjectDistribution[0]">
-                  <span class="text-sm font-bold text-black"
-                    *ngIf="processInformationCnjSubjectDistribution[0]">Distribuição de
-                    Assuntos</span>
-                  <app-layout-table [visibleItems]="50"
-                    [tableContent]="processInformationCnjSubjectDistribution[0]" />
-                </div>
+                <!-- Criar um toogle para ocultar esses itens -->
 
-                <div class="flex flex-col gap-2 py-2"
-                  *ngIf="processInformationCourtNameDistribution[0]">
-                  <span class="text-sm font-bold text-black"
-                    *ngIf="processInformationCourtNameDistribution[0]">Distribuição de
-                    Nome da Corte</span>
-                  <app-layout-table [visibleItems]="50"
-                    [tableContent]="processInformationCourtNameDistribution[0]" />
-                </div>
+                <div class="border-red-500 border" *ngIf="seeMore">
 
-                <div class="flex flex-col gap-2 py-2"
-                  *ngIf="processInformationCourtTypeDistribution[0]">
-                  <span class="text-sm font-bold text-black"
-                    *ngIf="processInformationCourtTypeDistribution[0]">Distribuição dos
-                    tipos de tribunal dos processos</span>
-                  <app-layout-table [visibleItems]="50"
-                    [tableContent]="processInformationCourtTypeDistribution[0]" />
-                </div>
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationCnjSubjectDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationCnjSubjectDistribution[0]">Distribuição de
+                      Assuntos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationCnjSubjectDistribution[0]" />
+                  </div>
 
-                <div class="flex flex-col gap-2 py-2"
-                  *ngIf="processInformationPartyTypeDistribution[0]">
-                  <span class="text-sm font-bold text-black"
-                    *ngIf="processInformationPartyTypeDistribution[0]">Distribuição dos
-                    tipos de parte do indíviduo nos processos</span>
-                  <app-layout-table [visibleItems]="50"
-                    [tableContent]="processInformationPartyTypeDistribution[0]" />
-                </div>
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationCourtNameDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationCourtNameDistribution[0]">Distribuição de
+                      Nome da Corte</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationCourtNameDistribution[0]" />
+                  </div>
 
-                <div class="flex flex-col gap-2 py-2"
-                  *ngIf="processInformationStateDistribution[0]">
-                  <span class="text-sm font-bold text-black"
-                    *ngIf="processInformationStateDistribution[0]">Distribuição de
-                    Estados</span>
-                  <app-layout-table [visibleItems]="50"
-                    [tableContent]="processInformationStateDistribution[0]" />
-                </div>
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationCourtTypeDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationCourtTypeDistribution[0]">Distribuição dos
+                      tipos de tribunal dos processos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationCourtTypeDistribution[0]" />
+                  </div>
 
-                <div class="flex flex-col gap-2 py-2"
-                  *ngIf="processInformationStatusDistribution[0]">
-                  <span class="text-sm font-bold text-black"
-                    *ngIf="processInformationStatusDistribution[0]">Distribuição dos
-                    status dos processos</span>
-                  <app-layout-table [visibleItems]="50"
-                    [tableContent]="processInformationStatusDistribution[0]" />
-                </div>
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationPartyTypeDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationPartyTypeDistribution[0]">Distribuição dos
+                      tipos de parte do indíviduo nos processos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationPartyTypeDistribution[0]" />
+                  </div>
 
-                <div class="flex flex-col gap-2 py-2"
-                  *ngIf="processInformationTypeDistribution[0]">
-                  <span class="text-sm font-bold text-black"
-                    *ngIf="processInformationTypeDistribution[0]">Distribuição dos tipos
-                    de processos</span>
-                  <app-layout-table [visibleItems]="50"
-                    [tableContent]="processInformationTypeDistribution[0]" />
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationStateDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationStateDistribution[0]">Distribuição de
+                      Estados</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationStateDistribution[0]" />
+                  </div>
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationStatusDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationStatusDistribution[0]">Distribuição dos
+                      status dos processos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationStatusDistribution[0]" />
+                  </div>
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationTypeDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationTypeDistribution[0]">Distribuição dos tipos
+                      de processos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationTypeDistribution[0]" />
+                  </div>
+                </div>
+                <!-- Criar o botão do toggle -->
+
+                <div (click)="seeMoreItems()">
+
+                  <div class="flex h-fit w-[98%] items-center justify-center text-center">
+                    <div
+                      class="mt-8 flex w-fit cursor-pointer items-center justify-center gap-1 text-center text-xs text-primary"
+                        >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </ng-container>
 
@@ -209,7 +238,9 @@
                         <ng-container
                           *ngFor="let partyDistribuition of processData.DistribuicaoTipoParte | keyvalue">
 
-                          <b class="text-accent after:content-[','] after:mr-2 last:after:content-['.'] last:after:mr-0">{{ partyDistribuition.key }} ({{
+                          <b
+                            class="text-accent after:content-[','] after:mr-2 last:after:content-['.'] last:after:mr-0">{{
+                            partyDistribuition.key }} ({{
                             partyDistribuition.value }}) </b>
                         </ng-container>
                       </span>
@@ -218,7 +249,9 @@
                       <p>Os processos são de esfera:</p>
                       <ng-container
                         *ngFor="let courtTypeDistribution of processData.DistribuicaoTipoTribunal | keyvalue">
-                        <p class="after:content-[','] after:mr-1 last:after:content-['.'] last:after:mr-0" [ngClass]="{ 'text-red-500 ': hasCriminalProcessToReport }">{{
+                        <p
+                          class="after:content-[','] after:mr-1 last:after:content-['.'] last:after:mr-0"
+                          [ngClass]="{ 'text-red-500 ': hasCriminalProcessToReport }">{{
                           courtTypeDistribution.key }} ({{ courtTypeDistribution.value
                           }})</p>
                       </ng-container>
@@ -238,8 +271,8 @@
                     <span
                       *ngFor="let subjectDistribuition of processData.DistribuicaoAssunto | keyvalue; let last = last">
                       <span class="group relative mb-1 mr-1 inline-block"
-                      (click)="onMouseEnter(subjectDistribuition.key)" (mouseenter)="onMouseEnter(subjectDistribuition.key)"
-                        >
+                        (click)="onMouseEnter(subjectDistribuition.key)"
+                        (mouseenter)="onMouseEnter(subjectDistribuition.key)">
                         <span
                           class="relative cursor-default text-accent underline  hover:text-accent">
                           {{ subjectDistribuition.key }}
