@@ -126,8 +126,7 @@ public checkIfFormHasErrors(): void{
   public searchOcrInformation() : void {
     const formValues =  {... this.ocrForm.value}
     if(this.datasets && formValues.cnpj || formValues.cpf) {
-      let datasetinformation = this.datasets.join(',') || 'none'
-      console.log(this.datasets.join(','), 'dados dos datasets escolhidos')
+      let datasetinformation = this.datasets.join(',') || ''
       this.route.navigate(['/dashboard/ocr/result', formValues.cnpj || formValues.cpf, datasetinformation
       ])
     }

@@ -1,6 +1,6 @@
 <ng-container aria-label="SideBar">
   <aside [@slideInOut]="isSidebarOpen ? 'open' : 'closed'" id="logo-sidebar"
-    class="fixed left-0 top-0 z-30 h-full min-h-screen w-[242px] -translate-x-full rounded-t-xl bg-white pt-16 font-sans transition-transform sm:translate-x-0 dark:border-gray-700 dark:bg-gray-800"
+    class="fixed left-0 top-0 z-30 h-full min-h-screen w-[242px] -translate-x-full rounded-t-xl bg-white pt-16 font-sans transition-transform sm:translate-x-0 dark:border-gray-700 dark:bg-gray-800 overflow-y-scroll"
     aria-label="Sidebar">
     <div class="h-full overflow-y-auto bg-white px-0 pb-4 dark:bg-gray-800">
       <ul *ngIf="session$ | async as sessao; else menuNaoLogado"
