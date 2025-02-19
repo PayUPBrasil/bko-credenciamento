@@ -3,68 +3,15 @@
     <div
       class="flex items-center justify-between rounded-t-2xl bg-white p-3 px-5 shadow-sm">
       <div>
-        <h1 class="p-2 px-2 font-sans text-lg font-bold text-accent">Anotações Adicionadas</h1>
-        <span class="px-2 text-sm text-text">Veja os comentários que foram adicionados.</span>
+        <h1 class="p-2 px-2 font-sans text-lg font-bold text-accent">Anotações
+          Adicionadas</h1>
+        <span class="px-2 text-sm text-text">Veja os comentários que foram
+          adicionados.</span>
       </div>
     </div>
     <div class="flex flex-col gap-5 rounded-b-2xl bg-white p-5 pt-0 shadow-sm">
-      <div
-      class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
-      <div>
-        <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
-          class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-          type="button">
-          <span class="sr-only">Action button</span>
-          Action
-          <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-              stroke-width="2" d="m1 1 4 4 4-4" />
-          </svg>
-        </button>
 
-        <div id="dropdownAction"
-          class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
-          <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownActionButton">
-            <li>
-              <a href="#"
-                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
-            </li>
-            <li>
-              <a href="#"
-                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
-            </li>
-            <li>
-              <a href="#"
-                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate
-                account</a>
-            </li>
-          </ul>
-          <div class="py-1">
-            <a href="#"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
-              User</a>
-          </div>
-        </div>
-      </div>
-      <label for="table-search" class="sr-only">Search</label>
-      <div class="relative">
-        <div
-          class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-              stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-          </svg>
-        </div>
-        <input type="text" id="table-search-users"
-          class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Search for users">
-      </div>
-    </div>
-      <div class="relative overflow-x-auto h-[400px]">
-
+      <div class="relative overflow-x-auto h-[400px] mt-5">
 
         <table
           class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -92,7 +39,7 @@
 
               <th scope="row"
                 class="flex items-center px-6 py-2 text-gray-900 whitespace-nowrap dark:text-white">
-                <img class="size-10"
+                <img class="size-8 rounded-full"
                   [src]="note.user.profilePic"
                   [alt]="note.user.name">
                 <div class="ps-3">
@@ -112,9 +59,19 @@
                 </div>
               </td>
               <td class="px-6 py-2">
-                <a href="#"
-                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                  user</a>
+                <span class="cursor-pointer hover:text-primary transition-all delay-75">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M2.89899 12.7346C2.80091 12.5052 2.75 12.2542 2.75 12C2.75 11.7458 2.80091 11.4948 2.89899 11.2654C3.70725 9.34502 4.99868 7.72989 6.61515 6.61781C8.23161 5.50574 10.1029 4.945 12 5.00426C13.8971 4.945 15.7684 5.50574 17.3849 6.61781C19.0013 7.72989 20.2928 9.34502 21.101 11.2654C21.1991 11.4948 21.25 11.7458 21.25 12C21.25 12.2542 21.1991 12.5052 21.101 12.7346C20.2928 14.655 19.0013 16.2701 17.3849 17.3822C15.7684 18.4943 13.8971 19.055 12 18.9957C10.1029 19.055 8.23161 18.4943 6.61515 17.3822C4.99868 16.2701 3.70725 14.655 2.89899 12.7346Z"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </span>
               </td>
             </tr>
 
