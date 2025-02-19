@@ -175,7 +175,7 @@
 
 @if (!showNoteEditor) {
   <ng-container>
-    <app-pages-note (closeNoteEditor)="showNoteEditor = !showNoteEditor" />
+    <app-pages-note (closeNoteEditor)="showNoteEditor = !showNoteEditor" [crId]="clientDetails[0].basicData.crId" />
   </ng-container>
 }
 

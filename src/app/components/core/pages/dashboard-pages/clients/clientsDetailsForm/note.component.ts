@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import { fadeInOut } from "../../../../../animations/fadeInAnimation.component";
 import { FormsModule } from "@angular/forms";
 import { NgClass, NgIf } from "@angular/common";
@@ -14,9 +14,8 @@ import { NotesService } from "../services/notes.service";
 export class noteComponent {
 
   @Output() closeNoteEditor = new EventEmitter<string>();
+  @Input() crId!: string;
   private noteService = inject(NotesService)
-
-
 
   maxLength = 280;
   text = '';
@@ -43,8 +42,7 @@ export class noteComponent {
       this.errorMessage = 'Informe uma anotação para salvar.'
     }
     else {
-      const crId = ''
-      this.noteService.saveNote(text, crId)
+      this.noteService.saveNote(text, this.crId)
       .pipe()
       .subscribe({
         next: (response) => {
