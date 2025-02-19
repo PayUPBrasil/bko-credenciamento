@@ -1,11 +1,11 @@
-import { NgFor, NgIf } from "@angular/common";
+import { DatePipe, NgFor, NgIf } from "@angular/common";
 import { Component, inject, Input, OnInit } from "@angular/core";
 import { NotesService } from "../services/notes.service";
 
 @Component({
   selector: 'app-pages-client-detail-observation',
   templateUrl: './observation.component.html',
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, DatePipe],
   standalone: true,
 
 })
