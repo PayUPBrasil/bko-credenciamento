@@ -15,5 +15,8 @@ export class NotesService {
     return this.http.post(`${this.url}/notes`, { note,crId });
   }
 
+  public getNotes(crId:string) : Observable<any> {
+    return this.http.get(`${this.url}/notes/${crId}`);
+  }
 
 }
