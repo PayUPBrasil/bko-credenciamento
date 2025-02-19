@@ -11,8 +11,8 @@ export class NotesService {
 
   private http = inject(HttpClient)
   private url = environment.api.url;
-  public saveNote(note:string) : Observable<any> {
-    return this.http.post(`${this.url}/notes`, { note });
+  public saveNote(note:string, crId:string) : Observable<any> {
+    return this.http.post(`${this.url}/notes`, { note,crId });
   }
 
 

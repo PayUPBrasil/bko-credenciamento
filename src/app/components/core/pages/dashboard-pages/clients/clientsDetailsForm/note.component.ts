@@ -16,20 +16,23 @@ export class noteComponent {
   @Output() closeNoteEditor = new EventEmitter<string>();
   private noteService = inject(NotesService)
 
-  public closeModal(){
-    this.closeNoteEditor.emit('close note editor');
-  }
+
 
   maxLength = 280;
   text = '';
   public errorMessage !: string;
 
-  maxInputLength() {
+  public closeModal(){
+    this.closeNoteEditor.emit('close note editor');
+  }
+  public maxInputLength() {
     // Apenas uma verificação para garantir que o valor não ultrapasse o limite
     if (this.text.length > this.maxLength) {
       this.text = this.text.substring(0, this.maxLength);
     }
   }
+
+  //*Calcula a quantidade de caracteres restantes para anotação
 
   get remainingCharacters(): number {
     return this.maxLength - this.text.length;
@@ -40,7 +43,8 @@ export class noteComponent {
       this.errorMessage = 'Informe uma anotação para salvar.'
     }
     else {
-      this.noteService.saveNote(text)
+      const crId = ''
+      this.noteService.saveNote(text, crId)
       .pipe()
       .subscribe({
         next: (response) => {
