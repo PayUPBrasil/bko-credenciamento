@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { map, Observable, tap } from "rxjs";
 import { environment } from "../../../../../../../environments/environment.development";
 
 @Injectable({
@@ -16,7 +16,9 @@ export class NotesService {
   }
 
   public getNotes(crId:string) : Observable<any> {
-    return this.http.get(`${this.url}/notes/${crId}`);
+    return this.http.get<any>(`${this.url}/notes/${crId}`).pipe(
+      map(notes => notes.map((note:any) => ({note: note.note.note, user: note.note.user, createdAt: note.createdAt})))
+    );
   }
 
 }
