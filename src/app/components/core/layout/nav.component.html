@@ -1,30 +1,38 @@
-<nav class="fixed top-0 z-40 h-16 w-full border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+<nav
+  class="fixed top-0 z-40 h-16 w-full border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex w-11/12 items-center justify-start rtl:justify-end">
         <a href="dashboard/home" class="ms-2 flex md:me-24">
-          <img src="/assets/imgs/logo.svg" class="me-3 h-8" alt="FlowBite Logo" />
+          <img src="/assets/imgs/logo.svg" class="me-3 h-7" alt="Payup Logo" />
         </a>
       </div>
 
-      <div class="rounded-full bg-primary p-1 text-sm text-white">
+      <div class="rounded-full bg-primary p-1 text-xs text-white">
         {{ leftLoginTimer }}
       </div>
       <div class="mr-10 flex items-center justify-center" (click)="toggleProfile()">
         <div class="ms-3 flex w-full cursor-pointer items-center justify-center gap-7">
           <div class="flex w-full items-center justify-center gap-3">
-            <button type="button" class="flex rounded-full bg-white text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="true" data-dropdown-toggle="dropdown-user">
+            <button type="button"
+              class="flex rounded-full bg-white text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              aria-expanded="true" data-dropdown-toggle="dropdown-user">
               <div class="profile-picture plus-jakarta-sans">
                 @if (hasProfilePic) {
-                  <div [style.backgroundImage]="'url(' + profileUrl + ')'" class="border-1 h-[48px] w-[48px] rounded-full border border-dashed border-slate-700 bg-cover bg-center"></div>
+                <div [style.backgroundImage]="'url(' + profileUrl + ')'"
+                  class="border-1 h-[44px] w-[44px] rounded-full border border-dashed border-slate-700 bg-cover bg-center"></div>
                 } @else {
-                  <div class="border-1 flex h-[48px] w-[48px] items-center justify-center rounded-full border border-dashed border-slate-700 bg-blue-300 bg-cover bg-center text-xl font-bold">{{ profileUrl }}</div>
+                <div
+                  class="border-1 flex h-[44px] w-[44px] items-center justify-center rounded-full border border-dashed border-slate-700 bg-blue-300 bg-cover bg-center text-xl font-bold">{{
+                  profileUrl }}</div>
                 }
               </div>
             </button>
           </div>
 
-          <div *ngIf="showProfile === true" class="fixed top-9 z-50 mt-8 min-h-[140px] w-[140px] list-none divide-y divide-gray-100 rounded bg-white font-sans text-base shadow dark:divide-gray-600 dark:bg-gray-700" id="dropdown-user">
+          <div *ngIf="showProfile === true"
+            class="fixed top-9 z-50 mt-8 min-h-[140px] w-[140px] list-none divide-y divide-gray-100 rounded bg-white font-sans text-base shadow dark:divide-gray-600 dark:bg-gray-700"
+            id="dropdown-user">
             <ul>
               <!-- <li routerLink="/dashboard/perfil" class="flex items-center gap-2 border-b border-slate-50 p-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                 <span>
@@ -39,15 +47,25 @@
                 <a class="block text-sm text-gray-700" role="menuitem">Perfil</a>
               </li> -->
 
-              <li class="flex items-center border-b border-slate-50 px-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+              <li
+                class="flex items-center border-b border-slate-50 px-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                 <span class="text-red-500">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.4767 21.2448H8.34067C7.04877 21.3045 5.78536 20.8527 4.82407 19.9876C3.86278 19.1224 3.28099 17.9134 3.2047 16.6224V7.37762C3.28099 6.08659 3.86278 4.87757 4.82407 4.01241C5.78536 3.14724 7.04877 2.69559 8.34067 2.75524H13.4767" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M20.7953 12H7.44174" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
-                    <path d="M16.0833 17.136L20.4874 12.7319C20.6802 12.5371 20.7884 12.2742 20.7884 12C20.7884 11.7259 20.6802 11.4629 20.4874 11.2681L16.0833 6.86404" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M13.4767 21.2448H8.34067C7.04877 21.3045 5.78536 20.8527 4.82407 19.9876C3.86278 19.1224 3.28099 17.9134 3.2047 16.6224V7.37762C3.28099 6.08659 3.86278 4.87757 4.82407 4.01241C5.78536 3.14724 7.04877 2.69559 8.34067 2.75524H13.4767"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M20.7953 12H7.44174" stroke="currentColor" stroke-width="1.5"
+                      stroke-miterlimit="10" stroke-linecap="round" />
+                    <path
+                      d="M16.0833 17.136L20.4874 12.7319C20.6802 12.5371 20.7884 12.2742 20.7884 12C20.7884 11.7259 20.6802 11.4629 20.4874 11.2681L16.0833 6.86404"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
                   </svg>
                 </span>
-                <button (click)="logoff()" class="flex w-full items-center px-2 text-sm hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                <button (click)="logoff()"
+                  class="flex w-full items-center px-2 text-sm hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                   <span class="block py-2 text-sm text-red-500">Sair</span>
                 </button>
               </li>
