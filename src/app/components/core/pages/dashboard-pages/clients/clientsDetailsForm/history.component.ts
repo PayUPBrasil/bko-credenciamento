@@ -44,8 +44,7 @@ export class HistoryDetailsComponent implements OnInit {
     ).subscribe({
       next: (names) => {
         this.userNames = names.filter(name => name !== null) as string[];
-        console.log('Nomes dos usuários:', this.userNames);
-      },
+       },
       error: (error) => {
         console.error('Erro ao carregar nomes dos usuários:', error);
       }

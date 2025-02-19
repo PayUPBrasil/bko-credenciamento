@@ -562,14 +562,12 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
 
   // @ Direciona o usuário para o cadastro recém feito.
   public goToClientDetails(crId: string) {
-    console.log(crId, 'crId');
     this.router.navigate(['/dashboard/clients/details', crId]);
   }
 
 
   public remaindMeLater() {
     let crId = this.newAccreditationService.getCrId()
-    console.log(crId, 'verificando o crID')
     this.router.navigate(['/dashboard/clients/details', crId]);
   }
   // @ Funções responsáveis por realizar validações no formulário

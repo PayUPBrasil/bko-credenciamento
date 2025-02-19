@@ -174,7 +174,6 @@ export class NewAccreditationModalComponent implements OnInit, OnDestroy {
 
   //* @ Direciona o usuário para o cadastro recém feito.
   public goToClientDetails(crId: string) {
-    console.log(crId, 'crId')
     this.router.navigate(['/dashboard/clients/details', crId])
   }
 

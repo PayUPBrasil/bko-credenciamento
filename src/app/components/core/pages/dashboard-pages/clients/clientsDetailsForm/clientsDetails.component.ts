@@ -210,8 +210,7 @@ export class ClientsDetailsComponent implements OnInit {
   }
 
   public getUserNameByUserId(userId:string){
-    console.log('em getUserNameByUserId no component de clientes', userId)
-    this.userService.getUserNameById(userId).subscribe({
+     this.userService.getUserNameById(userId).subscribe({
       next: (response) => {
         if(response) return this.userName = response.name;
         return this.userName = 'N/A'
