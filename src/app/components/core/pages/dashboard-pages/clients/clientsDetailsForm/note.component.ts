@@ -47,6 +47,9 @@ export class noteComponent {
       .subscribe({
         next: (response) => {
             console.log(response, 'resposta depois de salvar a nota')
+            if(response){
+              window.location.reload();
+            }
         },
         error: (error) => {
           console.error(error, 'Mostrando o erro ao salvar a anotação')
