@@ -39,9 +39,8 @@
 
               <th scope="row"
                 class="flex items-center px-6 py-2 text-gray-900 whitespace-nowrap dark:text-white">
-                <img class="size-8 rounded-full"
-                  [src]="note.user.profilePic"
-                  [alt]="note.user.name">
+                  <div *ngIf="note.user.profilePic" class="bg-purple-400 rounded-full size-8 bg-center bg-cover" [ngStyle]="{'background-image': 'url(' + note.user.profilePic + ')'}"></div>
+                  <div *ngIf="!note.user.profilePic" class="bg-purple-400 rounded-full size-8 "></div>
                 <div class="ps-3">
                   <div class="text-sm font-medium
                   ">{{note.user.name.split(" ")[0]}}</div>
@@ -87,9 +86,8 @@
           <div class="bg-white w-[500px] h-[250px] rounded-lg z-10 p-5 fixed">
 
             <div class="flex w-full justify-between gap-2 items-start">
-
-              <div class="bg-purple-400 rounded-full w-[100px] h-[40px] bg-center bg-cover" [ngStyle]="{'background-image': 'url(' + noteById.user.profilePic + ')'}">
-              </div>
+              <div *ngIf="noteById.user.profilePic" class="bg-purple-400 rounded-full w-[100px] h-[40px] bg-center bg-cover" [ngStyle]="{'background-image': 'url(' + noteById.user.profilePic + ')'}"></div>
+              <div *ngIf="!noteById.user.profilePic" class="bg-purple-400 rounded-full w-[100px] h-[40px] bg-center bg-cover"></div>
               <div class="flex-col flex">
                 <span class="font-medium">{{noteById.user.name}}</span>
                 <span class="text-xs text-text">{{noteById.user.email}}</span>
