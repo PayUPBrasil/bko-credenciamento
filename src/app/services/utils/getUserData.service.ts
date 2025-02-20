@@ -23,7 +23,6 @@ export class GetUserLoggedService {
    }
 
   public getUserData() {
-    //console.log(this.userLoggedData, 'userLoggedData')
     return this.userInfo = {
       name: this.userName,
       email: "example@example.com",
@@ -41,12 +40,14 @@ export class GetUserLoggedService {
 {
        this.sessionService.getSessao().subscribe({
         next: (session:any) => {
-          // console.log(session.id, 'id session')
+          console.log(session.id, 'id session')
           if (session?.id) {
 
             this.token =  session.id
             this.userUUid = this.decodeToken(this.token)
+            console.log(this.userUUid, 'token decodificado')
 
+            return this.getUserById(this.userUUid.sub)
           }
 
         },
@@ -58,9 +59,7 @@ export class GetUserLoggedService {
   this.userService.getUserById(userId).subscribe(
     {
       next: (user) => {
-        console.log(user, 'usuario')
-        this.userLoggedData = user
-        console.log()
+        return this.userLoggedData = user
       },
       error: (error) => {
         console.error('Erro ao carregar nome do usuário:', error);
