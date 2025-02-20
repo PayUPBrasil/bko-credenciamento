@@ -37,7 +37,7 @@ export class ObservationDetailsComponent implements OnInit {
   }
 
   public deleteNote(noteId:string){
-    this.notesService.deleteNote(noteId)
+    this.notesService.deleteNote(noteId, this.crId)
     .pipe()
     .subscribe({
       next: (response: any) => {

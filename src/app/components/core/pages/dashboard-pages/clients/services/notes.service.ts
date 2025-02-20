@@ -22,8 +22,8 @@ export class NotesService {
     );
   }
 
-  public deleteNote(noteId:string) : Observable<any> {
-    return this.http.delete(`${this.url}/notes/${noteId}`);
+  public deleteNote(noteId:string, crId:string) : Observable<any> {
+    return this.http.delete(`${this.url}/notes/${noteId}/${crId}`);
   }
 
 }
