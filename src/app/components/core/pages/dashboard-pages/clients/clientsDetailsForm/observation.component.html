@@ -79,12 +79,22 @@
       </div>
 
       <!-- Modal com os detalhes da nota -->
-      <ng-container *ngIf="showNote">
+      <ng-container *ngIf="!showNote">
         <div
           class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50  w-full md:inset-0 min-h-screen max-h-full flex justify-center items-center">
           <div
             class="opacity-70 bg-slate-500 w-full h-full fixed overflow-y-auto overflow-x-hidden"></div>
           <div class="bg-white w-[500px] h-[250px] rounded-lg z-10 p-5">
+            <div (click)="showNote = false"
+              class="flex left-0 w-full justify-end cursor-pointer text-text hover:text-primary transition-all delay-75"><svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </div>
+
             <div>Foto do perfil - Nome</div>
             <div>Nota</div>
             <div>Botoes para interagir</div>
