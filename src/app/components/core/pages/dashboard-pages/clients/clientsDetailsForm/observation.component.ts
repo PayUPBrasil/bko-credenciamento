@@ -27,6 +27,13 @@ export class ObservationDetailsComponent implements OnInit {
 
   public showCompleteNote(noteId:string){
     console.log('showing complete note', noteId)
+    this.showNote = true;
+    this.listOfNotes.forEach((note:any) => {
+      if(note.noteId === noteId){
+        console.log(note, 'note depois de validar se o id é igual')
+        return note;
+      }
+    });
   }
 
 }

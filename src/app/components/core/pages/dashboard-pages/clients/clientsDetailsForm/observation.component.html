@@ -79,13 +79,15 @@
       </div>
 
       <!-- Modal com os detalhes da nota -->
-      <ng-container *ngIf="!showNote">
+      <ng-container *ngIf="showNote">
         <div
           class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50  w-full md:inset-0 min-h-screen max-h-full flex justify-center items-center">
           <div
             class="opacity-70 bg-slate-500 w-full h-full fixed overflow-y-auto overflow-x-hidden"></div>
-          <div class="bg-white w-[500px] h-[500px] rounded-lg z-10">
-
+          <div class="bg-white w-[500px] h-[250px] rounded-lg z-10 p-5">
+            <div>Foto do perfil - Nome</div>
+            <div>Nota</div>
+            <div>Botoes para interagir</div>
           </div>
         </div>
 

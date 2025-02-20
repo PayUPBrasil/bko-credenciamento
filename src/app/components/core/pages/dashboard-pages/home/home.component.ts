@@ -154,10 +154,8 @@ export class HomeComponent implements OnInit {
           label: {
             show: true,
             formatter: '{b}: {c} ({d}%)',
-            textStyle: {
-              fontFamily: 'Space Grotesk, serif',
-              fontSize: 12
-            }
+            fontFamily: 'Space Grotesk, serif', // Mova estas propriedades para cá
+            fontSize: 12
           },
           emphasis: {
             label: {
