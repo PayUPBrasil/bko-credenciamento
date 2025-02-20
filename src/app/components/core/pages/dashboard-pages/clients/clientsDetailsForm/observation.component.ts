@@ -34,4 +34,8 @@ export class ObservationDetailsComponent implements OnInit {
     });
   }
 
+  public deleteNote(noteId:string){
+    console.log(noteId, 'noteId que desejo deletar')
+  }
+
 }
