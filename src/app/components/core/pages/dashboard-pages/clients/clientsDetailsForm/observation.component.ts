@@ -37,7 +37,18 @@ export class ObservationDetailsComponent implements OnInit {
   }
 
   public deleteNote(noteId:string){
-    console.log(noteId, 'noteId que desejo deletar')
+    this.notesService.deleteNote(noteId)
+    .pipe()
+    .subscribe({
+      next: (response: any) => {
+        console.log(response, 'response')
+        console.log('Nota deletada com sucesso')
+        this.getAllNotesFromClient()
+      },
+      error: (error: any) => {
+        console.error('Erro ao deletar a nota:', error);
+      }
+    })
   }
 
   private getUserAuthenticatedEmail(): any {
