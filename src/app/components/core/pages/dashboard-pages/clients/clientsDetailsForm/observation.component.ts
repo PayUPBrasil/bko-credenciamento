@@ -22,7 +22,7 @@ export class ObservationDetailsComponent implements OnInit {
   ngOnInit(): void {
       this.getAllNotesFromClient()
       this.getUserLoggedService.tokenDecodedData()
-      this.getUserAuthenticatedEmail()
+
   }
 
   public showCompleteNote(noteId:string){
@@ -56,8 +56,10 @@ export class ObservationDetailsComponent implements OnInit {
     }
 
     private getAllNotesFromClient(){
+      this.getUserAuthenticatedEmail()
       this.notesService.getNotes(this.crId)
-      .pipe()
+      .pipe(
+      )
       .subscribe((notes: any) => {
         this.listOfNotes = notes.map((note: any) => {
           return {
