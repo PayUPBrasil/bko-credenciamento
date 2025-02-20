@@ -16,6 +16,7 @@ export class ObservationDetailsComponent implements OnInit {
   public listOfNotes : any = []
   public noteById: any;
   protected showNote = false;
+  protected thisNoteIsFromThisUserLogged = false;
   private notesService = inject(NotesService)
   ngOnInit(): void {
       this.notesService.getNotes(this.crId)
