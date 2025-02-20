@@ -69,4 +69,5 @@ export class ObservationDetailsComponent implements OnInit {
 
     }
 
+    editNote(noteId:string){}
 }
