@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import { fadeInOut } from "../../../../../animations/fadeInAnimation.component";
 import { FormsModule } from "@angular/forms";
-import { NgClass, NgIf } from "@angular/common";
+import { NgClass, NgFor, NgIf } from "@angular/common";
 import { NotesService } from "../services/notes.service";
  @Component({
   selector: "app-pages-note",

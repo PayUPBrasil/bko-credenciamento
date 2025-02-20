@@ -1,11 +1,11 @@
-import { DatePipe, NgFor, NgIf } from "@angular/common";
+import { DatePipe, NgFor, NgIf, NgStyle } from "@angular/common";
 import { Component, inject, Input, OnInit } from "@angular/core";
 import { NotesService } from "../services/notes.service";
 
 @Component({
   selector: 'app-pages-client-detail-observation',
   templateUrl: './observation.component.html',
-  imports: [NgIf, NgFor, DatePipe],
+  imports: [NgIf, NgFor, DatePipe, NgStyle],
   standalone: true,
 
 })
@@ -14,6 +14,7 @@ export class ObservationDetailsComponent implements OnInit {
   @Input() crId:any = []
 
   public listOfNotes : any = []
+  public noteById: any;
   protected showNote = false;
   private notesService = inject(NotesService)
   ngOnInit(): void {
@@ -30,8 +31,9 @@ export class ObservationDetailsComponent implements OnInit {
     this.showNote = true;
     this.listOfNotes.forEach((note:any) => {
       if(note.noteId === noteId){
+        console.log(typeof(note),'note')
+        this.noteById = note;
         console.log(note, 'note depois de validar se o id é igual')
-        return note;
       }
     });
   }
