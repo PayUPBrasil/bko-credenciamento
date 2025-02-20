@@ -1,24 +1,40 @@
 <div class="grid grid-cols-1">
   <div class="flex items-center justify-between rounded-t-2xl bg-white p-3 px-5">
     <div>
-      <h1 class="p-2 px-3 font-sans text-lg font-bold text-accent">Histórico de Alterações</h1>
+      <h1 class="p-2 px-3 font-sans text-lg font-bold text-accent">Histórico de
+        Alterações</h1>
     </div>
   </div>
   <div class="flex flex-col gap-5 rounded-b-2xl bg-white p-5 pt-0">
     <div class="grid grid-cols-1 gap-8">
-      <div class="flex flex-col gap-5 overflow-x-scroll rounded-b-2xl bg-white p-5 pt-0 sm:overflow-hidden">
+      <div
+        class="flex flex-col gap-5 overflow-x-scroll rounded-b-2xl bg-white p-5 pt-0 sm:overflow-hidden">
         <ng-container *ngIf="clientDetails?.length; else noHistory">
           <div class="overflow-y-auto max-h-[35vh]">
-            <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-y-scroll  max-h-[20vh]">
+            <table
+              class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-y-scroll  max-h-[20vh]">
               <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-                <tr *ngFor="let tableContent of clientDetails; trackBy: trackByFn; index as i">
-                  <th class="px-6 py-4 font-medium text-xs text-gray-900">{{ userNames[i] }}</th>
+                <tr
+                  *ngFor="let tableContent of clientDetails; trackBy: trackByFn; index as i">
+                  <th class="px-6 py-4 font-medium text-xs text-gray-900">{{ userNames[i]
+                    }}</th>
                   <td class="px-6 py-4 text-xs">
                     <ng-container *ngIf="tableContent.changes?.length">
-                     <p class="text-ellipsis max-w-[680px] overflow-hidden text-nowrap"> Alterou - <b class="text-red-500">{{ tableContent.changes[0]?.field }}</b> de <b class="text-red-500">{{ tableContent.changes[0]?.oldValue }}</b> para <b class="text-green-500">{{ tableContent.changes[0]?.newValue }}</b></p>
+                      <p *ngIf="tableContent.changes[0]?.field !== 'notes'"
+                        class="text-ellipsis max-w-[680px] overflow-hidden text-nowrap">
+                        Alterou - <b class="text-red-500">{{
+                          tableContent.changes[0]?.field }}</b> de <b
+                          class="text-red-500">{{ tableContent.changes[0]?.oldValue }}</b>
+                        para <b class="text-green-500">{{
+                          tableContent.changes[0]?.newValue }}</b></p>
+                      <p *ngIf="tableContent.changes[0]?.field == 'notes'"
+                        class="text-ellipsis max-w-[680px] overflow-hidden text-nowrap">
+                        <b class="text-green-500">{{ tableContent.changes[0]?.newValue
+                          }}</b></p>
                     </ng-container>
                   </td>
-                  <td class="px-6 py-4 text-xs">{{ tableContent.timestamp | date: 'dd/MM/yyyy HH:mm' : 'America/Sao_Paulo' }}</td>
+                  <td class="px-6 py-4 text-xs">{{ tableContent.timestamp | date:
+                    'dd/MM/yyyy HH:mm' : 'America/Sao_Paulo' }}</td>
                   <td></td>
                   <td></td>
                 </tr>
