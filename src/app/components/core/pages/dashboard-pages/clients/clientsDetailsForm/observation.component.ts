@@ -14,6 +14,7 @@ export class ObservationDetailsComponent implements OnInit {
   @Input() crId:any = []
 
   public listOfNotes : any = []
+  protected showNote = false;
   private notesService = inject(NotesService)
   ngOnInit(): void {
     console.log(this.crId, 'crId')
@@ -23,4 +24,9 @@ export class ObservationDetailsComponent implements OnInit {
          this.listOfNotes = notes;
       });
   }
+
+  public showCompleteNote(noteId:string){
+    console.log('showing complete note', noteId)
+  }
+
 }

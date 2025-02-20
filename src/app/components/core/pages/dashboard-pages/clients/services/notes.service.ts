@@ -17,7 +17,8 @@ export class NotesService {
 
   public getNotes(crId:string) : Observable<any> {
     return this.http.get<any>(`${this.url}/notes/${crId}`).pipe(
-      map(notes => notes.map((note:any) => ({note: note.note, user: note.user, createdAt: note.createdAt})))
+      tap(notes => console.log('Notas carregadas', notes)),  // Debugging purposes
+      map(notes => notes.map((note:any) => ({note: note.note, user: note.user, createdAt: note.createdAt, noteId:note.noteId})))
     );
   }
 
