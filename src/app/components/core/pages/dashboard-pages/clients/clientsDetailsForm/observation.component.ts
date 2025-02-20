@@ -18,7 +18,6 @@ export class ObservationDetailsComponent implements OnInit {
   protected showNote = false;
   private notesService = inject(NotesService)
   ngOnInit(): void {
-    console.log(this.crId, 'crId')
       this.notesService.getNotes(this.crId)
       .pipe()
       .subscribe((notes: any) => {
@@ -27,13 +26,10 @@ export class ObservationDetailsComponent implements OnInit {
   }
 
   public showCompleteNote(noteId:string){
-    console.log('showing complete note', noteId)
     this.showNote = true;
     this.listOfNotes.forEach((note:any) => {
       if(note.noteId === noteId){
-        console.log(typeof(note),'note')
         this.noteById = note;
-        console.log(note, 'note depois de validar se o id é igual')
       }
     });
   }
