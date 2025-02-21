@@ -16,6 +16,7 @@ export class noteComponent implements OnChanges{
 
   @Output() closeNoteEditor = new EventEmitter<string>();
   @Input() crId!: string;
+  @Input() noteId!: string;
   @Input() value!:any;
   private noteService = inject(NotesService)
 
@@ -47,11 +48,12 @@ export class noteComponent implements OnChanges{
   }
 
   public saveNote(text:string) {
+
     if(text.trim() === ''){
       this.errorMessage = 'Informe uma anotação para salvar.'
     }
     else {
-      this.noteService.saveNote(text, this.crId)
+      this.noteService.saveNote(text, this.crId, this.noteId ? this.noteId : '')
       .pipe()
       .subscribe({
         next: (response) => {
