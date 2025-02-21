@@ -15,6 +15,7 @@ export class noteComponent {
 
   @Output() closeNoteEditor = new EventEmitter<string>();
   @Input() crId!: string;
+  @Input() value!:string;
   private noteService = inject(NotesService)
 
   maxLength = 280;

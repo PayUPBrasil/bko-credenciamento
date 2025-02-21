@@ -110,14 +110,14 @@
       </div>
 
       <!-- Modal com os detalhes da nota -->
-      <ng-container *ngIf="showNote">
+      <ng-container *ngIf="showNoteModal || editingNoteModal">
         <div
           class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50  w-full md:inset-0 min-h-screen max-h-full flex justify-center items-center">
           <div
             class="opacity-70 bg-slate-500 w-full h-full fixed overflow-y-auto overflow-x-hidden"></div>
           <div class="bg-white w-[500px] h-[250px] rounded-lg z-10 p-5 fixed">
 
-            <div class="flex w-full justify-between gap-2 items-start">
+            <div *ngIf="showNote" class="flex w-full justify-between gap-2 items-start">
               <div *ngIf="noteById.user.profilePic"
                 class="bg-purple-400 rounded-full w-[100px] h-[40px] bg-center bg-cover"
                 [ngStyle]="{'background-image': 'url(' + noteById.user.profilePic + ')'}"></div>
@@ -128,7 +128,7 @@
                 <span class="text-xs text-text">{{noteById.user.email}}</span>
               </div>
 
-              <div (click)="showNote = false"
+              <div (click)="changeNoteModalVisibility()"
                 class="flex left-0 w-full justify-end cursor-pointer text-text hover:text-primary transition-all delay-75">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -139,9 +139,20 @@
                 </svg>
               </div>
             </div>
-            <div class="py-5 text-sm text-text min-h-[150px]">{{noteById.note}}</div>
-            <div class="text-slate-400 text-sm flex justify-end">{{noteById.createdAt |
-              date:'dd/MM/yyyy HH:mm' }}</div>
+
+            <ng-container *ngIf="showNote">
+              <div class="py-5 text-sm text-text min-h-[150px]">{{noteById.note}}</div>
+              <div class="text-slate-400 text-sm flex justify-end">{{noteById.createdAt |
+                date:'dd/MM/yyyy HH:mm' }}</div>
+            </ng-container>
+
+            <ng-container *ngIf="editingNote && !showNote">
+              <div class="py-5 text-sm text-text min-h-[150px]">
+                <app-pages-note [value]="noteById.note"
+                  (closeNoteEditor)="editingNote = !editingNote" />
+              </div>
+            </ng-container>
+
           </div>
         </div>
       </ng-container>

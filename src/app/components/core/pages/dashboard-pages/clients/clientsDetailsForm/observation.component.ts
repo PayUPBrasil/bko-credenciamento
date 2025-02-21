@@ -2,11 +2,12 @@ import { DatePipe, NgFor, NgIf, NgStyle } from "@angular/common";
 import { Component, inject, Input, OnInit } from "@angular/core";
 import { NotesService } from "../services/notes.service";
 import { GetUserLoggedService } from "../../../../../../services/utils/getUserData.service";
+import { noteComponent } from "./note.component";
 
 @Component({
   selector: 'app-pages-client-detail-observation',
   templateUrl: './observation.component.html',
-  imports: [NgIf, NgFor, DatePipe, NgStyle],
+  imports: [NgIf, NgFor, DatePipe, NgStyle, noteComponent],
   standalone: true,
 
 })
@@ -16,7 +17,10 @@ export class ObservationDetailsComponent implements OnInit {
 
   public listOfNotes : any = []
   public noteById: any;
+  protected showNoteModal = false;
   protected showNote = false;
+  protected editingNote = false;
+  protected editingNoteModal = false;
   private notesService = inject(NotesService)
   private getUserLoggedService = inject(GetUserLoggedService)
   ngOnInit(): void {
@@ -25,18 +29,20 @@ export class ObservationDetailsComponent implements OnInit {
 
   }
 
-  public showCompleteNote(noteId:string){
-    this.showNote = true;
-    this.listOfNotes.forEach((note:any) => {
-      if(note.noteId === noteId){
-        this.noteById = note;
-      } else if(note.user.email == this.getUserAuthenticatedEmail()){
-        console.log('Esse comentário é do usuário logado')
-      }
-    });
+  public showCompleteNote(noteId:string) : void{
+   this.changeNoteModalVisibility()
+    this.addNoteToListOfNotes(noteId);
   }
 
-  public deleteNote(noteId:string){
+  protected changeNoteModalVisibility() :void {
+    this.showNoteModal = !this.showNoteModal;
+    this.showNote = !this.showNote;
+  }
+  private editNoteModalVisibility() :void {
+    this.editingNoteModal = !this.editingNoteModal;
+  }
+
+  public deleteNote(noteId:string) : void{
     this.notesService.deleteNote(noteId, this.crId)
     .pipe()
     .subscribe({
@@ -51,16 +57,16 @@ export class ObservationDetailsComponent implements OnInit {
     })
   }
 
-  private getUserAuthenticatedEmail(): any {
+  private getUserAuthenticatedEmail(): string {
     return this.getUserLoggedService.userLoggedData.email
-    }
+  }
 
-    private getAllNotesFromClient(){
-      this.getUserAuthenticatedEmail()
+ private getAllNotesFromClient() : any{
       this.notesService.getNotes(this.crId)
       .pipe(
       )
       .subscribe((notes: any) => {
+        this.getUserAuthenticatedEmail()
         this.listOfNotes = notes.map((note: any) => {
           return {
             ...note,
@@ -68,8 +74,20 @@ export class ObservationDetailsComponent implements OnInit {
           };
         });
       });
-
     }
 
-    editNote(noteId:string){}
+   public  editNote(noteId:string){
+    this.addNoteToListOfNotes(noteId)
+    this.editNoteModalVisibility()
+    }
+
+    private addNoteToListOfNotes(noteId:any){
+      this.listOfNotes.forEach((note:any) => {
+        if(note.noteId === noteId){
+          this.noteById = note;
+        } else if(note.user.email == this.getUserAuthenticatedEmail()){
+          console.log('Esse comentário é do usuário logado')
+        }
+      });
+    }
 }
