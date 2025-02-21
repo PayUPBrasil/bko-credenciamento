@@ -69,7 +69,7 @@ export class ObservationDetailsComponent implements OnInit {
       .subscribe((notes: any) => {
         this.getUserAuthenticatedEmail()
         console.log(notes, 'notes')
-        if(notes && notes.length === 0 && notes != null){
+        if(notes && notes != null){
           console.log('Notas carregadas', notes)
         this.listOfNotes = notes.map((note: any) => {
           return {
