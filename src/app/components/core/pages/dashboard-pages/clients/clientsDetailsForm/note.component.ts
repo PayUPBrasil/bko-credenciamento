@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { fadeInOut } from "../../../../../animations/fadeInAnimation.component";
 import { FormsModule } from "@angular/forms";
 import { NgClass, NgFor, NgIf } from "@angular/common";
@@ -11,16 +11,27 @@ import { NotesService } from "../services/notes.service";
   imports:[FormsModule, NgClass, NgIf]
 })
 
-export class noteComponent {
+export class noteComponent implements OnChanges{
+
 
   @Output() closeNoteEditor = new EventEmitter<string>();
   @Input() crId!: string;
-  @Input() value!:string;
+  @Input() value!:any;
   private noteService = inject(NotesService)
+
+
 
   maxLength = 280;
   text = '';
   public errorMessage !: string;
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.value, '=== valor do input')
+    this.text = this.value || '';
+
+   }
+
 
   public closeModal(){
     this.closeNoteEditor.emit('close note editor');

@@ -40,6 +40,7 @@ export class ObservationDetailsComponent implements OnInit {
   }
   private editNoteModalVisibility() :void {
     this.editingNoteModal = !this.editingNoteModal;
+    this.editingNote = !this.editingNote;
   }
 
   public deleteNote(noteId:string) : void{
@@ -77,13 +78,16 @@ export class ObservationDetailsComponent implements OnInit {
     }
 
    public  editNote(noteId:string){
+    console.log(noteId, 'verificando o id da nota que estou tentando adicionar')
     this.addNoteToListOfNotes(noteId)
     this.editNoteModalVisibility()
+
     }
 
     private addNoteToListOfNotes(noteId:any){
       this.listOfNotes.forEach((note:any) => {
         if(note.noteId === noteId){
+          console.log('adicionei o id da nota')
           this.noteById = note;
         } else if(note.user.email == this.getUserAuthenticatedEmail()){
           console.log('Esse comentário é do usuário logado')
