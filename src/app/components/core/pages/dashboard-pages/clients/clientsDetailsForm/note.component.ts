@@ -20,16 +20,13 @@ export class noteComponent implements OnChanges{
   private noteService = inject(NotesService)
 
 
-
   maxLength = 280;
   text = '';
   public errorMessage !: string;
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.value, '=== valor do input')
     this.text = this.value || '';
-
    }
 
 

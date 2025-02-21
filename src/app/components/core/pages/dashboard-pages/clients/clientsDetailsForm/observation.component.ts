@@ -77,7 +77,7 @@ export class ObservationDetailsComponent implements OnInit {
       });
     }
 
-   public  editNote(noteId:string){
+   public editNote(noteId:string){
     console.log(noteId, 'verificando o id da nota que estou tentando adicionar')
     this.addNoteToListOfNotes(noteId)
     this.editNoteModalVisibility()

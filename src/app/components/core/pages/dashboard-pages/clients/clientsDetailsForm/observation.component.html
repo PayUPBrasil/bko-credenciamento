@@ -152,7 +152,7 @@
 
       <ng-container *ngIf="editingNoteModal">
         <div class="py-5 text-sm text-text min-h-[150px] absolute">
-          <app-pages-note [value]="noteById.note"
+          <app-pages-note [value]="noteById.note" [crId]="crId"  (closeNoteEditor)="editingNoteModal = false"
             (closeNoteEditor)="editingNote = !editingNote" />
         </div>
       </ng-container>
