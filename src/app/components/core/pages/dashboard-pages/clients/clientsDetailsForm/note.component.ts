@@ -57,8 +57,7 @@ export class noteComponent implements OnChanges{
       .pipe()
       .subscribe({
         next: (response) => {
-            console.log(response, 'resposta depois de salvar a nota')
-            if(response){
+            if(response || response == null){
               window.location.reload();
             }
         },
