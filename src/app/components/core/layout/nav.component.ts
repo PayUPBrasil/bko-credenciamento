@@ -17,7 +17,7 @@ interface user {
   selector: "app-layout-nav",
   templateUrl: "./nav.component.html",
   standalone: true,
-  imports: [NotifyComponent, NgIf, RouterLink, ProfileAsideComponent, NgStyle],
+  imports: [ NgIf, RouterLink ],
   animations: [slideInOutAnimation, fadeInOut]
 })
 
@@ -94,6 +94,7 @@ updateTime() {
   }
 
   public toggleProfile() {
+    console.log('chamei a funcao')
     this.showProfile = !this.showProfile;
     this.cdr.detectChanges();
     if (this.showProfile == false) this.dropdownIcon = 'assets/icons/arrow-down-outline.svg'

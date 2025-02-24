@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { fadeInOut } from "../../../../../animations/fadeInAnimation.component";
 import { FormsModule } from "@angular/forms";
-import { NgClass,  NgIf } from "@angular/common";
+import { NgClass,  NgIf, NgStyle } from "@angular/common";
 import { NotesService } from "../services/notes.service";
 import { GetUserLoggedService } from "../../../../../../services/utils/getUserData.service";
  @Component({
@@ -9,7 +9,7 @@ import { GetUserLoggedService } from "../../../../../../services/utils/getUserDa
   templateUrl: "./note.component.html",
   standalone: true,
   animations: [fadeInOut],
-  imports:[FormsModule, NgClass, NgIf]
+  imports:[FormsModule, NgClass, NgIf, NgStyle]
 })
 
 export class noteComponent implements OnChanges, OnInit {
@@ -78,10 +78,11 @@ export class noteComponent implements OnChanges, OnInit {
   //* Captura as informações do usuário logado.
 
   private getUserInformation(): any {
-    console.log('capturando as informações do usuário logado...')
     return this.userLoggedData = {
+      name: this.getUserLoggedService.userLoggedData.name,
       email: this.getUserLoggedService.userLoggedData.email,
-      name: this.getUserLoggedService.userLoggedData.name
+      profilePic: this.getUserLoggedService.getUserData().profilePic
+
     }
   }
 

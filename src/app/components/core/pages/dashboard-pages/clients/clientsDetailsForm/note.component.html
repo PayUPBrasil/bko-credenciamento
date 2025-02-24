@@ -17,7 +17,7 @@
             <!-- perfil -->
             <div class="flex gap-2 items-start">
               <div
-                class="w-10 h-10 rounded-full bg-purple-400 border border-red-500"></div>
+                class="w-10 h-10 rounded-full bg-no-repeat bg-cover bg-center" [ngStyle]="{'background-image': 'url( ' + userLoggedData.profilePic +' )'}"></div>
               <div class="flex flex-col">
                 <span class="text-sm font-bold text-black">{{userLoggedData.name}}</span>
                 <span class="text-xs">{{userLoggedData.email}}</span>
