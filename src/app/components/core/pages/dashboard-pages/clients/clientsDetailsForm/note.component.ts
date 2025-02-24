@@ -81,8 +81,7 @@ export class noteComponent implements OnChanges, OnInit {
     return this.userLoggedData = {
       name: this.getUserLoggedService.userLoggedData.name,
       email: this.getUserLoggedService.userLoggedData.email,
-      profilePic: this.getUserLoggedService.getUserData().profilePic
-
+      profilePic: this.getUserLoggedService.getUserData().profilePic || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
     }
   }
 
