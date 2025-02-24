@@ -23,6 +23,7 @@ export class ObservationDetailsComponent implements OnInit {
   protected editingNoteModal = false;
   private notesService = inject(NotesService)
   private getUserLoggedService = inject(GetUserLoggedService)
+
   ngOnInit(): void {
       this.getAllNotesFromClient()
       this.getUserLoggedService.tokenDecodedData()
@@ -43,7 +44,7 @@ export class ObservationDetailsComponent implements OnInit {
     this.editingNote = !this.editingNote;
   }
 
-  public deleteNote(noteId:string) : void{
+public deleteNote(noteId:string) : void{
     this.notesService.deleteNote(noteId, this.crId)
     .pipe()
     .subscribe({
@@ -56,11 +57,11 @@ export class ObservationDetailsComponent implements OnInit {
         console.error('Erro ao deletar a nota:', error);
       }
     })
-  }
+}
 
-  private getUserAuthenticatedEmail(): string {
+private getUserAuthenticatedEmail(): string {
     return this.getUserLoggedService.userLoggedData.email
-  }
+}
 
  private getAllNotesFromClient() : any{
       this.notesService.getNotes(this.crId)
@@ -68,9 +69,7 @@ export class ObservationDetailsComponent implements OnInit {
       )
       .subscribe((notes: any) => {
         this.getUserAuthenticatedEmail()
-        console.log(notes, 'notes')
         if(notes && notes != null){
-          console.log('Notas carregadas', notes)
         this.listOfNotes = notes.map((note: any) => {
           return {
             ...note,
@@ -84,14 +83,14 @@ export class ObservationDetailsComponent implements OnInit {
       });
     }
 
-   public editNote(noteId:string){
+ public editNote(noteId:string){
     console.log(noteId, 'verificando o id da nota que estou tentando adicionar')
     this.addNoteToListOfNotes(noteId)
     this.editNoteModalVisibility()
 
-    }
+}
 
-    private addNoteToListOfNotes(noteId:any){
+private addNoteToListOfNotes(noteId:any){
       this.listOfNotes.forEach((note:any) => {
         if(note.noteId === noteId){
           console.log('adicionei o id da nota')
@@ -100,5 +99,6 @@ export class ObservationDetailsComponent implements OnInit {
           console.log('Esse comentário é do usuário logado')
         }
       });
-    }
+}
+
 }

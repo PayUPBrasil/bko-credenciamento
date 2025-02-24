@@ -11,15 +11,32 @@
 
         <!-- Header -->
         <div class="flex flex-col w-full items-center justify-between">
-          <div class="px-4 w-full py-2 flex items-center justify-end mt-2 text-slate-500">
-            <button (click)="closeModal()" class="w-fit group">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke-width="1.5" stroke="currentColor"
-                class="size-5 group-hover:text-primary w-fit">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M6 18 18 6M6 6l12 12" />
-              </svg>
-            </button>
+          <div
+            class="px-4 w-full py-2 flex items-start justify-between mt-2 text-slate-500">
+
+            <!-- perfil -->
+            <div class="flex gap-2 items-start">
+              <div
+                class="w-10 h-10 rounded-full bg-purple-400 border border-red-500"></div>
+              <div class="flex flex-col">
+                <span class="text-sm font-bold text-black">{{userLoggedData.name}}</span>
+                <span class="text-xs">{{userLoggedData.email}}</span>
+              </div>
+            </div>
+
+            <!-- botao -->
+            <div>
+              <button (click)="closeModal()" class="w-fit group">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor"
+                  class="size-5 group-hover:text-primary w-fit">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6 18 18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div>
           </div>
           <div class="h-[1px] bg-slate-50 w-full "></div>
         </div>
