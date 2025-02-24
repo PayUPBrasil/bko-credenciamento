@@ -81,7 +81,7 @@ export class noteComponent implements OnChanges, OnInit {
     console.log('capturando as informações do usuário logado...')
     return this.userLoggedData = {
       email: this.getUserLoggedService.userLoggedData.email,
-      name:'string'
+      name: this.getUserLoggedService.userLoggedData.name
     }
   }
 
