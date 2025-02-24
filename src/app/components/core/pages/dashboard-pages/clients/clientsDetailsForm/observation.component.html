@@ -75,7 +75,7 @@
                       stroke-linejoin="round" />
                   </svg>
                 </span>
-                <span *ngIf="note.isFromLoggedUser"
+                <span *ngIf="note.userCanEditOrDelete"
                   class="cursor-pointer hover:text-primary transition-all delay-75"
                   (click)="deleteNote(note.noteId)">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

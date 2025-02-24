@@ -49,9 +49,7 @@ public deleteNote(noteId:string) : void{
     .pipe()
     .subscribe({
       next: (response: any) => {
-        console.log(response, 'response')
-        console.log('Nota deletada com sucesso')
-        this.getAllNotesFromClient()
+        window.location.reload();
       },
       error: (error: any) => {
         console.error('Erro ao deletar a nota:', error);
