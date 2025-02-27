@@ -203,15 +203,20 @@ public modalFormConfiguration =
 
     response.Result[0].MediaProfileAndExposure.NewsItems.forEach((reportage: any) => {
       const tradeName = response.Result[0].BasicData.TradeName ? response.Result[0].BasicData.TradeName.toUpperCase() : null;
+      const OfficialName = response.Result[0].BasicData.OfficialName ? response.Result[0].BasicData.OfficialName.toUpperCase() : null;
       const title = reportage.Title.toUpperCase();
       const clientType = response.Result[0].BasicData.TaxIdNumber;
 
+      console.log(title.includes(tradeName || OfficialName), 'title.includes(tradeName || OfficialName')
+      console.log(tradeName,  OfficialName)
+
       if (clientType.length === 14) {
-        if (tradeName && title.includes(tradeName)) {
+        if (tradeName && title.includes(tradeName || OfficialName)) {
           console.log(reportage, 'unica reportagem com as informações completamente inteiras');
           console.log('dentro do pj criacao');
           newsInformatinList.push(reportage);
         }
+        newsInformatinList.push(reportage);
       } else {
         newsInformatinList.push(reportage);
       }
