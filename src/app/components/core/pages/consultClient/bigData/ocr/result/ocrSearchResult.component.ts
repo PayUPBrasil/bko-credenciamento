@@ -202,16 +202,12 @@ public modalFormConfiguration =
      response.Result[0].MediaProfileAndExposure.NewsItems.filter((reportage:any) => {
       const tradeName = response.Result[0].BasicData.TradeName.toUpperCase();
       const title = reportage.Title.toUpperCase();
-
       if(title.includes(tradeName)){
-        console.log(true)
-          console.log(reportage, 'essa reportagem é a única que tem o nome igual igual')
-
           this.newsList.push(reportage);
       }
     });
 
-     this.newsList.length > 0 ? this.isAKnowPerson = true  : false
+    this.newsList.length > 0 ? this.isAKnowPerson = true  : false
     this.hasKYCInformation = true
     this.totalSocialNetworks = response.Result[0].AppsNetworksAndPlatforms.TotalSocialNetworks
     this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms)
