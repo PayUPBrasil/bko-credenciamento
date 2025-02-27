@@ -199,15 +199,20 @@ public modalFormConfiguration =
 
 
   public createKycResume(response:any) {
-    this.newsList =   response.Result[0].MediaProfileAndExposure.NewsItems.slice(0, 4);
-    this.newsList.length > 0 ? this.isAKnowPerson = true  : false
+     response.Result[0].MediaProfileAndExposure.NewsItems.filter((reportage:any) => {
+      const tradeName = response.Result[0].BasicData.TradeName.toUpperCase();
+      const title = reportage.Title.toUpperCase();
+
+      if(title.includes(tradeName)){
+        console.log(true)
+          console.log(reportage, 'essa reportagem é a única que tem o nome igual igual')
+
+          this.newsList.push(reportage);
+      }
+    });
+
+     this.newsList.length > 0 ? this.isAKnowPerson = true  : false
     this.hasKYCInformation = true
-
-    this.quantityNewsItems = response.Result[0].MediaProfileAndExposure.EntityStatistics.NewsByRangeDate.TotalNews;
-    console.log('quntidade de materias atreladas ao cliente', response.Result[0].MediaProfileAndExposure.EntityStatistics.NewsByRangeDate.TotalNews)
-
-    console.log(response.Result[0].AppsNetworksAndPlatforms, 'vendo o que aparece em AppsNetworksAndPlatforms')
-
     this.totalSocialNetworks = response.Result[0].AppsNetworksAndPlatforms.TotalSocialNetworks
     this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms)
     this.TotalSearchResults = response.Result[0].AppsNetworksAndPlatforms.TotalSearchResults
