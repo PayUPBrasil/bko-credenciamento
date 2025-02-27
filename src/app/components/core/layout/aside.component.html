@@ -7,7 +7,7 @@
         class="flex h-full flex-col justify-between space-y-2">
         <div
           class="absolute right-0 z-50 cursor-pointer rounded-full bg-white text-accent "
-          [ngClass]="{ '-mr-0': isSidebarOpen == true, '-mt-0 mr-10': isSidebarOpen == false }"
+          [ngClass]="{ 'mr-0': isSidebarOpen == true, '-mt-0 mr-20 fixed': isSidebarOpen == false }"
           (click)="toggleSidebar()">
           <!-- Quando o menu estiver fechado, mostrar esse ícone -->
           <ng-container *ngIf="isSidebarOpen == false">
