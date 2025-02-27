@@ -1,5 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   content: ['./src/**/*.{html,js}'],
@@ -29,5 +30,20 @@ module.exports = {
     },
   },
 
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/typography'), require('@tailwindcss/forms'),
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        /* Chrome, Safari and Opera */
+        ".scrollbar-hidden::-webkit-scrollbar": {
+          display: "none",
+        },
+
+        ".scrollbar-hidden": {
+          "scrollbar-width": "none" /* Firefox */,
+          "-ms-overflow-style": "none" /* IE and Edge */,
+        },
+      })
+    }),
+  ],
 }
