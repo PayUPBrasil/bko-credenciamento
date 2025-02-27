@@ -199,19 +199,35 @@ public modalFormConfiguration =
 
 
   public createKycResume(response:any) {
-     response.Result[0].MediaProfileAndExposure.NewsItems.filter((reportage:any) => {
-      const tradeName = response.Result[0].BasicData.TradeName.toUpperCase();
+    let newsInformatinList: any[] = [];
+
+    response.Result[0].MediaProfileAndExposure.NewsItems.forEach((reportage: any) => {
+      const tradeName = response.Result[0].BasicData.TradeName ? response.Result[0].BasicData.TradeName.toUpperCase() : null;
       const title = reportage.Title.toUpperCase();
-      if(title.includes(tradeName)){
-          this.newsList.push(reportage);
+      const clientType = response.Result[0].BasicData.TaxIdNumber;
+
+      if (clientType.length === 14) {
+        if (tradeName && title.includes(tradeName)) {
+          console.log(reportage, 'unica reportagem com as informações completamente inteiras');
+          console.log('dentro do pj criacao');
+          newsInformatinList.push(reportage);
+        }
+      } else {
+        newsInformatinList.push(reportage);
       }
     });
 
+
+    this.newsList.push(...newsInformatinList);
+
     this.newsList.length > 0 ? this.isAKnowPerson = true  : false
     this.hasKYCInformation = true
-    this.totalSocialNetworks = response.Result[0].AppsNetworksAndPlatforms.TotalSocialNetworks
-    this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms)
-    this.TotalSearchResults = response.Result[0].AppsNetworksAndPlatforms.TotalSearchResults
+
+    if (response.Result[0].AppsNetworksAndPlatforms) {
+      this.totalSocialNetworks = response.Result[0].AppsNetworksAndPlatforms.TotalSocialNetworks;
+      this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms);
+      this.TotalSearchResults = response.Result[0].AppsNetworksAndPlatforms.TotalSearchResults;
+    }
   }
 
   protected addSocialNameToArrList(socialNetworks: any) {

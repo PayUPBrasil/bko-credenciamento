@@ -224,16 +224,16 @@
               <!-- Resumo do processo para que as pessoas entendam -->
 
               <ng-container>
-                <div class="mt-5 w-11/12">
+                <div class="border-2 border-dotted border-spacing-4 mt-5 w-full p-2 rounded-lg">
                   <span class="text-lg font-medium"> Resumo:</span>
-                  <div #resumeText class="mt-3 text-sm text-text">
+                  <div #resumeText class="mt-3 text-sm text-black">
                     <p>
                       O cliente {{ document | formatCpfCnpj }} possui <b
                         class="text-accent">{{ processData.TotalProcessos }}</b> {{
                       processData.TotalProcessos == 1 ? 'processo relacionado' :
                       'processos relacionados' }}.
                       <span *ngIf="processData.TotalProcessos > 0">
-                        nos quais desempenha os seguintes papéis:
+                        Nos quais desempenha os seguintes papéis:
                         <ng-container
                           *ngFor="let partyDistribuition of processData.DistribuicaoTipoParte | keyvalue">
 
@@ -263,7 +263,8 @@
                       <ng-container
                         *ngFor="let state of processData.DistribuicaoEstado | keyvalue">
                         <b class="text-accent"> {{ state.key }} ({{ state.value }})
-                        </b></ng-container>. E os temas {{ processData.TotalProcessos == 1
+                        </b>
+                        </ng-container>. <br><br>  Os temas {{ processData.TotalProcessos == 1
                       ? 'do processo são' : 'dos processos são' }}:
                     </p>
                     <!-- Ajustar a visibilidade da tabela aqui -->
@@ -302,7 +303,7 @@
                     </span>
 
                     <!-- Ajustar a visibilidade da lista de aqui -->
-
+                    <br><br>
                     <p *ngIf="processData.TotalProcessos > 0">
                       {{ processData.TotalProcessos == 1 ? 'Deste processo existe' :
                       'Destes processos existem' }}:
@@ -317,14 +318,14 @@
                     <div class="h-full w-full mt-10" *ngIf="hasKYCInformation">
                       <div class="flex gap-3 flex-col">
                         <div class="gap-1 " *ngIf="newsList.length > 0">
-                          <p class="text-text mb-3 -mt-3">
+                          <p class="mb-3">
                             O cliente pesquisado aparece em {{newsList.length}} {{
                             newsList.length > 1 ? 'reportagens' : 'reportagem' }},
                             incluindo: </p>
 
                           <div class="gap-2">
-                            <ng-container *ngFor="let news of newsList">
-                              <div class="text-sm flex gap-1 text-primary items-center"
+                            <ng-container *ngFor="let news of newsList.slice(0,5)">
+                              <div class="text-sm flex gap-1 text-primary items-center mb-2"
                                 *ngIf="newsList">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                   viewBox="0 0 24 24" stroke-width="1.5"
@@ -339,9 +340,10 @@
                                 </a>
                               </div>
                             </ng-container>
+                            <span class="text-red-500 text-xs italic">*Cuidado! Algumas reportagens podem não estar relacionadas ao cliente. A precisão desse retorno depende da unicidade do nome do cliente. Use essas informações com cautela.</span>
                           </div>
                         </div>
-                        <p class="text-text text-sm">
+                        <p class="mt-2 text-sm">
                           {{ isAKnowPerson ?
                           'Este cliente possui altas chances de ser uma pessoa publicamente exposta.'
                           :
