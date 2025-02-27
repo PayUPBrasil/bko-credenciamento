@@ -5,7 +5,6 @@ import { OcrFormInputs } from "../types/ocr.interface";
 import { NgClass, NgFor, NgIf } from "@angular/common";
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { CpfCnpjValidatorDirective } from "../../../../../../../directives/validators/cpfcnpj-validator.directive";
-import { CheckboxComponent } from "../../../../../layout/interface-helpers/checkbox.component";
 import { fadeInOut } from "../../../../../../animations/fadeInAnimation.component";
 import { DataSetListService } from "../../../../../../../services/utils/datasetsList.service";
 import { CheckBoxService } from "../../../../../layout/interface-helpers/checkbox.service";
@@ -14,7 +13,7 @@ import { CheckBoxService } from "../../../../../layout/interface-helpers/checkbo
   selector: "app-pages-onboarding-form",
   templateUrl: "./onboardingForm.component.html",
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective,  NgxMaskDirective, NgIf, NgClass, CheckboxComponent],
+  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective,  NgxMaskDirective, NgIf, NgClass],
   providers: [provideNgxMask()],
   animations:[fadeInOut]
 
