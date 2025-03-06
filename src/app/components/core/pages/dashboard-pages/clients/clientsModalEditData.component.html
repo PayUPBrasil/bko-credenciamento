@@ -18,7 +18,7 @@
         </div>
         <ng-container *ngIf="!flagEdit">
           <form class="w-full" [formGroup]="updateClientDataForm">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <ng-container *ngFor="let input of editInputsList; index as i; trackBy: trackByFn">
                 <div class="w-full">
                   <label class="mb-1 block text-xs font-medium text-primary">{{ editInputTitles[i] }}</label>

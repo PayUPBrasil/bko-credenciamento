@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit {
         left: '50%',
         text: 'Credenciamento por comercial',
         textStyle: {
-          fontFamily: 'Space Grotesk, serif',
+          fontFamily: 'Sora, serif',
           fontSize: 15
         },
         textAlign: 'center',
@@ -136,8 +136,8 @@ export class HomeComponent implements OnInit {
       },
        legend: {
         textStyle: {
-          fontFamily: 'Space Grotesk, serif',
-          fontSize: 10
+          fontFamily: 'Sora, serif',
+          fontSize: 12
         },
       bottom: 10,
       data: chartData,
@@ -154,13 +154,13 @@ export class HomeComponent implements OnInit {
           label: {
             show: true,
             formatter: '{b}: {c} ({d}%)',
-            fontFamily: 'Space Grotesk, serif', // Mova estas propriedades para cá
+            fontFamily: 'Sora, serif', // Mova estas propriedades para cá
             fontSize: 12
           },
           emphasis: {
             label: {
               fontWeight: 'bold',
-              fontFamily: 'Space Grotesk, serif'
+              fontFamily: 'Sora, serif'
             }
           }
         },
@@ -190,7 +190,7 @@ export class HomeComponent implements OnInit {
         left: '50%',
         text: 'Credenciamentos Mensais (2025)',
         textStyle: {
-          fontFamily: 'Space Grotesk, serif',
+          fontFamily: 'Sora, sans-serif',
           fontSize: 15
         },
         textAlign: 'center',
@@ -205,7 +205,7 @@ export class HomeComponent implements OnInit {
       },
       legend: {
         textStyle: {
-          fontFamily: 'Space Grotesk, serif',
+          fontFamily: 'Sora, sans-serif',
           fontSize: 10
         },
       bottom: 10,

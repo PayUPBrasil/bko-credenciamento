@@ -16,9 +16,9 @@
               <tbody class="divide-y divide-gray-100 border-t border-gray-100">
                 <tr
                   *ngFor="let tableContent of clientDetails; trackBy: trackByFn; index as i">
-                  <th class="px-6 py-4 font-medium text-xs text-gray-900">{{ userNames[i]
+                  <th class="px-6 py-4 font-medium text-sm text-gray-900">{{ userNames[i]
                     }}</th>
-                  <td class="px-6 py-4 text-xs">
+                  <td class="px-6 py-4 text-sm">
                     <ng-container *ngIf="tableContent.changes?.length">
                       <p *ngIf="tableContent.changes[0]?.field !== 'notes'"
                         class="text-ellipsis max-w-[680px] overflow-hidden text-nowrap">
@@ -33,7 +33,7 @@
                           }}</b></p>
                     </ng-container>
                   </td>
-                  <td class="px-6 py-4 text-xs">{{ tableContent.timestamp | date:
+                  <td class="px-6 py-4 text-sm">{{ tableContent.timestamp | date:
                     'dd/MM/yyyy HH:mm' : 'America/Sao_Paulo' }}</td>
                   <td></td>
                   <td></td>
