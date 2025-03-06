@@ -136,6 +136,13 @@ public modalFormConfiguration =
     }
   }
 
+  onMouseClick(term:any) : void {
+    console.log('cliquei na palavra para realizar a busca', term)
+    if(!this.cache[term]){
+      this.loadingTerms.add(term);
+      this.searchTerms.next(term);
+    }
+  }
   public newConsultingRedirect(){
     this.cleanQuery.emit();
     this.router.navigate(['/dashboard/consultar-cliente']);

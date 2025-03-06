@@ -16,7 +16,7 @@ module.exports = {
         spin: 'spin 2s cubic-bezier(0.4, 0, 1, 1) infinite',
       },
       fontFamily: {
-        sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+        sans: ['Sora', ...defaultTheme.fontFamily.sans],
         second: ['Montserrat'],
         minText: ['Inter'],
       },

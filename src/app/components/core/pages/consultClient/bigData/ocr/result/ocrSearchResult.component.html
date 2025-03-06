@@ -264,14 +264,13 @@
                         *ngFor="let state of processData.DistribuicaoEstado | keyvalue">
                         <b class="text-accent"> {{ state.key }} ({{ state.value }})
                         </b>
-                        </ng-container>. <br *ngIf="processData.TotalProcessos > 0"><br *ngIf="processData.TotalProcessos > 0">  Os temas {{ processData.TotalProcessos == 1
-                      ? 'do processo são' : 'dos processos são' }}:
+                        </ng-container>. <br *ngIf="processData.TotalProcessos > 0"><br *ngIf="processData.TotalProcessos > 0">  Os temas {{ processData.TotalProcessos == 1 ? 'do processo são' : 'dos processos são' }}:
                     </p>
                     <!-- Ajustar a visibilidade da tabela aqui -->
                     <span
                       *ngFor="let subjectDistribuition of processData.DistribuicaoAssunto | keyvalue; let last = last">
                       <span class="group relative mb-1 mr-1 inline-block"
-                        (click)="onMouseEnter(subjectDistribuition.key)"
+                        (click)="onMouseClick(subjectDistribuition.key)"
                         (mouseenter)="onMouseEnter(subjectDistribuition.key)">
                         <span
                           class="relative cursor-default text-accent underline  hover:text-accent">
