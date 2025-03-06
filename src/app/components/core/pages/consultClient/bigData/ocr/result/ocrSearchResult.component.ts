@@ -129,14 +129,14 @@ public modalFormConfiguration =
       this.seeMore = !this.seeMore;
   }
 
-  onMouseEnter(term: any): void {
+ public onMouseEnter(term: any): void {
     if (!this.cache[term] && !this.loadingTerms.has(term)) {
       this.loadingTerms.add(term);
       this.searchTerms.next(term);
     }
   }
 
-  onMouseClick(term:any) : void {
+  public onMouseClick(term:any) : void {
     console.log('cliquei na palavra para realizar a busca', term)
     if(!this.cache[term]){
       this.loadingTerms.add(term);
