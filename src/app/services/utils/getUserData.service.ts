@@ -11,7 +11,7 @@ export class GetUserLoggedService {
 
   userInfo : any = {}
   public sessionService = inject(SessionService)
-  public userName = localStorage.getItem('dXNlcg==')
+  public userName : any = ''
   public profilePic !: string;
   public token  = 'inicio'
   public userService = inject(UserService)
@@ -23,8 +23,8 @@ export class GetUserLoggedService {
    }
 
   public getUserData() {
-    return this.userInfo = {
-      name: this.userName,
+     return this.userInfo = {
+      name: localStorage.getItem('dXNlcg=='),
       email: "example@example.com",
       profilePic: this.getProfilePic(),
       role: "Administrador",
@@ -40,8 +40,8 @@ export class GetUserLoggedService {
 {
        this.sessionService.getSessao().subscribe({
         next: (session:any) => {
-          console.log(session.id, 'id session')
           if (session?.id) {
+            console.log(session.id, 'id session')
 
             this.token =  session.id
             this.userUUid = this.decodeToken(this.token)
@@ -69,7 +69,8 @@ export class GetUserLoggedService {
   }
 
   private getProfilePic() {
-     let userProfilePic = localStorage.getItem('profile')
+     const userProfilePic = localStorage.getItem('profile')
+      this.userName =  localStorage.getItem('dXNlcg==');
      if(userProfilePic === 'undefined' && this.userName) {
       return this.generateProfilePic(this.userName)
      }
@@ -77,7 +78,6 @@ export class GetUserLoggedService {
   }
 
   public generateProfilePic(name:string){
-    console.log('gerando pq nao tem nao')
     return name.substring(0,1).toUpperCase()
   }
 

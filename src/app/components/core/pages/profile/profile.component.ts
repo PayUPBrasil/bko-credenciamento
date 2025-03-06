@@ -12,12 +12,12 @@ import { fadeInOut } from "../../../animations/fadeInAnimation.component";
   animations: [fadeInOut]
 })
 
-export class ProfileComponent{
-  public userData:any = inject(GetUserLoggedService).getUserData()
+export class ProfileComponent {
+  public userData:any = inject(GetUserLoggedService).userInfo;
   public userSerivce = inject(UserService)
   public sessionService = inject(SessionService)
   public userName !: string;
-  public hasProfilePic= false;
+  public hasProfilePic = false;
   public userShareLink !: string
   public sellerId!:string
 

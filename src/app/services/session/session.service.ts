@@ -39,7 +39,9 @@ export class SessionService {
 
   limparSessao() {
     sessionStorage.clear();
+    console.log('limparSessao, sessão limpa')
     this.session.next(null);
+    console.log(this.session, 'valores atribuidos a sessão')
   }
 
   getSessao() {

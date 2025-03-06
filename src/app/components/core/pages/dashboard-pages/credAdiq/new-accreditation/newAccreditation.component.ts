@@ -48,6 +48,7 @@ import { fadeInOut } from '../../../../../animations/fadeInAnimation.component';
 import { Breadcrumb } from '../../../../layout/types/breadcrumb.interface';
 import { SessionService } from '../../../../../../services/session/session.service';
 import { contactResponsabilityListService } from '../../../../../../services/utils/contactResponsabilityList.service';
+import { RegisterSuccessModalComponent } from "../../clients/clientsDetailsForm/registerSuccessModal.component";
 
 @Component({
   selector: 'app-pages-newAccreditation',
@@ -74,8 +75,9 @@ import { contactResponsabilityListService } from '../../../../../../services/uti
     MonthYearValidatorDirective,
     PhoneValidatorDirective,
     NgFor,
-    NgIf
-  ],
+    NgIf,
+    RegisterSuccessModalComponent
+],
   animations: [fadeInOut],
 })
 export class NewAccreditationComponent implements OnDestroy, OnInit {
@@ -120,8 +122,6 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
   public enterpriseTypes = inject(TypeEnterpriseService).getEnterpriseTypes();
   private searchCNPJService = inject(SearchCNPJService);
   private searchCepService = inject(SearchCepService);
-  private countriesService = inject(CountriesService);
-  private searchCityIBGECodeService = inject(SearchCityIBGECodeService);
   public ufService = inject(UfService);
   private taxationService = inject(TaxationService);
   public taxationList = this.taxationService.getTaxationList();

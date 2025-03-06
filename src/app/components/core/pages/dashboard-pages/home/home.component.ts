@@ -11,7 +11,7 @@ import type { EChartsCoreOption } from 'echarts/core';
 
 import { CoolTheme } from "../../../../CoolTheme/cool-theme";
 import { MetricsService } from "../../../../../services/metrics/metrics.service";
-
+ import { GetUserLoggedService } from "../../../../../services/utils/getUserData.service";
 @Component({
   selector: "app-pages-home",
   imports: [BreadcrumbComponent, CommonModule, NgxEchartsModule],
@@ -22,11 +22,11 @@ import { MetricsService } from "../../../../../services/metrics/metrics.service"
     },
   ],
   templateUrl: './home.component.html',
-  standalone:true
+  standalone:true,
 })
 
 
-export class HomeComponent implements OnInit {
+export class HomeComponent  implements OnInit {
 
   private metricsService = inject(MetricsService)
   public sumClients = 0
@@ -35,13 +35,16 @@ export class HomeComponent implements OnInit {
 
   public accreditationOptions!: EChartsCoreOption;
   public accreditationByMonth !: EChartsOption
+  public userName : string | null = ''
+  private getUserLoggedService = inject(GetUserLoggedService)
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.getTotalClients()
     this.getTotalActiveClients()
     this.getTotalPendingClients()
     this.getAccreditationBySeller()
     this.getAccreditationByMonth()
+    this.getUserName()
   }
 
   theme!: string | ThemeOption;
@@ -59,7 +62,9 @@ export class HomeComponent implements OnInit {
       }
     })
   }
-
+  public getUserName() {
+    this.userName  = this.getUserLoggedService.userInfo.name;
+  }
   getTotalActiveClients(){
     this.metricsService.totalActiveClients().subscribe({
       next: (data: any) => {
@@ -73,6 +78,7 @@ export class HomeComponent implements OnInit {
   }
 
   getTotalPendingClients(){
+
     this.metricsService.totalPendingClients().subscribe({
       next: (data: any) => {
         // console.log(data);
