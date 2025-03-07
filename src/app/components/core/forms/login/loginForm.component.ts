@@ -113,7 +113,7 @@ export class LoginFormComponent {
         localStorage.setItem('profile', response.data.profilePic)
         if (response) {
           // this.data.routerLink = "dashboard/home"
-          this.router.navigate(['dashboard/home'])
+          this.router.navigate(['dashboard/consultar-cliente'])
         }
       },
       error: (error) => {

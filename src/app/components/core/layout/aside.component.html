@@ -60,7 +60,7 @@
             </a>
           </li>
 
-          <li class=" p-2 text-sm">
+          <li class=" p-2 text-sm hidden">
             <a routerLinkActive="bg-primary text-white"
               routerLink="/dashboard/todos-os-clientes"
               class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-primary hover:text-white dark:text-white">
@@ -96,7 +96,7 @@
 
           <!-- Credenciamento Adiq -->
 
-          <li class=" p-2 text-sm"
+          <li class=" p-2 text-sm hidden"
             *ngIf="hasAccess(['admin', 'master', 'Criar Credenciamento'])">
             <button (click)="toggleShowAdiqOptions()" type="button"
               class="group flex w-full items-center rounded-lg p-1 font-sans text-base transition duration-75 hover:bg-primary hover:text-white"
@@ -207,7 +207,6 @@
                       stroke-linejoin="round" />
                   </svg>
                 </span>
-
                 <span
                   class="ms-3 flex-1 whitespace-nowrap text-start font-sans text-sm">Admin</span>
 

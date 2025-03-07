@@ -27,7 +27,6 @@ export const routes: Routes = [
         canActivateChild: [PermissionsGuard],
         children: [
 
-
           {
             path: 'users',
             loadComponent: () => import('./components/core/pages/dashboard-pages/admin/users/users.component').then(m => m.UsersComponent),
@@ -56,11 +55,13 @@ export const routes: Routes = [
           },
         ],
       },
+
       // {
       //   path: 'credPinBank/novo-credenciamento',
       //   loadComponent: () => import('./components/core/pages/dashboard-pages/credPinBank/new-accreditationPinBank/newAccreditationPinBank.component').then(m => m.NewAccreditationComponentPinBank),
       //   data: { roles: ['admin', 'master', 'Criar Credenciamento'] }
       // },
+
       {
         path: 'gerar-contrato',
         loadComponent: () => import('./components/core/pages/dashboard-pages/contract/contractGenerate.component').then(m => m.ContractGenerateComponent)
