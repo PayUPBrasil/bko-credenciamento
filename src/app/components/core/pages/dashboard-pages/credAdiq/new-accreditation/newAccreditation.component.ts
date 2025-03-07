@@ -203,7 +203,7 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
 
   //* @ Campos do formulário de credenciamento, PF e PJ
   public accreditationForm = this.formBuilder.group({
-    cnpj: ['', [Validators.minLength(14), Validators.maxLength(18)]],
+    cnpj: ['44569277000105', [Validators.minLength(14), Validators.maxLength(18)]],
     cpf: ['', [Validators.minLength(14), Validators.maxLength(14)]],
     name: [''],
     birthdayDate: [''],
@@ -213,7 +213,7 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
 
     contactResponsability: [''],
     corporateName: ['', [Validators.maxLength(100)]],
-    tradeName: ['', [Validators.maxLength(100), Validators.required]],
+    tradeName: ['Lab Albergaria', [Validators.maxLength(100), Validators.required]],
     stateRegistration: ['', [Validators.maxLength(100)]],
     nameOnInvoice: ['', [Validators.maxLength(35), Validators.required]],
     commercialActivity: ['', []],

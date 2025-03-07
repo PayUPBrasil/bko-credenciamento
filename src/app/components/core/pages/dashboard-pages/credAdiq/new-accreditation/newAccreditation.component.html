@@ -16,7 +16,7 @@
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
                 </svg>
 
-                <div><b>Error alert</b> Lorem ipsum dolor sit amet. Internos reprehenderit perspiciatis commodi et omnis impedit.</div>
+                <div><b>Error alert</b> {{errorMessage}}</div>
                 <button (click)="errorMessage = ''" class="ml-auto" x-on:click="showAlert = false">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
                     <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -791,7 +791,7 @@
                         </div>
                         <div class="flex w-full flex-col">
                           <span class="font-sans">Órgão Expedidor</span>
-                          <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerDocumentExpedidor" placeholder="SSP" />
+                          <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500 uppercase" formControlName="partnerDocumentExpedidor" placeholder="SSP" />
                           <ng-container *ngIf="accreditationForm.get('partnerDocumentExpedidor')?.errors">
                             <span class="mt-2 text-xs text-red-500" *ngIf="accreditationForm.get('partnerDocumentExpedidor')?.hasError('required')">O campo é obrigatório</span>
                           </ng-container>
@@ -1437,5 +1437,7 @@
 </ng-container>
 
 @if (accreditationAdiq) {
-  <app-pages-newAccreditationModal [clientDocument]="accreditationForm.get('cnpj')!.value!.toString() || accreditationForm.get('cpf')!.value!.toString()" [type]="'PJ'" (closeModalAccreditation)="accreditationAdiq = false" />
+  <div class="h-screen top-0 w-11/12 fixed z-50  flex justify-center items-center">
+    <app-pages-newAccreditationModal [clientDocument]="accreditationForm.get('cnpj')!.value!.toString() || accreditationForm.get('cpf')!.value!.toString()" [type]="'PJ'" (closeModalAccreditation)="accreditationAdiq = false" />
+  </div>
 }

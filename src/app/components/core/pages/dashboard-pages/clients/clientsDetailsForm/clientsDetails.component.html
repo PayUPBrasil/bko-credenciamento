@@ -4,7 +4,8 @@
       <app-layout-breadcrumb [path]="path" />
     </div>
     <div class="z-10 flex w-full items-end justify-end">
-      <app-layout-button-actionButton [actionButtonElements]="actionButtonElements" (MenuClickedItem)="clickedItem($event)" />
+      <app-layout-button-actionButton [actionButtonElements]="actionButtonElements"
+        (MenuClickedItem)="clickedItem($event)" />
     </div>
   </div>
 
@@ -157,7 +158,8 @@
 
     <!-- Observações -->
 
-    <ng-container *ngIf="clientDetails[0] && clientDetails[0].basicData && clientDetails[0].basicData.crId">
+    <ng-container
+      *ngIf="clientDetails[0] && clientDetails[0].basicData && clientDetails[0].basicData.crId">
       <div>
         <app-pages-client-detail-observation [crId]="clientDetails[0].basicData.crId" />
       </div>
@@ -177,12 +179,20 @@
     <app-pages-client-detail-soluion />
   </div>
 
-  @if (accreditationAdiq) {
-  <app-pages-newAccreditationModal [clientDocument]="clientDetails[0].basicData.document"
-    [type]="clientDetails[0].type"
-    (closeModalAccreditation)="closeModalOfAccreditation($event)" />
-  }
-</div>
+  @if (!accreditationAdiq) {
+  <div>
+       <div
+        class="fixed inset-0  w-full z-10 bg-slate-500 bg-opacity-75 transition-opacity"
+        aria-hidden="true"></div>
+      <div class="fixed inset-0 z-10 m-auto w-screen overflow-y-auto">
+        <div class="mt-10 flex w-full  justify-center min-h-[90vh]  items-center">
+          <app-pages-newAccreditationModal [clientDocument]="clientDetails[0].basicData.document"
+          [type]="clientDetails[0].type"
+          (closeModalAccreditation)="closeModalOfAccreditation($event)" />
+        </div>
+      </div>
+    </div>
+   }
 
 @if (generateContract == true) {
 <ng-container>
@@ -196,7 +206,9 @@
           class="relative flex h-[280px] transform flex-col justify-around overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
           <div class="z-10 flex h-full w-full items-center justify-center">
             <div class="z-50 bg-gray-300 opacity-80"></div>
-            <app-pages-contractModal class="h-full w-full" [newContract]="true" [clientDocument]="clientDetails[0].basicData.document" (closeModalEvent)="generateContract = false" />
+            <app-pages-contractModal class="h-full w-full" [newContract]="true"
+              [clientDocument]="clientDetails[0].basicData.document"
+              (closeModalEvent)="generateContract = false" />
           </div>
         </div>
       </div>
@@ -213,7 +225,8 @@
 }
 
 @if (showNoteEditor) {
-<ng-container *ngIf="clientDetails[0] && clientDetails[0].basicData && clientDetails[0].basicData.crId">
+<ng-container
+  *ngIf="clientDetails[0] && clientDetails[0].basicData && clientDetails[0].basicData.crId">
   <app-pages-note (closeNoteEditor)="showNoteEditor = !showNoteEditor"
     [crId]="clientDetails[0].basicData.crId" />
 </ng-container>
