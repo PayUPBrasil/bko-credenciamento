@@ -1,100 +1,677 @@
-<ng-container aria-label="Formulário de onboarding para buscar dados de uma pessoa">
-  <section class="flex min-h-screen w-full justify-center bg-background">
-    <div class="m-auto min-h-[50vh] w-[65%] rounded-lg bg-white p-10">
-      <div class="pb-10">
-        <h1 class="text-lg font-bold text-primary">Documentos da consulta</h1>
-        <span class="text-text">Preencha todos os campos para continuar a consulta.</span>
-      </div>
-      <form class="w-full" [formGroup]="ocrForm">
-        <div class="grid grid-cols-1 gap-4">
-          <ng-container *ngFor="let item of inputsList; index as i">
-            <div>
-              <span
-                class="mb-1 block text-sm font-medium text-gray-700 after:text-red-500 after:content-['*']">{{
-                item.label }}</span>
-              <input (input)="checkIfFormHasErrors()" (blur)="checkIfFormHasErrors()"
-                class="h-[50px] w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                [formControlName]="item.id" [placeholder]="item.placeholder"
-                [required]="item.required" [mask]="item.mask"
-                [maxlength]="item.id === 'cpf' ? 14 : 18" appCpfCnpjValidator />
-            </div>
-            <ng-container>
-              <div class="flex items-center justify-between">
-                <div>
-                  <span class="mt-2 text-xs text-red-500"
-                    *ngIf="ocrForm.get(item.id)?.hasError('required')">O campo é
-                    obrigatório</span>
-                  <span class="mt-2 text-xs text-red-500"
-                    *ngIf="ocrForm.get(item.id)?.hasError('cpfInvalid')">Informe um CPF
-                    válido</span>
-                  <span class="mt-2 text-xs text-red-500"
-                    *ngIf="ocrForm.get(item.id)?.hasError('cnpjInvalid')">Informe um CNPJ
-                    válido</span>
-                  <span class="mt-2 text-xs text-red-500"
-                    *ngIf="ocrForm.get(item.id)?.hasError('minlength')">Informe um
-                    documento válido</span>
-                </div>
-                <div class="flex items-center justify-end">
-                  <span (click)="changeConsultingType()"
-                    class="cursor-pointer text-sm text-primary underline"> Alterar tipo de
-                    consulta </span>
-                </div>
-              </div>
-            </ng-container>
-          </ng-container>
+<ng-container aria-label="Resultado da Consulta de OCR do Cliente">
+  <section
+    class="pt-20 flex min-h-screen flex-col items-center justify-center bg-background p-2">
+    <div class="m-auto w-full px-4">
+      <div class="flex items-center justify-between rounded-2xl bg-white px-3 py-3">
+        <div class="flex flex-col px-3">
+          <h1 class="text-lg font-bold">Resultado da Consulta - {{ document |
+            formatCpfCnpj }}</h1>
         </div>
-        <div class="bottom-0 flex gap-2 py-10">
-          <button (click)="searchOcrInformation()" type="button"
-            [disabled]="buttonContinueData.disabled !== false"
-            [ariaLabel]="buttonContinueData.aria_label" [title]="buttonContinueData.title"
-            [ngClass]="{ 'cursor-not-allowed bg-slate-400 text-white': buttonContinueData.disabled == true  , 'cursor-pointer  text-primary hover:text-white border-primary relative overflow-hidden transition-all delay-75 before:absolute  before:top-0 before:left-0 before:h-full before:w-full before:origin-left before:scale-x-0 before:bg-primary before:transition-transform before:duration-500 before:ease-in-out hover:before:scale-x-100 before:z-0 group hover:border-primary hover:duration-500': buttonContinueData.disabled === false }"
-            class="flex h-[48px] w-full items-center justify-center gap-2 rounded-lg border p-3 text-white
-          ">
-            <div class="relative z-10 w-full flex justify-center items-center">
-              <span *ngIf="buttonContinueData.loadingStatus !== 'visible'">{{
-                buttonContinueData.title }}</span>
-              <div *ngIf="buttonContinueData.loadingStatus === 'visible'"
-                class="border-[rgba(0,0,0, .1)] h-[25px] w-[25px] animate-spin rounded-[50%] border-[5px] border-solid border-l-secondary transition-all delay-1000"></div>
-            </div>
-
-          </button>
-        </div>
-        <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação, KYC e Risco Financeiro ] caso queira buscar outros datasets <a class="text-primary underline" href="https://center.bigdatacorp.com.br/login" target="_blank" rel="noreferrer"> clique aqui.</a></p>
-        <!-- <p class="text-center text-xs text-text">Os datasets consultados na busca padrão
-          são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses
-          Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira
-          adicionar outros datasets na busca <span
-            class="cursor-pointer text-primary underline"
-            (click)="datasetModal = true">clique aqui.</span></p> -->
-      </form>
-    </div>
-
-    <!-- Modal de datasets -->
-    <!-- <ng-container aria-label="Modal com os itens" *ngIf="datasetModal">
-      <div [@fadeInOut] class="fixed z-10 flex h-full w-full items-center justify-center">
-        <div class="relative h-full w-full bg-slate-500 opacity-45"></div>
-        <div
-          class="absolute z-50 h-[230px] max-h-[300px] min-h-[150px] w-[580px] rounded-lg bg-white p-5">
-          <div class="flex h-full w-full flex-col items-start space-y-6 ">
-            <div class="flex w-full items-center justify-between">
-              <div class="flex flex-col">
-                <h3 class="text-lg font-bold text-primary">Selecione os datasets
-                  adicionais que deseja consultar</h3>
+        <div class="flex gap-4">
+          <button (click)="newConsultingRedirect()"
+            class="flex min-h-[30px] items-center justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white"
+            title="Nova Consulta">Nova Consulta</button>
+          <div class="grid grid-cols-2 items-center gap-2">
+            <button [disabled]="!canClickTheButton" (click)="exportToPdf()"
+              class="flex h-[34px] items-center justify-center group gap-2 rounded-lg bg-primary p-2 text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+              title="Fazer Download">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor" class="size-4">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              </span>
+              <div
+                class="absolute text-xs  bg-gradient-to-r from-purple-500 to-pink-500 z-10 rounded min-w-32 hidden group-hover:block mt-16 h-auto p-1">
+                <span>Exportar Resultado</span>
               </div>
-              <div>
-                <span>
-                  <img (click)="closeDataSetModal()" class="size-5 cursor-pointer"
-                    src="assets/icons/closeIcon.svg" alt="Icone para fechar o modal" />
-                </span>
+            </button>
+
+            <button (click)="forceRefresh()"
+              class="flex h-[34px] items-center group relative justify-center gap-2 rounded-lg bg-primary p-2 text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+              title="Forçar atualização">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor" class="size-4">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </span>
+
+              <div
+                class="absolute text-xs mr-10 bg-gradient-to-r from-purple-500 to-pink-500 z-10 rounded min-w-32 hidden group-hover:block  h-auto mt-16 p-1">
+                <span>Forçar Atualização</span>
               </div>
-            </div>
-            <div>
-              <app-layout-checkbox (checkboxItemClicked)="clickedItemOnCheckbox($event)"
-                [checkboxValues]="listDatasetByType" />
-            </div>
+            </button>
+
+            <button (click)="linkQueryState()"
+              class="h-[34px] items-center group justify-center gap-2 rounded-lg bg-primary p-2 text-sm text-white hidden"
+              title="Vincular consulta">
+              <span>
+                <svg class="size-4" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.125 14.7185C8.525 14.7185 4.505 17.6469 4.505 21.245"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path
+                    d="M12.125 11.4603C12.9877 11.4623 13.8317 11.2084 14.55 10.7308C15.2683 10.2531 15.8287 9.57326 16.1602 8.77718C16.4918 7.98111 16.5795 7.10462 16.4124 6.25866C16.2453 5.4127 15.8309 4.63531 15.2215 4.02488C14.6122 3.41445 13.8353 2.99843 12.9893 2.82948C12.1432 2.66053 11.2661 2.74624 10.4688 3.07576C9.67155 3.40528 8.99002 3.96381 8.51049 4.68063C8.03097 5.39746 7.775 6.24036 7.775 7.10265C7.775 8.25664 8.23298 9.36351 9.04848 10.1804C9.86397 10.9974 10.9704 11.4577 12.125 11.4603Z"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M16.4883 14.9834V20.9801" stroke="currentColor"
+                    stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
+                  <path d="M13.495 17.9883H19.495" stroke="currentColor"
+                    stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
+                </svg>
+              </span>
+
+              <div
+                class="absolute text-xs  bg-gradient-to-r from-purple-500 to-pink-500 mr-16 z-10 rounded min-w-32 hidden group-hover:block  h-auto  p-1">
+                <span>Vincular Resultado</span>
+              </div>
+            </button>
           </div>
         </div>
       </div>
-    </ng-container> -->
+
+      <ng-container *ngIf="linkQueryModal">
+        <div class="absolute" [@fadeInOut]>
+          <app-layout-form-modal [modalValues]="modalFormConfiguration" />
+        </div>
+      </ng-container>
+
+      <div>
+        <div
+          class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6">
+          <div class="flex flex-col">
+            <span class="font-bold text-slate-800">Dados Básicos</span>
+            <span class="text-sm text-text">Dados cadastrais básicos do cliente.</span>
+          </div>
+          <ng-container *ngIf="contentLoaded; else noLoadedYet">
+            <app-layout-table [visibleItems]="4"
+              [tableContent]="basicDataInformation[0]" />
+          </ng-container>
+          <div class="item">
+            <ng-template #noLoadedYet>
+              <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="mt-5 flex flex-col gap-5 rounded-2xl border bg-white p-4 px-6"
+          [ngClass]="{ 'border-red-100': hasCriminalProcessToReport, 'border-slate-100': !hasCriminalProcessToReport }">
+
+          <div class="flex justify-between" *ngIf="totalProcess">
+            <div class="flex flex-col">
+              <span class="pt-5 font-bold text-slate-800">Dados de Distribuição de
+                Processos Judiciais</span>
+              <span class="text-sm text-text">Detalhes sobre processos judiciais do
+                cliente.</span>
+            </div>
+            <div *ngIf="hasCriminalProcessToReport">
+              <span class="flex items-center gap-2 text-xs text-red-500 underline">
+                <img src="assets/icons/alarm.svg" class="size-6" />
+                Processo Criminal Identificado.
+              </span>
+            </div>
+          </div>
+
+          <ng-container *ngIf="contentLoaded; else noLoadedYet">
+            <div *ngFor="let processData of resumeInformation">
+              <ng-container>
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationCnjProcedureTypeDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationCnjProcedureTypeDistribution[0]">Distribuição
+                    de Tipos</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
+                </div>
+
+                <!-- Criar um toogle para ocultar esses itens -->
+
+                <div *ngIf="seeMore">
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationCnjSubjectDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationCnjSubjectDistribution[0]">Distribuição de
+                      Assuntos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationCnjSubjectDistribution[0]" />
+                  </div>
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationCourtNameDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationCourtNameDistribution[0]">Distribuição de
+                      Nome da Corte</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationCourtNameDistribution[0]" />
+                  </div>
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationCourtTypeDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationCourtTypeDistribution[0]">Distribuição dos
+                      tipos de tribunal dos processos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationCourtTypeDistribution[0]" />
+                  </div>
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationPartyTypeDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationPartyTypeDistribution[0]">Distribuição dos
+                      tipos de parte do indíviduo nos processos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationPartyTypeDistribution[0]" />
+                  </div>
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationStateDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationStateDistribution[0]">Distribuição de
+                      Estados</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationStateDistribution[0]" />
+                  </div>
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationStatusDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationStatusDistribution[0]">Distribuição dos
+                      status dos processos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationStatusDistribution[0]" />
+                  </div>
+
+                  <div class="flex flex-col gap-2 py-2"
+                    *ngIf="processInformationTypeDistribution[0]">
+                    <span class="text-sm font-bold text-black"
+                      *ngIf="processInformationTypeDistribution[0]">Distribuição dos tipos
+                      de processos</span>
+                    <app-layout-table [visibleItems]="50"
+                      [tableContent]="processInformationTypeDistribution[0]" />
+                  </div>
+                </div>
+                <!-- Criar o botão do toggle -->
+
+                <div *ngIf="totalProcess" (click)="seeMoreItems()">
+
+                  <div class="flex h-fit w-[98%] items-center justify-center text-center">
+                    <div
+                      class="mt-8 flex w-fit cursor-pointer items-center justify-center gap-1 text-center text-xs text-primary rounded-full bg-[#f7fafd] shadow-sm border-slate-300 border  p-1">
+                      <svg *ngIf="!seeMore" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                      </svg>
+                      <svg *ngIf="seeMore" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <!-- Resumo do processo para que as pessoas entendam -->
+
+              <ng-container>
+                <div class="border-2 border-dotted border-spacing-4 mt-5 w-full p-2 rounded-lg">
+                  <span class="text-lg font-medium"> Resumo:</span>
+                  <div #resumeText class="mt-3 text-sm text-black">
+                    <p>
+                      O cliente {{ document | formatCpfCnpj }} possui <b
+                        class="text-accent">{{ processData.TotalProcessos }}</b> {{
+                      processData.TotalProcessos == 1 ? 'processo relacionado' :
+                      'processos relacionados' }}.
+                      <span *ngIf="processData.TotalProcessos > 0">
+                        Nos quais desempenha os seguintes papéis:
+                        <ng-container
+                          *ngFor="let partyDistribuition of processData.DistribuicaoTipoParte | keyvalue">
+
+                          <b
+                            class="text-accent after:content-[','] after:mr-1 last:after:content-['.'] last:after:mr-0">{{
+                            partyDistribuition.key }} ({{
+                            partyDistribuition.value }}) </b>
+                        </ng-container>
+                      </span>
+                    </p>
+                    <div *ngIf="processData.TotalProcessos > 0" class="flex gap-2">
+                      <p>Os processos são de esfera:</p>
+                      <ng-container
+                        *ngFor="let courtTypeDistribution of processData.DistribuicaoTipoTribunal | keyvalue">
+                        <p
+                          class="after:content-[','] after:mr-1 last:after:content-['.'] last:after:mr-0"
+                          [ngClass]="{ 'text-red-500 ': hasCriminalProcessToReport }">{{
+                          courtTypeDistribution.key }} ({{ courtTypeDistribution.value
+                          }})</p>
+                      </ng-container>
+                    </div>
+
+                    <p class="mt-2 break-words" *ngIf="processData.TotalProcessos > 0">
+                      {{ processData.TotalProcessos == 1 ? 'Esse processo está' :
+                      'Esses processos estão' }} distribuído{{ processData.TotalProcessos
+                      == 1 ? '' : 's' }} nos seguintes estados:
+                      <ng-container
+                        *ngFor="let state of processData.DistribuicaoEstado | keyvalue">
+                        <b class="text-accent"> {{ state.key }} ({{ state.value }})
+                        </b>
+                        </ng-container>. <br *ngIf="processData.TotalProcessos > 0"><br *ngIf="processData.TotalProcessos > 0">  Os temas {{ processData.TotalProcessos == 1 ? 'do processo são' : 'dos processos são' }}:
+                    </p>
+                    <!-- Ajustar a visibilidade da tabela aqui -->
+                    <span
+                      *ngFor="let subjectDistribuition of processData.DistribuicaoAssunto | keyvalue; let last = last">
+                      <span class="group relative mb-1 mr-1 inline-block"
+                        (click)="onMouseClick(subjectDistribuition.key)"
+                        (mouseenter)="onMouseEnter(subjectDistribuition.key)">
+                        <span
+                          class="relative cursor-pointer text-accent underline  hover:text-accent">
+                          {{ subjectDistribuition.key }}
+                          <span
+                            class="invisible absolute left-1/2 top-5 z-50 w-[500px] max-w-[600px] -translate-x-1/2 transform break-words rounded-md border border-slate-200 bg-white p-3 text-sm text-text opacity-0 shadow-lg transition-opacity duration-300 group-hover:visible group-hover:opacity-100">
+                            @if (isLoading(subjectDistribuition.key)) {
+                            <ngx-skeleton-loader count="1"
+                              [theme]="{ height: '15px', 'animation-duration': '2s' }"></ngx-skeleton-loader>
+                            } @else {
+                            <ng-container
+                              *ngIf="getSearchResult(subjectDistribuition.key) as result">
+                              <div class="flex flex-col flex-wrap">
+                                <div>
+                                  <p class="text-xs">{{ '🔎 ' + result }}</p>
+                                </div>
+                                <div class="flex justify-end pb-3">
+                                  <span class="text-[10px]"> Fonte: Resultado gerado por
+                                    inteligência artificial.</span>
+                                </div>
+                              </div>
+                            </ng-container>
+                            }
+                          </span>
+                        </span>
+                        ({{ subjectDistribuition.value }}) <span *ngIf="!last">, </span>
+                        <span *ngIf="last">.</span>
+                      </span>
+                    </span>
+
+                    <!-- Ajustar a visibilidade da lista de aqui -->
+                    <br *ngIf="processData.TotalProcessos > 0"> <br *ngIf="processData.TotalProcessos > 0">
+                    <p *ngIf="processData.TotalProcessos > 0">
+                      {{ processData.TotalProcessos == 1 ? 'Deste processo existe' :
+                      'Destes processos existem' }}:
+                      <ng-container
+                        *ngFor="let statusDistribuition of processData.DistribuicaoStatus | keyvalue; let last = last">
+                        <b class="text-accent">({{ statusDistribuition.value }}) {{
+                          statusDistribuition.key }} </b> <span *ngIf="!last">, </span>
+                        <span *ngIf="last">.</span>
+                      </ng-container>
+                    </p>
+
+                    <div class="h-full w-full mt-10" *ngIf="hasKYCInformation">
+                      <div class="flex gap-3 flex-col">
+                        <div class="gap-1 " *ngIf="newsList.length > 0">
+                          <p class="mb-3">
+                            O cliente pesquisado aparece em {{newsList.length}} {{
+                            newsList.length > 1 ? 'reportagens' : 'reportagem' }},
+                            incluindo: </p>
+
+                          <div class="gap-2">
+                            <ng-container *ngFor="let news of newsList.slice(0,5)">
+                              <div class="text-sm flex gap-1 text-primary items-center mb-2"
+                                *ngIf="newsList">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                  viewBox="0 0 24 24" stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="size-4">
+                                  <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                </svg>
+                                <a class="underline"
+                                  [href]="news.Url"
+                                  target="_blank" rel="norefer">{{news.Title}}
+                                </a>
+                              </div>
+                            </ng-container>
+                            <span class="text-red-500 text-xs italic">*Cuidado! Algumas reportagens podem não estar relacionadas ao cliente. A precisão desse retorno depende da unicidade do nome do cliente. Use essas informações com cautela.</span>
+                          </div>
+                        </div>
+                        <p class="mt-2 text-sm">
+                          {{ isAKnowPerson ?
+                          'Este cliente possui altas chances de ser uma pessoa publicamente exposta.'
+                          :
+                          'Este cliente possui baixas chances de ser uma pessoa públicamente exposta.'}}
+
+                          <ng-container *ngIf="totalSocialNetworks > 0">
+                            Além disso, identificamos que o cliente está presente em
+                            {{totalSocialNetworks}} {{ totalSocialNetworks > 1 ?  'redes sociais:' : 'rede social:'}}
+                            <ng-container *ngFor="let social of socialNetworksName">
+                              <a class="underline text-primary" [href]="social.socialLink" target="_blank" rel="noferer"> {{ social.socialName }} </a>
+                            </ng-container>
+                          </ng-container>
+                          E foi mencionado em {{ TotalSearchResults }}
+                          resultados de pesquisa. No entanto, não há postagens de mídia
+                          social identificadas pela pesquisa para mostrar.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+            <div
+              class="hidden cursor-pointer justify-center border text-center text-xs text-text">Ver
+              Mais / Ver menos v</div>
+          </ng-container>
+
+          <div class="item">
+            <ng-template #noLoadedYet>
+              <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+            </ng-template>
+          </div>
+        </div>
+
+        <div
+          class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6"
+          *ngIf="financialInterestsInformation[0]">
+          <span class="font-bold text-slate-800">Interesses Financeiros</span>
+          <ng-container *ngIf="contentLoaded; else noLoadedYet">
+            <app-layout-table [visibleItems]="4"
+              [tableContent]="financialInterestsInformation[0]" />
+          </ng-container>
+          <div class="item">
+            <ng-template #noLoadedYet>
+              <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+            </ng-template>
+          </div>
+        </div>
+
+        <div
+          class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6"
+          *ngIf="financialRiskInformation[0]">
+          <div class="flex flex-col">
+            <span class="font-bold text-slate-800">Risco Financeiro</span>
+            <span class="text-sm text-text">Relativo ao Score do cliente no mercado
+              financeiro.</span>
+          </div>
+          <ng-container *ngIf="contentLoaded; else noLoadedYet">
+            <app-layout-table [visibleItems]="4"
+              [tableContent]="financialRiskInformation[0]" />
+          </ng-container>
+          <div class="item">
+            <ng-template #noLoadedYet>
+              <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="py-5 text-sm text-red-500">Consulta realizada em: {{ QueryDate | date:
+      'dd/MM/yyyy HH:mm:ss' }}</div>
   </section>
 </ng-container>
+
+<ng-template #noItemsToShow>
+  <div>
+    <p class="text-center text-xs text-red-500">Sem itens para mostrar...</p>
+  </div>
+</ng-template>
+
+<div class="mt-16 bg-[#f3f8fa] px-10" [ngClass]="{ hidden: showElementHidden !== true }">
+  <!-- Conteúdo que deve ser exportado para o arquivo PDF -->
+  <div class="px-10" #contentToExport>
+    <section class="grid gap-5">
+      <!-- Resumo primeiro -->
+      <div #resumeText
+        class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6 text-sm text-text"
+        *ngFor="let processData of resumeInformation; index as i">
+        <div>
+          <h3 class="mb-5 text-lg font-bold">Resumo</h3>
+          <p>
+            O cliente {{ document | formatCpfCnpj }} possui <b class="text-accent">{{
+              processData.TotalProcessos }}</b> {{ processData.TotalProcessos == 1 ?
+            'processo relacionado' : 'processos relacionados' }}.
+            <span *ngIf="processData.TotalProcessos > 0">
+              Ele faz parte {{ processData.TotalProcessos == 1 ? 'desse processo' :
+              'desses processos' }} como:
+              <ng-container
+                *ngFor="let partyDistribuition of processData.DistribuicaoTipoParte | keyvalue">
+                <b class="text-accent">{{ partyDistribuition.key }} de ({{
+                  partyDistribuition.value }}) </b>
+              </ng-container>
+            </span>
+          </p>
+
+          <div class="flex gap-2">
+            <p *ngIf="processData.TotalProcessos > 0">
+              Os processos são de esfera:
+              <ng-container
+                *ngFor="let courtTypeDistribution of processData.DistribuicaoTipoTribunal | keyvalue">
+                <b class="text-sm text-red-500"> {{ courtTypeDistribution.key }} ({{
+                  courtTypeDistribution.value }}) </b>
+              </ng-container>
+            </p>
+          </div>
+          <p *ngIf="processData.TotalProcessos > 0">
+            {{ processData.TotalProcessos == 1 ? 'Esse processo está' :
+            'Esses processos estão' }} distribuído{{ processData.TotalProcessos == 1 ? ''
+            : 's' }} nos seguintes estados:
+            <ng-container *ngFor="let state of processData.DistribuicaoEstado | keyvalue">
+              <b class="text-accent"> {{ state.key }} ({{ state.value }})
+              </b></ng-container>
+          </p>
+          <p *ngIf="processData.TotalProcessos > 0">
+            {{ processData.TotalProcessos == 1 ? 'Deste processo existe' :
+            'Destes processos existem' }}:
+            <ng-container
+              *ngFor="let statusDistribuition of processData.DistribuicaoStatus | keyvalue; let last = last">
+              <b class="text-accent">({{ statusDistribuition.value }}) {{
+                statusDistribuition.key }} </b> <span *ngIf="!last">, </span> <span
+                *ngIf="last">.</span>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+      <!-- Tabelas -->
+      <div>
+        <div
+          class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6">
+          <div class="flex flex-col">
+            <span class="font-bold text-slate-800">Dados Básicos</span>
+            <span class="text-sm text-text">Dados cadastrais básicos do cliente.</span>
+          </div>
+          <ng-container *ngIf="contentLoaded; else noLoadedYet">
+            <app-layout-table [visibleItems]="20"
+              [tableContent]="basicDataInformation[0]" />
+          </ng-container>
+          <div class="item">
+            <ng-template #noLoadedYet>
+              <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+            </ng-template>
+          </div>
+        </div>
+
+        <div
+          class="mt-5 flex flex-col gap-3 rounded-2xl border border-slate-100 bg-white p-4 px-6"
+          *ngIf="totalProcess">
+          <div class="flex justify-between">
+            <div class="flex flex-col"><span class="pt-5 font-bold text-slate-800">Dados
+                de Distribuição de Processos Judiciais</span> <span
+                class="text-sm text-text">Detalhes sobre processos judiciais do
+                cliente.</span></div>
+
+            <div *ngIf="hasCriminalProcessToReport">
+              <span class="flex items-center gap-2 text-xs text-red-500 underline">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M3 9.22843V14.7716C3 15.302 3.21071 15.8107 3.58579 16.1858L7.81421 20.4142C8.18929 20.7893 8.69799 21 9.22843 21H14.7716C15.302 21 15.8107 20.7893 16.1858 20.4142L20.4142 16.1858C20.7893 15.8107 21 15.302 21 14.7716V9.22843C21 8.69799 20.7893 8.18929 20.4142 7.81421L16.1858 3.58579C15.8107 3.21071 15.302 3 14.7716 3H9.22843C8.69799 3 8.18929 3.21071 7.81421 3.58579L3.58579 7.81421C3.21071 8.18929 3 8.69799 3 9.22843Z"
+                      stroke="#ff0026"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path d="M12 8V13" stroke="#ff0026" stroke-width="2"
+                      stroke-linecap="round"></path>
+                    <path d="M12 16V15.9888" stroke="#ff0026" stroke-width="2"
+                      stroke-linecap="round"></path>
+                  </g>
+                </svg>
+                Processo Criminal Identificado.
+              </span>
+            </div>
+          </div>
+
+          <ng-container *ngIf="contentLoaded; else noLoadedYet">
+            <div *ngFor="let processData of resumeInformation; index as i">
+              <ng-container>
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationCnjProcedureTypeDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationCnjProcedureTypeDistribution[0]">Distribuição
+                    de Tipos</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationCnjProcedureTypeDistribution[0]" />
+                </div>
+
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationCnjSubjectDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationCnjSubjectDistribution[0]">Distribuição de
+                    Assuntos</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationCnjSubjectDistribution[0]" />
+                </div>
+
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationCourtNameDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationCourtNameDistribution[0]">Distribuição de
+                    Nome da Corte</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationCourtNameDistribution[0]" />
+                </div>
+
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationCourtTypeDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationCourtTypeDistribution[0]">Distribuição dos
+                    tipos de tribunal dos processos</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationCourtTypeDistribution[0]" />
+                </div>
+
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationPartyTypeDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationPartyTypeDistribution[0]">Distribuição dos
+                    tipos de parte do indíviduo nos processos</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationPartyTypeDistribution[0]" />
+                </div>
+
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationStateDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationStateDistribution[0]">Distribuição de
+                    Estados</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationStateDistribution[0]" />
+                </div>
+
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationStatusDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationStatusDistribution[0]">Distribuição dos
+                    status dos processos</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationStatusDistribution[0]" />
+                </div>
+
+                <div class="flex flex-col gap-2 py-2"
+                  *ngIf="processInformationTypeDistribution[0]">
+                  <span class="text-sm font-bold text-black"
+                    *ngIf="processInformationTypeDistribution[0]">Distribuição dos tipos
+                    de processos</span>
+                  <app-layout-table [visibleItems]="50"
+                    [tableContent]="processInformationTypeDistribution[0]" />
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <div class="item">
+            <ng-template #noLoadedYet>
+              <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+            </ng-template>
+          </div>
+        </div>
+
+        <div *ngIf="financialInterestsInformation[0]"
+          class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6">
+          <span class="font-bold text-slate-800">Interesses Financeiros</span>
+          <ng-container *ngIf="contentLoaded; else noLoadedYet">
+            <app-layout-table [visibleItems]="20"
+              [tableContent]="financialInterestsInformation[0]" />
+          </ng-container>
+          <div class="item">
+            <ng-template #noLoadedYet>
+              <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+            </ng-template>
+          </div>
+        </div>
+
+        <div *ngIf="financialRiskInformation[0]"
+          class="mt-5 flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-4 px-6">
+          <div class="flex flex-col">
+            <span class="font-bold text-slate-800">Risco Financeiro</span>
+            <span class="text-sm text-text">Relativo ao Score do cliente no mercado
+              financeiro.</span>
+          </div>
+          <ng-container *ngIf="contentLoaded; else noLoadedYet">
+            <app-layout-table [visibleItems]="20"
+              [tableContent]="financialRiskInformation[0]" />
+          </ng-container>
+          <div class="item">
+            <ng-template #noLoadedYet>
+              <ngx-skeleton-loader count="3"></ngx-skeleton-loader>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer com a data -->
+      <div>
+        <div class="py-5 text-center text-sm text-text">Consulta realizada na BigData Corp
+          em: {{ QueryDate | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<ng-container *ngIf="notifyItemModal">
+  <app-layout-notify [notifyElements]="notifyItem"
+    (buttonClicked)="notifyItemModal = false" />
+</ng-container>
+
+
+
+
+
+
+
+
+
+
