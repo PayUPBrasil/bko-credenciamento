@@ -51,7 +51,6 @@ export class AsideComponent {
         if (session?.id) {
           this.decodedToken = jwtDecode(session?.id)
         }
-
       },
       error: (error) => console.error(error),
     })
@@ -93,7 +92,7 @@ export class AsideComponent {
   //   this.dropdownIcon = this.dropdownIcon == 'assets/icons/arrow-down-outline.svg' ? 'assets/icons/arrow-up.svg' : 'assets/icons/arrow-down-outline.svg'
   // }
 
-  isSidebarOpen: boolean = true
+  isSidebarOpen= true
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
