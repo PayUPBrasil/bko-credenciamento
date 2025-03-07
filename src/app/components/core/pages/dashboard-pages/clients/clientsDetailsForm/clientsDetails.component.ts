@@ -108,7 +108,7 @@ export class ClientsDetailsComponent implements OnInit {
         this.showEditDataModal = true
         break;
 
-      case 'Adicionar Informação':
+      case 'Adicionar Nota':
         this.showNoteEditor = true
         break;
 
@@ -210,8 +210,7 @@ export class ClientsDetailsComponent implements OnInit {
   }
 
   public getUserNameByUserId(userId:string){
-    console.log('em getUserNameByUserId no component de clientes', userId)
-    this.userService.getUserNameById(userId).subscribe({
+     this.userService.getUserNameById(userId).subscribe({
       next: (response) => {
         if(response) return this.userName = response.name;
         return this.userName = 'N/A'
@@ -297,7 +296,7 @@ export class ClientsDetailsComponent implements OnInit {
 
         {
           icon: '/assets/icons/pincel.svg',
-          name: 'Adicionar Informação',
+          name: 'Adicionar Nota',
           path: '/dashboard/admin/create-permissions'
         },
 
@@ -326,7 +325,7 @@ export class ClientsDetailsComponent implements OnInit {
 
         {
           icon: '/assets/icons/pincel.svg',
-          name: 'Adicionar Informação',
+          name: 'Adicionar Nota',
           path: '/dashboard/admin/add-information'
         },
 

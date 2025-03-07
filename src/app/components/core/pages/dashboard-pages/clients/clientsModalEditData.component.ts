@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from "@angular/common";
-import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { ButtonPrimaryComponent } from "../../../layout/buttons/button-primary.component";
 import { ReactiveFormsModule, Validators, FormBuilder } from "@angular/forms";
 import { Client } from "./types/client.interface";
@@ -8,6 +8,7 @@ import { fadeInOut } from "../../../../animations/fadeInAnimation.component";
 import { ClientService } from "./services/clients.service";
 import { Subject, takeUntil } from "rxjs";
 import { NgxMaskDirective } from "ngx-mask";
+import { CodProdutoAdiqService } from "../../../../../services/utils/codProdutoAdiq.service";
 @Component({
   selector: "app-pages-clientsModalEditData",
   templateUrl: "./clientsModalEditData.component.html",
@@ -24,18 +25,22 @@ export class ClientsModalEditDataComponent implements OnInit{
   public editInputsList: string[] = [];
   public editInputTitles: string[] = [];
   public editInputOldValues: any[] = [];
-  private fb = inject(FormBuilder)
+  public flagsByNames : string[] = []
   public updateClientDataForm!: any;
-  public flagEdit = false;
   public inputType = 'text';
-  private clientService = inject(ClientService)
   private destroy$ = new Subject<void>();
+  public flagEdit = false;
   public enableSubmit = false
   public hasError = false;
   public maskByInput !: any;
-  public remainderFlags !:any
+  public remainderFlags : any[] = []
+
+  private codProdutoAdiqService = inject(CodProdutoAdiqService)
+  private fb = inject(FormBuilder)
+  private clientService = inject(ClientService)
+
   public submitFormButtonElement =
-    {
+  {
       title: 'Salvar Alterações',
       color: 'text-white',
       bg_color: 'bg-red-500 hover:bg-red-600',
@@ -61,6 +66,9 @@ export class ClientsModalEditDataComponent implements OnInit{
     let hasChanges = false;
     let changedFields: { fieldName: string; newValue: any }[] = [];
 
+
+
+    //* Method to see if the form has chenged
     this.editInputOldValues.forEach((value, index) => {
       const fieldName = this.editInputsList[index];
       const newValue = formsValues[fieldName];
@@ -72,9 +80,18 @@ export class ClientsModalEditDataComponent implements OnInit{
       }
     });
 
+
+    // Verificando alterações na bandeira
+
+    const originalFlags = this.clientDetails.flags || [];
+    if (JSON.stringify(originalFlags.sort()) !== JSON.stringify(this.flagsByNames.sort())) {
+      hasChanges = true;
+      changedFields.push({ fieldName: 'codProdutos.codes', newValue: this.getFlagCode(this.flagsByNames) });
+    }
+
     //Função para habilitar o botão de salvar apenas se existirem alterações
     if(hasChanges && changedFields.length > 0){
-      console.log('existe alterações')
+      console.log('existe alterações', changedFields)
       this.submitFormButtonElement.disabled = false
     } else {
       this.submitFormButtonElement.disabled = true
@@ -82,33 +99,6 @@ export class ClientsModalEditDataComponent implements OnInit{
 
     return { hasChanges, changedFields };
   }
-
-
-  // public findFieldPath(obj: any, fieldName: string, currentPath: string = ''): string | null {
-
-  //   console.log("===================================")
-  //   console.log('em findFieldPath')
-  //   console.log(obj, fieldName, currentPath)
-  //   console.log("===================================")
-
-  //   let fieldNameWithoutNumbers = fieldName.replace(/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\s]+$/ ,'')
-
-  //   if (Array.isArray(obj)) {
-  //     for (let i = 0; i < obj.length; i++) {
-  //       const result = this.findFieldPath(obj[i], fieldNameWithoutNumbers, `${currentPath}[${i}]`);
-  //       if (result) return result;
-  //     }
-  //   } else if (typeof obj === 'object' && obj !== null) {
-  //     for (let key in obj) {
-  //       if (key === fieldNameWithoutNumbers) {
-  //         return currentPath ? `${currentPath}.${key}` : key;
-  //       }
-  //       const result = this.findFieldPath(obj[key], fieldNameWithoutNumbers, currentPath ? `${currentPath}.${key}` : key);
-  //       if (result) return result;
-  //     }
-  //   }
-  //   return null;
-  // }
 
 
   public findFieldPath(obj: any, fieldName = 'partnerPhone', currentPath: string = ''): string | null {
@@ -157,6 +147,7 @@ export class ClientsModalEditDataComponent implements OnInit{
   public saveAlterations():void{
 
     let alterations = this.checkForAlterations();
+    console.log(alterations,'tentando verificar as alterações que aconteceram')
     let crId = this.clientDetails.basicData.crId;
 
     for(let i = 0; i < alterations.changedFields.length; i++){
@@ -166,6 +157,7 @@ export class ClientsModalEditDataComponent implements OnInit{
         alterations.changedFields[i].newValue =  this.maskDateCEP(alterations.changedFields[i].newValue);
       }
     }
+
     if(alterations.hasChanges){
       this.clientService.updateClientData(alterations, crId)
       .pipe(takeUntil(this.destroy$))
@@ -340,7 +332,8 @@ export class ClientsModalEditDataComponent implements OnInit{
     window.location.reload();
   }
 
-  //* Criando o formulário dinamicamente de acordo com os dados que o usuário solicitou alteração
+  //* Creating the form dynamically according to the data the user request to chenge
+
 
   public createDynamicForm(): void {
     const formGroup: { [key: string]: any } = {};
@@ -361,6 +354,7 @@ export class ClientsModalEditDataComponent implements OnInit{
   //* Methods for working with flag editing
 
   public getFlagNames(flagNumbers: number[]): string[] {
+    console.log(flagNumbers, 'vendo o que foi recebido no método de flag')
     const flagMap: { [key: number]: string } = {
       1: 'VISA CREDITO',
       2: 'VISA DEBITO',
@@ -370,28 +364,60 @@ export class ClientsModalEditDataComponent implements OnInit{
       23: 'ELO DEBITO',
       28: 'HIPERCARD',
     };
-    return flagNumbers.map(num => flagMap[num] || 'Unknown Flag');
+    return this.flagsByNames = flagNumbers.map(num => flagMap[num] || 'Unknown Flag');
+
   }
+
 
   private getEnabledFlags(): Array<string> {
     this.flagEdit = true;
-    this.editInputOldValues = Object.values(this.clientDetails.codProdutos[0].codes);
-    this.remainderFlags = this.editInputOldValues;
+    this.getFlagNames(this.clientDetails.codProdutos[0].codes)
+    this.identifyRemainderFlags()
     return Object.keys(this.clientDetails.codProdutos[0].codes);
   }
 
   public editFlagsValues() : void{
-    let actualFlags = this.getEnabledFlags();
+    this.getEnabledFlags();
   }
 
-  public clickedFlagValue(e:any) : void{
-  console.log(e)
-  let arrFlags = [e] //*-> Armazenando os valores das flags clicadas no array para capturar os valores.
-  let flagCode = this.getFlagCode(arrFlags);
-  console.log(flagCode, 'flagCode informado')
-  this.remainderFlags = this.remainderFlags.filter((flag:any) => flag !== flagCode[0]); //*-> Removendo a flag clicada do array de flags restantes.
-  console.log(this.remainderFlags, 'remainderFlags')
-}
+  public clickedFlagValue(e: any): void {
+    let arrFlags = [e];
+    // let flagCode = this.getFlagCode(arrFlags);
+
+    // console.log(flagCode[0], 'capturando o código da bandeira conforme interação ')
+
+    this.flagsByNames = (this.flagsByNames).filter((flag:any) => {
+      return flag !== e
+    })
+
+    this.identifyRemainderFlags()
+
+  }
+
+  //* Method who show the remaining flags to user add
+
+  private identifyRemainderFlags() : void {
+    this.remainderFlags = this.codProdutoAdiqService.getCodProdutoList().filter((allFlags:any) => {
+      if(allFlags.nomeProduto !== 'TODAS AS BANDEIRAS'){
+        return !this.flagsByNames.includes(allFlags.nomeProduto)
+      }
+      return
+    }).map((flag:any) => { return flag.nomeProduto})
+  }
+
+
+  @ViewChild('selectFlag') selectFlag:any;
+
+  public addFlagClicked(flag:any){
+    let flagValue = flag.target as HTMLSelectElement;
+
+    this.flagsByNames.push(flagValue.value)
+    this.identifyRemainderFlags()
+
+    // Limpando o select a cada interação para que o evento chenge funcione corretamente
+    this.selectFlag.nativeElement.value = ''
+
+  }
 
 
   public getFlagCode(flagCode:string[]) : number[]{
@@ -404,8 +430,6 @@ export class ClientsModalEditDataComponent implements OnInit{
       'ELO DEBITO': 23 ,
       'HIPERCARD': 28 ,
     };
-    console.log(flagCode, 'Nomes das flags')
-
     return flagCode.map(string => flagMap[string]);
   }
 

@@ -12,7 +12,6 @@ export class AdiqRequestByClientService {
   private url = environment.api.url
 
   getAdiqRequestByClient(crId: string): Observable<any> {
-    console.log(crId, 'verificando o id que é recebido no gerAdiqRequestByClient')
     return this.http.get<any>(`${this.url}/accreditationAdiqById/${crId}`)
   }
 

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './services/guards/authGuard.service';
 import { PermissionsGuard } from './services/guards/permissionsGuard.service';
+import { PagenotfoundComponent } from './components/core/layout/pageNotFound/pagenotfound.component';
 
 
 export const routes: Routes = [
@@ -25,7 +26,6 @@ export const routes: Routes = [
         path: 'admin',
         canActivateChild: [PermissionsGuard],
         children: [
-
 
           {
             path: 'users',
@@ -55,11 +55,13 @@ export const routes: Routes = [
           },
         ],
       },
+
       // {
       //   path: 'credPinBank/novo-credenciamento',
       //   loadComponent: () => import('./components/core/pages/dashboard-pages/credPinBank/new-accreditationPinBank/newAccreditationPinBank.component').then(m => m.NewAccreditationComponentPinBank),
       //   data: { roles: ['admin', 'master', 'Criar Credenciamento'] }
       // },
+
       {
         path: 'gerar-contrato',
         loadComponent: () => import('./components/core/pages/dashboard-pages/contract/contractGenerate.component').then(m => m.ContractGenerateComponent)
@@ -75,8 +77,9 @@ export const routes: Routes = [
         loadComponent: () => import('./components/core/pages/consultClient/bigData/ocr/onboarding/onboardingForm.component').then(m => m.onboardingFormComponent)
       },
 
+
       {
-        path: 'ocr/result/:document',
+        path: 'ocr/result/:document/:datasets',
         loadComponent: () => import('./components/core/pages/consultClient/bigData/ocr/result/ocrSearchResult.component').then(m => m.ocrSearchResultComponent)
       },
 
@@ -137,6 +140,11 @@ export const routes: Routes = [
         loadComponent: () => import('./components/core/pages/profile/profile.component').then(m => m.ProfileComponent),
         canActivateChild: [PermissionsGuard]
       },
+
+
     ]
   },
+  { path: '**', pathMatch: 'full',
+    component: PagenotfoundComponent },
+
 ];

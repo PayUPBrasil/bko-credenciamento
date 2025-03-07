@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
 import { Subject, lastValueFrom, takeUntil, timeout } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -9,10 +9,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 // Components
 import { BreadcrumbComponent } from '../../../../layout/breadcrumb.component';
 import { ModalComponent } from '../../../../layout/modal.component';
-import { LoaderComponent } from '../../../../layout/loader.component';
 import { FlagTagComponent } from '../../../../layout/flagTag.component';
-import { ButtonPrimaryComponent } from '../../../../layout/buttons/button-primary.component';
-import { FakeLoaderComponent } from '../../../../layout/fakeLoader.component';
 import { ContractModalComponent } from '../../contract/contractModal.component';
 import { NewAccreditationModalComponent } from "./newAccreditationModal.component";
 import { DocumentUploadComponent } from "./documentUpload.component";
@@ -32,14 +29,11 @@ import { TecnologyTableAdiq } from '../../../../../../services/utils/tecnologyTa
 import { TypeEnterpriseService } from '../../../../../../services/utils/typeEnterprise.service';
 import { NewAccreditationService } from './newAccreditation.service';
 import { SearchCepService } from '../../../../../../services/utils/searchCep.service';
-import { SearchCityIBGECodeService } from '../../../../../../services/utils/searchCityIBGECode.service';
-import { CountriesService } from '../../../../../../services/utils/countries.service';
 import { AccountTypesService } from '../../../../../../services/utils/accountTypes.service';
 // Directives
 import { DateValidatorDirective } from '../../../../../../directives/validators/date-validator.directive';
 import { MonthYearValidatorDirective } from '../../../../../../directives/validators/month-year-validator.directive';
 import { CpfCnpjValidatorDirective } from '../../../../../../directives/validators/cpfcnpj-validator.directive';
-import { PhoneValidatorDirective } from '../../../../../../directives/validators/phone-validator.directive';
 
 // Animations
 import { fadeInOut } from '../../../../../animations/fadeInAnimation.component';
@@ -48,6 +42,8 @@ import { fadeInOut } from '../../../../../animations/fadeInAnimation.component';
 import { Breadcrumb } from '../../../../layout/types/breadcrumb.interface';
 import { SessionService } from '../../../../../../services/session/session.service';
 import { contactResponsabilityListService } from '../../../../../../services/utils/contactResponsabilityList.service';
+import { RegisterSuccessModalComponent } from "../../clients/clientsDetailsForm/registerSuccessModal.component";
+import { SelectAccountTypeComponent } from "./selectAccountType.component";
 
 @Component({
   selector: 'app-pages-newAccreditation',
@@ -56,14 +52,10 @@ import { contactResponsabilityListService } from '../../../../../../services/uti
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterLink,
     NgxMaskDirective,
     BreadcrumbComponent,
     ModalComponent,
-    LoaderComponent,
     FlagTagComponent,
-    ButtonPrimaryComponent,
-    FakeLoaderComponent,
     ContractModalComponent,
     NewAccreditationModalComponent,
     DocumentUploadComponent,
@@ -72,10 +64,11 @@ import { contactResponsabilityListService } from '../../../../../../services/uti
     CpfCnpjValidatorDirective,
     DateValidatorDirective,
     MonthYearValidatorDirective,
-    PhoneValidatorDirective,
     NgFor,
-    NgIf
-  ],
+    NgIf,
+    RegisterSuccessModalComponent,
+    SelectAccountTypeComponent
+],
   animations: [fadeInOut],
 })
 export class NewAccreditationComponent implements OnDestroy, OnInit {
@@ -106,8 +99,8 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
     });
   }
 
-  // public accreditationOption!: number;
-  public accreditationOption = 2; //*-> Usado para testar um tipo específico de credenciamento (pf ou pj) -> Deve ser removido em produção
+  public accreditationOption!: number;
+  // public accreditationOption = 2; //*-> Usado para testar um tipo específico de credenciamento (pf ou pj) -> Deve ser removido em produção
   public formBuilder = inject(FormBuilder);
   public router = inject(Router);
 
@@ -120,8 +113,6 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
   public enterpriseTypes = inject(TypeEnterpriseService).getEnterpriseTypes();
   private searchCNPJService = inject(SearchCNPJService);
   private searchCepService = inject(SearchCepService);
-  private countriesService = inject(CountriesService);
-  private searchCityIBGECodeService = inject(SearchCityIBGECodeService);
   public ufService = inject(UfService);
   private taxationService = inject(TaxationService);
   public taxationList = this.taxationService.getTaxationList();
@@ -178,7 +169,7 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
 
   //* @Permite que o usuário final escolha o tipo de credenciamento que vai realizar
   public accreditationOptSelect(value: any) {
-     this.accreditationOption = value;
+    this.accreditationOption = value;
     this.setValidators();
   }
 
@@ -212,7 +203,7 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
 
   //* @ Campos do formulário de credenciamento, PF e PJ
   public accreditationForm = this.formBuilder.group({
-    cnpj: ['', [Validators.minLength(14), Validators.maxLength(18)]],
+    cnpj: ['44569277000105', [Validators.minLength(14), Validators.maxLength(18)]],
     cpf: ['', [Validators.minLength(14), Validators.maxLength(14)]],
     name: [''],
     birthdayDate: [''],
@@ -222,7 +213,7 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
 
     contactResponsability: [''],
     corporateName: ['', [Validators.maxLength(100)]],
-    tradeName: ['', [Validators.maxLength(100), Validators.required]],
+    tradeName: ['Lab Albergaria', [Validators.maxLength(100), Validators.required]],
     stateRegistration: ['', [Validators.maxLength(100)]],
     nameOnInvoice: ['', [Validators.maxLength(35), Validators.required]],
     commercialActivity: ['', []],
@@ -562,14 +553,12 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
 
   // @ Direciona o usuário para o cadastro recém feito.
   public goToClientDetails(crId: string) {
-    console.log(crId, 'crId');
     this.router.navigate(['/dashboard/clients/details', crId]);
   }
 
 
   public remaindMeLater() {
     let crId = this.newAccreditationService.getCrId()
-    console.log(crId, 'verificando o crID')
     this.router.navigate(['/dashboard/clients/details', crId]);
   }
   // @ Funções responsáveis por realizar validações no formulário

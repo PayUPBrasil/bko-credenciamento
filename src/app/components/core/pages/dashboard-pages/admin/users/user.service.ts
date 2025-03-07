@@ -93,7 +93,7 @@ export class UserService {
 
   public getUserNameById(userID:string) : Observable<any>{
     return this.getUserById(userID).pipe(
-      tap( user => console.log('User Name:', user.name)  )
+
     )
   }
 }

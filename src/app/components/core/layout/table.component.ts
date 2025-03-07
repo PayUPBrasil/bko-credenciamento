@@ -17,14 +17,14 @@ export class TableComponent implements OnInit {
   @Input() visibleItems = 4;
   public showArrowIcon = false;
 
-  showMore() {
+  public showMore() {
     this.visibleItems += 10;
     if (this.visibleItems > Object.keys(this.tableContent).length) {
       this.visibleItems = Object.keys(this.tableContent).length;
     }
   }
 
-  showLess(){
+  public showLess(){
     this.visibleItems = Math.max(this.visibleItems - 10, 4);
     if (this.visibleItems < 4) {
       this.visibleItems = 4;

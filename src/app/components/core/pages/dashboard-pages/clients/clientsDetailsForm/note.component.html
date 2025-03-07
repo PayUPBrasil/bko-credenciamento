@@ -1,26 +1,81 @@
 <ng-container aria-label="Adicionar Notas">
-  <div [@fadeInOut] class="fixed inset-0 z-50 flex w-full items-center justify-center bg-gray-700/50 p-4">
-    <div class="w-[480px] min-w-[400px] max-w-[800px]">
-      <div class="focus-within:border-primary-300 focus-within:ring-primary-200 relative overflow-hidden rounded-md border border-gray-300 bg-green-600 shadow-sm focus-within:ring focus-within:ring-opacity-50">
-        <textarea id="example5" class="block w-full resize-none border-0 focus:border-0 focus:ring-0" rows="8" placeholder="Escreva uma mensagem..."></textarea>
+  <div [@fadeInOut]
+    class="fixed inset-0 z-50 flex w-full items-center justify-center bg-gray-700/50 p-4">
+    <div class="w-[470px] min-w-[400px] max-w-[800px]">
+      <div
+        class=" relative overflow-hidden rounded-xl border border-gray-300 bg-white shadow-sm"
+        [ngClass]="{
+          'focus-within:border-red-400 focus-within:ring-red-400 focus-within:ring-opacity-100': remainingCharacters === 0,
+          '': remainingCharacters > 0
+        }">
 
-        <div class="flex w-full items-center justify-between border-t bg-white p-2">
-          <div class="flex space-x-1">
-            <button class="text-secondary-400 hover:bg-primary-50 hover:text-primary-400 rounded p-1.5">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-              </svg>
-            </button>
-            <!-- <button class="text-secondary-400 hover:bg-primary-50 hover:text-primary-400 rounded p-1.5">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
-              </svg>
-            </button> -->
+        <!-- Header -->
+        <div class="flex flex-col w-full items-center justify-between">
+          <div
+            class="px-4 w-full py-2 flex items-start justify-between mt-2 text-slate-500">
+
+            <!-- perfil -->
+            <div class="flex gap-2 items-start">
+              <div
+                class="w-10 h-10 rounded-full bg-no-repeat bg-cover bg-center border" [ngStyle]="{'background-image': 'url( ' + userLoggedData.profilePic +' )'}"></div>
+              <div class="flex flex-col">
+                <span class="text-sm font-bold text-black">{{userLoggedData.name}}</span>
+                <span class="text-xs">{{userLoggedData.email}}</span>
+              </div>
+            </div>
+
+            <!-- botao -->
+            <div>
+              <button (click)="closeModal()" class="w-fit group">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor"
+                  class="size-5 group-hover:text-primary w-fit">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6 18 18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
           </div>
-          <div class="space-x-3">
-            <button (click)="closeModal()" type="button" class="rounded border border-red-500 bg-red-500 px-2 py-1.5 text-center text-xs font-medium text-white shadow-sm transition-all hover:bg-red-500 focus:ring focus:ring-red-500">Cancelar</button>
+          <div>
+          </div>
+          <div class="h-[1px] bg-slate-50 w-full "></div>
+        </div>
 
-            <button type="button" class="rounded border border-primary bg-primary px-2 py-1.5 text-center text-xs font-medium text-white shadow-sm transition-all hover:bg-primary focus:ring focus:ring-primary">Salvar Anotação</button>
+        <!-- Body -->
+        <textarea
+          #textAreaInput
+          spellcheck="true"
+          lang="pt-BR"
+          [(ngModel)]="text"
+          [attr.maxlength]="maxLength"
+          (input)="maxInputLength()"
+          class="block w-full resize-none border-0 focus:border-0 focus:ring-0  text-sm plus-jakarta-sans px-3 text-start"
+          rows="8"
+          placeholder="O que está acontecendo?"></textarea>
+
+        <!-- Footer -->
+        <div
+          class="flex w-11/12 m-auto items-center justify-between border-t bg-white p-2 pl-8">
+
+          <ng-container *ngIf="errorMessage">
+            <div class="flex space-x-1 text-xs text-red-500">
+              {{errorMessage}}
+            </div>
+          </ng-container>
+
+          <div class="w-full flex items-center justify-end gap-3">
+            <span
+              class="text-xs text-text border-4 p-1 w-9 flex justify-center items-center h-9 rounded-full "
+              [ngClass]="{'text-red-500 border-red-500' : remainingCharacters == 0, 'border-yellow-500' : remainingCharacters <= 20 && remainingCharacters != 0 , 'border-primary' : remainingCharacters !== 0 }">{{remainingCharacters}}</span>
+            <div class="space-x-3">
+              <button (click)="saveNote(textAreaInput.value)" type="button"
+                class="rounded-full border border-primary bg-primary px-2 py-2 text-center text-xs font-medium text-white shadow-sm transition-all hover:bg-primary focus:ring focus:ring-primary disabled:bg-slate-400 border-none cursor-pointer items-center justify-center gap-2 delay-150
+        relative overflow-hidden before:absolute before:top-0 before:left-0 before:h-full before:w-full before:origin-left before:scale-x-0 before:bg-primary before:transition-transform before:duration-700 before:ease-in-out hover:before:scale-x-100 before:z-0 group hover:border-primary hover:duration-500 hover:text-white
+                ">
+                <span class="relative z-10">Salvar
+                  Anotação</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

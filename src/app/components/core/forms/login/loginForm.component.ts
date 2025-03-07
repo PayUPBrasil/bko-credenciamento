@@ -86,8 +86,12 @@ export class LoginFormComponent {
                 this.errorMsg = "Você não tem permissão para acessar o sistema, por favor, comunique seu superior."
                 break;
 
-              case "Usuário não localizado!":
-                this.errorMsg = "Usuário não cadastrado no sistema. Entre em contato com o seu superior."
+              case "Senha inválida!":
+                this.errorMsg = "Senha inválida!"
+                break;
+
+              case "O campo *Usuário* deve ser válido":
+                this.errorMsg = "Usuário incorreto!"
                 break;
 
               default: this.errorMsg = "Não foi possível realizar o login, contate o administrador do sistema."
@@ -109,7 +113,6 @@ export class LoginFormComponent {
         localStorage.setItem('profile', response.data.profilePic)
         if (response) {
           // this.data.routerLink = "dashboard/home"
-          // this.router.navigate(['dashboard/home'])
           this.router.navigate(['dashboard/consultar-cliente'])
         }
       },

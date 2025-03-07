@@ -54,7 +54,7 @@
 
             <div class="flex flex-col gap-1">
               <span class="px-1 text-sm">E-mail</span>
-              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientEmail" />
+              <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="clientEmail" placeholder="email@email.com" />
               <ng-container *ngIf="newContractForm.get('clientEmail')?.errors">
                 <span class="mt-2 text-xs text-red-500" *ngIf="newContractForm.get('clientEmail')?.hasError('required')">O campo é obrigatório</span>
               </ng-container>

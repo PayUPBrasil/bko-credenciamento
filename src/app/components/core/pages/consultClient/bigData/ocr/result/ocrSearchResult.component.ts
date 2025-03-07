@@ -1,43 +1,56 @@
-import { Component, ElementRef,  inject, OnDestroy, OnInit,  ViewChild } from "@angular/core";
+import { Component, ElementRef,  EventEmitter,  inject, OnDestroy, OnInit,  Output,  ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormatCpfCnpjPipe } from "../../../../../../../pipes/format-cpf-cnpj.pipe";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { DatePipe, KeyValuePipe, NgClass, NgFor, NgIf } from "@angular/common";
 import { OcrService } from "../ocr.service";
-import { debounceTime, distinctUntilChanged,  Subject, takeUntil } from "rxjs";
+import { debounceTime, distinctUntilChanged,  Subject, takeUntil, tap } from "rxjs";
 import { TableComponent } from "../../../../../layout/table.component";
 import { Root } from "../types/bigData.interface";
 import { ExportsFileService } from "../../../../../../../services/utils/exportsFile.service";
 import { NotifyComponent } from "../../../../../layout/notifyAlert.component";
+import { fadeInOut } from "../../../../../../animations/fadeInAnimation.component";
+import { ComboboxModalComponent } from "../../../../../layout/comboboxModal.component";
 
 @Component({
   selector: "app-pages-ocr-result",
   templateUrl: "./ocrSearchResult.component.html",
   standalone: true,
-  imports: [FormatCpfCnpjPipe, NgxSkeletonLoaderModule, NgIf, NgFor, KeyValuePipe, TableComponent, DatePipe, NgClass, NotifyComponent]
+  imports: [FormatCpfCnpjPipe, NgxSkeletonLoaderModule, NgIf, NgFor, KeyValuePipe, TableComponent, DatePipe, NgClass, NotifyComponent, ComboboxModalComponent],
+  animations: [fadeInOut]
 })
 
 export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
+  @Output() cleanQuery = new EventEmitter<void>()
   private activatedRoute = inject(ActivatedRoute)
   private ocrService = inject(OcrService)
   private exportsFileService = inject(ExportsFileService)
 
-  protected document !: string;
+
   public contentLoaded = false
   public showElementHidden= false
   public canClickTheButton = false
   public aiContentLoaded = true
-  private destroy$ = new Subject<void>();
-  public subjectValues : any[]= []
+  public totalProcess = false
+  public linkQueryModal = false
+  public notifyItemModal = false
+  public notifyItem !: any;
+  public isAKnowPerson = false
+  public TotalSearchResults = 0
+  public hasKYCInformation = false
+  public seeMore = false
+
   public QueryDate = ''
 
-
+  private destroy$ = new Subject<void>();
+  public subjectValues : any[]= []
+  protected document !: string;
+  protected datasets : any[] = []
+  protected newsList: any[] = []
   public returnObje : any = {}
-  public notifyItemModal = false
   public hasCriminalProcessToReport !: boolean
 
-  public notifyItem !: any;
   public processInformationCnjProcedureTypeDistribution : any[]  = []
   public processInformationCnjSubjectDistribution : any[]  = []
   public processInformationCourtLevelDistribution : any[]  = []
@@ -48,12 +61,28 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   public processInformationStatusDistribution : any[]  = []
   public processInformationTypeDistribution : any[]  = []
 
+public modalFormConfiguration =
+  {
+    title: 'Pesquisar Cliente',
+    description: 'Busque o cliente que você deseja vincular esta consulta.',
+    type: 'text',
+    required: true,
+    disabled: true,
+    value: '',
+    form: {
+      formName:'searchClient',
+    }
+  }
+
+
   public basicDataInformation : any [] = []
   public resumeInformation : any [] = []
+  public kcyInformation : any[] = []
   public financialInterestsInformation : any [] = []
   public IndebtednessQuestionInformation : any [] = []
   public financialRiskInformation : any [] = []
-
+  public kcyContent = ''
+  public quantityNewsItems = ''
   public resultSearchTerm : any[]= []
 
   private searchTerms = new Subject<string>();
@@ -62,13 +91,24 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
   private router = inject(Router)
   public tableContent = []
+  public totalSocialNetworks: any;
+  public socialNetworksName : any[] = []
+
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       if(!params['document']){
         this.router.navigate(['/dashboard/consultar-cliente']);
       }
+
       this.document = params['document'];
+
+      if(!params['datasets']){
+        this.router.navigate([`/dashboard/ocr/result/${this.document}/`]);
+      } else if(params['datasets']) {
+        const datasetsString = params['datasets'];
+        this.datasets = datasetsString.split(',');
+      }
     });
     this.searchInformationAboutDocument();
   }
@@ -83,35 +123,75 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
     });
   }
 
-  onMouseEnter(term: any): void {
+
+  //* Mostra ou oculta tabelas que estão agrupadas no front-end
+  public seeMoreItems() {
+      this.seeMore = !this.seeMore;
+  }
+
+ public onMouseEnter(term: any): void {
     if (!this.cache[term] && !this.loadingTerms.has(term)) {
       this.loadingTerms.add(term);
       this.searchTerms.next(term);
     }
   }
 
+  public onMouseClick(term:any) : void {
+    console.log('cliquei na palavra para realizar a busca', term)
+    if(!this.cache[term]){
+      this.loadingTerms.add(term);
+      this.searchTerms.next(term);
+    }
+  }
   public newConsultingRedirect(){
+    this.cleanQuery.emit();
     this.router.navigate(['/dashboard/consultar-cliente']);
   }
 
   //* Buscando informações do documento na BigData Corp
   public searchInformationAboutDocument(){
-    if(this.document) {
-      this.ocrService.searchInformationAtBigDataCorp(this.document).pipe(
+
+    if(this.document && this.datasets.length  > 0) {
+       let consultingParams = {
+        document:this.document,
+        datasets: this.datasets || '',
+      }
+
+      this.ocrService.searchInformationAtBigDataCorp(consultingParams).pipe(
         takeUntil(this.destroy$)
       )
       .subscribe({
         next: (response) => {
+          console.log(response, 'verificando a resposta da bigdata no controller')
+          if(response.Result[0].LawsuitsDistributionData.TotalLawsuits > 0){
+            this.totalProcess = true
+          }
           if(response) {
-            this.QueryDate = response.QueryDate //* Data em que a consulta foi realizada
+
+            this.QueryDate = response.QueryDate
             let type  = this.checkTypeByReturnBigData(response.Result[0].BasicData.TaxIdNumber)
 
-            if(type == 'pf'){
+           if( response.Result[0].BasicData && response.Result[0].BasicData.TaxIdStatus === "CNPJ DOES NOT EXIST IN RECEITA FEDERAL DATABASE"){
+            this.canClickTheButton = false
+              this.basicDataInformation = ['']
+              this.processInformationCnjProcedureTypeDistribution = []
+              this.processInformationCnjSubjectDistribution   = []
+              this.processInformationCourtLevelDistribution   = []
+              this.processInformationCourtNameDistribution   = []
+              this.processInformationCourtTypeDistribution   = []
+              this.processInformationPartyTypeDistribution   = []
+              this.processInformationStateDistribution   = []
+              this.processInformationStatusDistribution   = []
+              this.processInformationTypeDistribution   = []
+
+            } else if (type == 'pf'){
               this.createTabelWithDataByType('pf', response);
             } else if(type == 'pj'){
               this.createTabelWithDataByType('pj', response);
             }
-          this.stopLoadingSkeleton()
+            this.stopLoadingSkeleton()
+            this.createKycResume(response);
+            this.canClickTheButton= true
          } else {
           throw new Error('Falha ao buscar informações do documento');
          }
@@ -123,7 +203,105 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
     }
   }
 
-  public checkTypeByReturnBigData(document:string) : string{
+
+
+  public createKycResume(response:any) {
+    let newsInformatinList: any[] = [];
+
+    response.Result[0].MediaProfileAndExposure.NewsItems.forEach((reportage: any) => {
+      const tradeName = response.Result[0].BasicData.TradeName ? response.Result[0].BasicData.TradeName.toUpperCase() : null;
+      const OfficialName = response.Result[0].BasicData.OfficialName ? response.Result[0].BasicData.OfficialName.toUpperCase() : null;
+      const title = reportage.Title.toUpperCase();
+      const clientType = response.Result[0].BasicData.TaxIdNumber;
+
+      console.log(title.includes(tradeName || OfficialName), 'title.includes(tradeName || OfficialName')
+      console.log(tradeName,  OfficialName)
+
+      if (clientType.length === 14) {
+        if (tradeName && title.includes(tradeName || OfficialName)) {
+          console.log(reportage, 'unica reportagem com as informações completamente inteiras');
+          console.log('dentro do pj criacao');
+          newsInformatinList.push(reportage);
+        }
+        newsInformatinList.push(reportage);
+      } else {
+        newsInformatinList.push(reportage);
+      }
+    });
+
+
+    this.newsList.push(...newsInformatinList);
+
+    this.newsList.length > 0 ? this.isAKnowPerson = true  : false
+    this.hasKYCInformation = true
+
+    if (response.Result[0].AppsNetworksAndPlatforms) {
+       this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms.AppProfiles);
+      this.TotalSearchResults = response.Result[0].AppsNetworksAndPlatforms.TotalSearchResults;
+    }
+  }
+
+  protected addSocialNameToArrList(socialNetworks: any) {
+    console.log(this.socialNetworksName,'socialNetworksName.length ')
+
+    for(let i =0; i < socialNetworks.length; i++) {
+      if(socialNetworks[i].DisplayNameMatchRate > 40) {
+        this.socialNetworksName.push(
+          { socialName: socialNetworks[i].AppName,
+            socialLink: socialNetworks[i].ProfileUrl
+          }
+        );
+        this.totalSocialNetworks = this.socialNetworksName.length;
+      }
+    }
+
+    const {
+      HasFacebookProfile,
+      HasGithubProfile,
+      HasInstagramProfile,
+      HasLinkedInProfile,
+      HasMercadoLivrePresence,
+      HasOLXPresence,
+      HasPinterestProfile,
+      HasTwitterProfile,
+    } = socialNetworks;
+
+    const objValues = {
+      HasFacebookProfile,
+      HasGithubProfile,
+      HasInstagramProfile,
+      HasLinkedInProfile,
+      HasMercadoLivrePresence,
+      HasOLXPresence,
+      HasPinterestProfile,
+      HasTwitterProfile,
+    };
+
+    if (Object.keys(objValues)) {
+      console.log(objValues, 'objValues')
+      this.socialNetworksName.push(
+        Object.keys(objValues)
+          .filter((item) => objValues[item as keyof typeof objValues] === true)
+          .map((item) => this.getSocialNetworkName(item))
+      );
+
+    }
+  }
+public getSocialNetworkName(name:string) {
+  switch(name){
+    case 'HasFacebookProfile': return 'Facebook';
+    case 'HasGithubProfile': return 'Github';
+    case 'HasInstagramProfile': return 'Instagram';
+    case 'HasLinkedInProfile': return 'LinkedIn';
+    case 'HasMercadoLivrePresence': return 'Mercado Livre';
+    case 'HasOLXPresence': return 'OLX';
+    case 'HasPinterestProfile': return 'Pinterest';
+    case 'HasTwitterProfile': return 'Twitter';
+    default: return '';
+  }
+}
+
+public checkTypeByReturnBigData(document:string) : string{
     let cleanDocument = document.replace(/\D/g, '');
     const TYPE_PF = 'pf';
     const TYPE_PJ = 'pj';
@@ -154,16 +332,17 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
       response.Result[0].BasicData ? this.basicDataInformation = [this.ocrService.filterBasicDataPJ(response.Result[0].BasicData)] : [];
 
+
       //*Tratando os processos judiciais separadamente por assunto retornado via bigData.
-      response.Result[0].LawsuitsDistributionData.CnjSubjectDistribution ? this.processInformationCnjSubjectDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CnjSubjectDistribution)] : this.processInformationCnjSubjectDistribution = ['']
-      response.Result[0].LawsuitsDistributionData.CnjProcedureTypeDistribution ? this.processInformationCnjProcedureTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CnjProcedureTypeDistribution)] : this.processInformationCnjProcedureTypeDistribution = ['']
-      response.Result[0].LawsuitsDistributionData.CourtLevelDistribution ? this.processInformationCourtLevelDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CourtLevelDistribution)] : this.processInformationCourtLevelDistribution = ['']
-      response.Result[0].LawsuitsDistributionData.CourtNameDistribution ? this.processInformationCourtNameDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CourtNameDistribution)] : this.processInformationCourtNameDistribution = ['']
-      response.Result[0].LawsuitsDistributionData.CourtTypeDistribution ? this.processInformationCourtTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CourtTypeDistribution)] : this.processInformationCourtTypeDistribution = ['']
-      response.Result[0].LawsuitsDistributionData.PartyTypeDistribution ? this.processInformationPartyTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.PartyTypeDistribution)] : this.processInformationPartyTypeDistribution = ['']
-      response.Result[0].LawsuitsDistributionData.StateDistribution ? this.processInformationStateDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.StateDistribution)] : this.processInformationStateDistribution = ['']
-      response.Result[0].LawsuitsDistributionData.StatusDistribution ? this.processInformationStatusDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.StatusDistribution)] : this.processInformationStatusDistribution = ['']
-      response.Result[0].LawsuitsDistributionData.TypeDistribution ? this.processInformationTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.TypeDistribution)] : this.processInformationTypeDistribution = ['']
+      response.Result[0].LawsuitsDistributionData.CnjSubjectDistribution ? this.processInformationCnjSubjectDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CnjSubjectDistribution)] : this.processInformationCnjSubjectDistribution = []
+      response.Result[0].LawsuitsDistributionData.CnjProcedureTypeDistribution ? this.processInformationCnjProcedureTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CnjProcedureTypeDistribution)] : this.processInformationCnjProcedureTypeDistribution = []
+      response.Result[0].LawsuitsDistributionData.CourtLevelDistribution ? this.processInformationCourtLevelDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CourtLevelDistribution)] : this.processInformationCourtLevelDistribution = []
+      response.Result[0].LawsuitsDistributionData.CourtNameDistribution ? this.processInformationCourtNameDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CourtNameDistribution)] : this.processInformationCourtNameDistribution = []
+      response.Result[0].LawsuitsDistributionData.CourtTypeDistribution ? this.processInformationCourtTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.CourtTypeDistribution)] : this.processInformationCourtTypeDistribution = []
+      response.Result[0].LawsuitsDistributionData.PartyTypeDistribution ? this.processInformationPartyTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.PartyTypeDistribution)] : this.processInformationPartyTypeDistribution = []
+      response.Result[0].LawsuitsDistributionData.StateDistribution ? this.processInformationStateDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.StateDistribution)] : this.processInformationStateDistribution = []
+      response.Result[0].LawsuitsDistributionData.StatusDistribution ? this.processInformationStatusDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.StatusDistribution)] : this.processInformationStatusDistribution = []
+      response.Result[0].LawsuitsDistributionData.TypeDistribution ? this.processInformationTypeDistribution = [this.ocrService.filterPocessInformation(response.Result[0].LawsuitsDistributionData.TypeDistribution)] : this.processInformationTypeDistribution = []
 
       //* Maneira que os dados devem ser estruturados para que seja possível montar um texto corrido de resumo com os valores dos processos judiciais
       //* Se esse item não existir, a tabela não é criada
@@ -194,6 +373,21 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
     return  this.hasCriminalProcessToReport
   }
 
+  public forceRefresh() {
+    if(this.document)
+    this.ocrService.forceNewSearchAtBigDataCorp(this.document).pipe(
+  tap(res => {console.log(res, 'vericicando  a response no tap')})).subscribe(
+      {
+        next: (response) => {
+           if(response.status == 204) window.location.reload();
+        },
+        error: (error) => {
+          // Handle error
+          console.error(error, 'verificando o erro')
+        }
+      }
+    )
+  }
 
   //* Buscando termo juridico com AI
 
@@ -207,7 +401,6 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe({
       next: (result) => {
-        console.log(result, 'verificano o resultado retornado pela IA')
         this.cache[term] = result.data.result;
         this.loadingTerms.delete(term);
       },
@@ -227,13 +420,10 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
 
   public stopLoadingSkeleton() : void {
     this.contentLoaded = true
-    this.canClickTheButton= true
+    // this.canClickTheButton= true
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+
 
 
 
@@ -242,16 +432,15 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
   }
 
 
-
-
-
+  public linkQueryState(){
+    this.linkQueryModal = !this.linkQueryModal
+  }
 
 
   @ViewChild('contentToExport') contentToExport!: ElementRef;
 
 
-  exportToPdf() {
-
+  public exportToPdf() {
     this.canClickTheButton = false
     //colocar o loading para rodar ->
     const htmlContent = this.contentToExport.nativeElement.innerHTML;
@@ -308,5 +497,13 @@ export class ocrSearchResultComponent implements OnInit, OnDestroy {
     });
 
 }
+
+ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
+}
+
+
+
 
 }

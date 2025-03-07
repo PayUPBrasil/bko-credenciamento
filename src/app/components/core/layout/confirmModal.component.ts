@@ -5,7 +5,6 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
   selector: "app-layout-confirmModal",
   templateUrl: "./confirmModal.component.html",
   standalone: true,
-  imports: [NgIf]
 })
 
 export class ConfirmModalComponent {

@@ -16,7 +16,7 @@
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
                 </svg>
 
-                <div><b>Error alert</b> Lorem ipsum dolor sit amet. Internos reprehenderit perspiciatis commodi et omnis impedit.</div>
+                <div><b>Error alert</b> {{errorMessage}}</div>
                 <button (click)="errorMessage = ''" class="ml-auto" x-on:click="showAlert = false">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
                     <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -696,8 +696,8 @@
                         </ng-container>
                       </div>
                       <div class="mt-4 flex flex-col">
-                        <span class="font-sans">Documento do Responsável pela Conta</span>
-                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="accountResponsibleDoc" maxlength="19" placeholder="000.000.000-00 / 00.000.000/0000-00" mask="000.000.000-00 || 00.000.000/0000-00" />
+                        <span class="font-sans">Documento do Responsável pela Conta (CPF ou CNPJ)</span>
+                        <input type="text" class="placeholder:text-secondary-400 h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="accountResponsibleDoc" maxlength="19" placeholder="CPF ou CNPJ" mask="000.000.000-00 || 00.000.000/0000-00" />
                         <ng-container *ngIf="accreditationForm.get('accountResponsibleDoc')?.errors">
                           <span *ngIf="accreditationForm.get('accountResponsibleDoc')?.hasError('required')" class="mt-2 text-xs text-red-500">O campo é obrigatório</span>
                           <span *ngIf="accreditationForm.get('accountResponsibleDoc')?.hasError('serverError')" class="mt-2 text-xs text-red-500">
@@ -791,7 +791,7 @@
                         </div>
                         <div class="flex w-full flex-col">
                           <span class="font-sans">Órgão Expedidor</span>
-                          <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500" formControlName="partnerDocumentExpedidor" placeholder="SSP" />
+                          <input type="text" class="h-[50px] rounded-lg border border-[#E1E7EF] font-sans focus:border-purple-500 uppercase" formControlName="partnerDocumentExpedidor" placeholder="SSP" />
                           <ng-container *ngIf="accreditationForm.get('partnerDocumentExpedidor')?.errors">
                             <span class="mt-2 text-xs text-red-500" *ngIf="accreditationForm.get('partnerDocumentExpedidor')?.hasError('required')">O campo é obrigatório</span>
                           </ng-container>
@@ -1381,27 +1381,19 @@
         </div>
       </section>
     </div>
-    <div class="flex justify-center bg-slate-500">
-      @if (showModalAlert) {
-        <app-layout-modal [alert]="alert" (newItemEvent)="button($event)" />
-      }
-    </div>
+    <ng-container *ngIf="showModalAlert">
+      <div class="flex justify-center bg-slate-500">
+          <app-layout-modal [alert]="alert" (newItemEvent)="button($event)" />
+      </div>
+    </ng-container>
+
   </section>
 }
 
 @if (!accreditationOption) {
-  <div class="min-h-screen bg-[#eef1f6] p-4">
-    <div class="flex h-screen items-center justify-center" [@fadeInOut]>
-      <div class="flex min-h-[230px] w-[500px] flex-col items-center justify-evenly rounded-lg bg-white px-4 text-center">
-        <span class="font-sans text-lg">Escolha qual o tipo de cadastro você deseja criar</span>
-
-        <div class="grid grid-cols-1 items-center gap-5 lg:grid-cols-2">
-          <div (click)="accreditationOptSelect('2')" class="flex h-[80px] w-[200px] cursor-pointer items-center justify-center rounded-lg border border-slate-200 p-2 shadow-sm transition-all delay-100 hover:border-primary">Pessoa Física</div>
-          <div (click)="accreditationOptSelect('1')" class="flex h-[80px] w-[200px] cursor-pointer items-center justify-center rounded-lg border border-slate-200 p-2 shadow-sm transition-all delay-100 hover:border-primary">Pessoa Jurídica</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div [@fadeInOut]>
+  <app-pages-select-account-type  (selectedAccountType)="accreditationOptSelect($event)"/>
+</div>
 }
 
 @if (doAccreditation === true && produtosAdicionados.length > 0) {
@@ -1417,40 +1409,20 @@
 
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-2 text-center sm:items-center sm:p-0">
-          <div class="relative flex h-[280px] transform flex-col justify-around overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div class="relative flex h-[280px] transform flex-col justify-start overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
             <!-- animaçao de load -->
 
-            @if (loadingFake == true) {
+            <!-- @if (loadingFake == true) {
               <div class="flex h-full w-full items-center justify-center">
                 <app-layout-fakeLoader />
               </div>
-            }
+            } -->
 
             <!-- Informação de sucesso -->
 
-            @if (loadingFake == false && generateContract == false) {
-              <div class="flex flex-col gap-5">
-                <div class="flex flex-col items-center justify-center gap-2">
-                  <div class="flex w-full items-center justify-end px-3 pt-3">
-                    <span class="cursor-pointer" (click)="remaindMeLater()">
-                      <img class="size-6" src="/assets/icons/xMark.svg" alt="Ícone para fechar" />
-                    </span>
-                  </div>
-                  <div class="flex w-fit flex-col items-center justify-center gap-3 rounded-full bg-transparent p-2 px-5">
-                    <img class="w-10" src="/assets/icons/checkGreenIcon.svg" alt="" />
-                    <span class="font-sans text-lg font-bold text-text">Cliente Registrado com Sucesso</span>
-                    <span class="text-center font-sans text-sm text-text">Gere um contrato para o cliente cadastrado ou realize o credeenciamento dele na Adiq.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="w-full justify-center font-sans">
-                <div class="gap-5 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button (click)="accreditationAdiq = true" type="button" class="mb-2 mt-3 inline-flex h-[40px] w-[209.52px] items-center justify-center rounded-md bg-primary px-3 py-2 text-sm text-white sm:mt-0">Credenciar na Adiq</button>
-                  <button (click)="generateContract = true" type="button" class="inline-flex h-[40px] w-[209.52px] items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3">Gerar Contrato</button>
-                </div>
-              </div>
-            }
+           @if (loadingFake == false && generateContract == false) {
+            <app-pages-register-success-modal (credClientOnAdiq)="accreditationAdiq = true" (generateContract)="generateContract = true" (closeSuccessModal)="remaindMeLater()"/>
+             }
 
             @if (generateContract == true) {
               <div class="z-10 flex h-full w-full items-center justify-center">
@@ -1465,5 +1437,7 @@
 </ng-container>
 
 @if (accreditationAdiq) {
-  <app-pages-newAccreditationModal [clientDocument]="accreditationForm.get('cnpj')!.value!.toString() || accreditationForm.get('cpf')!.value!.toString()" [type]="'PJ'" (closeModalAccreditation)="accreditationAdiq = false" />
+  <div class="h-screen top-0 w-11/12 fixed z-50  flex justify-center items-center">
+    <app-pages-newAccreditationModal [clientDocument]="accreditationForm.get('cnpj')!.value!.toString() || accreditationForm.get('cpf')!.value!.toString()" [type]="'PJ'" (closeModalAccreditation)="accreditationAdiq = false" />
+  </div>
 }

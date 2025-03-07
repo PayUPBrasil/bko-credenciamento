@@ -1,0 +1,28 @@
+<div class="flex flex-col  justify-center items-center">
+  <div class="flex flex-col items-center justify-center gap-2">
+    <div class="flex w-full items-center justify-end px-3 pt-3">
+      <span class="cursor-pointer" (click)="close()">
+        <img class="size-6" src="/assets/icons/xMark.svg" alt="Ícone para fechar" />
+      </span>
+    </div>
+    <div
+      class="flex w-fit flex-col items-center justify-center gap-3 rounded-full bg-transparent p-2 px-5">
+      <img class="w-10" src="/assets/icons/checkGreenIcon.svg" alt />
+      <span class="font-sans text-lg font-bold text-text">Cliente Registrado com
+        Sucesso</span>
+      <span class="text-center font-sans text-sm text-text">Gere um contrato para o
+        cliente cadastrado ou realize o credeenciamento dele na Adiq.</span>
+    </div>
+  </div>
+</div>
+
+<div class="w-full justify-center font-sans">
+  <div class="gap-5 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+    <button (click)="credAdiq()" type="button"
+      class="mb-2 mt-3 inline-flex h-[40px] w-[209.52px] items-center justify-center rounded-md bg-primary px-3 py-2 text-sm text-white sm:mt-0">Credenciar
+      na Adiq</button>
+    <button (click)="genContract()" type="button"
+      class="inline-flex h-[40px] w-[209.52px] items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3">Gerar
+      Contrato</button>
+  </div>
+</div>

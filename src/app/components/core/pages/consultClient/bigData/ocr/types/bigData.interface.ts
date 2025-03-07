@@ -7,6 +7,11 @@ export interface Root {
   Evidences: Evidences
 }
 
+//*Parametros de consulta no bigDataCorp (datasets e documento a ser consultado)
+export interface ConsultingParamsBigData {
+  datasets?: string[],
+  document:string | number
+}
 export interface Result {
   MatchKeys: string
   BasicData: BasicData
@@ -14,7 +19,19 @@ export interface Result {
   LawsuitsDistributionData: LawsuitsDistributionData | any;
   FinancialRisk: FinancialRisk
   FinancialInterests: FinancialInterests
+  MediaProfileAndExposure: MediaProfileAndExposure
+  apps_networks_and_platforms:AppsNetworksAndPlatforms
+  KycData:KYC
 }
+
+export interface MediaProfileAndExposure {
+
+}
+export interface KYC {
+
+}
+
+export interface AppsNetworksAndPlatforms {}
 
 export interface BasicData {
   TaxIdNumber: string

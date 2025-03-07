@@ -14,7 +14,7 @@ import { ClientService } from "./services/clients.service";
 @Component({
   selector: 'app-pages-clients',
   templateUrl: './clients.component.html',
-  imports: [BreadcrumbComponent, PaginationComponent, SearchInputComponent, FilterInputComponent, RouterLink, ActionButtonComponent, NgFor, NgClass, NgIf, CommonModule, FormatCpfCnpjPipe, TagComponent, ConfirmModalComponent],
+  imports: [BreadcrumbComponent, PaginationComponent, SearchInputComponent, FilterInputComponent,  NgFor, NgClass, NgIf, CommonModule, FormatCpfCnpjPipe, TagComponent],
   standalone: true
 })
 

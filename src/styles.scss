@@ -2,6 +2,13 @@
 
 @import './tailwind.scss';
 
+*{
+  scrollbar-width: thin;
+  scrollbar-color: #c4b5fd #ede9fe;
+  scrollbar-width: 5px;
+  stroke-linejoin: miter;
+}
+
 .font-Inter {
   font-family: 'Inter', sans-serif;
 }
@@ -16,4 +23,16 @@
 
 .font-primary {
   font-family: "Space Grotesk", serif;
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hidden {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
 }

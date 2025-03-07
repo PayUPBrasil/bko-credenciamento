@@ -1,23 +1,18 @@
-import { Component, inject, ChangeDetectorRef, OnInit, HostListener, ElementRef, OnDestroy, Inject, Injector, ComponentRef } from "@angular/core";
-import { NotifyComponent } from "./notifyAlert.component";
-import { NgIf, NgStyle } from "@angular/common";
+import { Component, inject, ChangeDetectorRef, OnInit, HostListener, ElementRef, OnDestroy } from "@angular/core";
+import { NgIf } from "@angular/common";
 import { SessionService } from "../../../services/session/session.service";
 import { Router, RouterLink } from "@angular/router";
-import { ProfileAsideComponent } from "./profileAside.component";
 import { slideInOutAnimation } from "../../animations/slideInOutAnimation.component";
 import { fadeInOut } from "../../animations/fadeInAnimation.component";
 import { GetUserLoggedService } from "../../../services/utils/getUserData.service";
 import { AuthService } from "../../../services/Auth/auth.service";
 
-interface user {
-  user: string
-}
 
 @Component({
   selector: "app-layout-nav",
   templateUrl: "./nav.component.html",
   standalone: true,
-  imports: [NotifyComponent, NgIf, RouterLink, ProfileAsideComponent, NgStyle],
+  imports: [ NgIf, RouterLink ],
   animations: [slideInOutAnimation, fadeInOut]
 })
 
@@ -34,20 +29,25 @@ export class NavComponent  implements OnInit, OnDestroy {
   protected _eref = inject(ElementRef)
   public dropdownIcon = 'assets/icons/arrow-down-outline.svg'
   public hasProfilePic = false;
-  public profileUrl : string | null;
+  public profileUrl !: string | null;
   public leftLoginTimer !: any
   private timerInterval:any;
+  public userInfo !: any
 
 
   constructor(){
-    this.getUserData()
-    this.profileUrl = this.getUserProfilePic();
     this.updateTime()
     this.leftLoginTimer = this.authService.getTimeRemaining()
   }
 
   ngOnInit() {
     this.startTimer();
+    this.getUser()
+    this.profilePicture()
+  }
+
+  profilePicture(){
+    this.profileUrl = this.getUserProfilePic();
   }
 
   startTimer() {
@@ -75,8 +75,9 @@ updateTime() {
 }
 
 
-  public getUserData() {
-    return this.getUserLoggedService.getUserData().name
+  public getUser() {
+    console.log('estou no navbarcomponent chamando a funcao getUserData')
+    return this.getUserLoggedService.getUserData()
   }
 
   @HostListener('document:click', ['$event'])
@@ -89,11 +90,13 @@ updateTime() {
 
   public logoff() {
     this.sessionService.limparSessao()
-    localStorage.clear()
-    this.router.navigate([''])
+    localStorage.removeItem('dXNlcg==')
+    localStorage.removeItem('profile')
+    this.router.navigate(['/'])
   }
 
   public toggleProfile() {
+    console.log('chamei a funcao')
     this.showProfile = !this.showProfile;
     this.cdr.detectChanges();
     if (this.showProfile == false) this.dropdownIcon = 'assets/icons/arrow-down-outline.svg'
@@ -101,13 +104,15 @@ updateTime() {
   }
 
   public getUserProfilePic() : string | null{
-    let profilePic = this.getUserLoggedService.getUserData().profilePic;
+    let profilePic = this.getUserLoggedService.userInfo.profilePic;
+
     if(profilePic && profilePic.startsWith('http')){
         this.hasProfilePic = true;
        return profilePic;
      } else {
       this.hasProfilePic = false;
       }
+      console.log(profilePic, 'verificando a foto do pergil profilePic')
      return profilePic
   }
 

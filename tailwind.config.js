@@ -1,5 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   content: ['./src/**/*.{html,js}'],
@@ -15,19 +16,34 @@ module.exports = {
         spin: 'spin 2s cubic-bezier(0.4, 0, 1, 1) infinite',
       },
       fontFamily: {
-        sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+        sans: ['Sora', ...defaultTheme.fontFamily.sans],
         second: ['Montserrat'],
         minText: ['Inter'],
       },
       colors: {
-        accent:'#4e2ec7',
+        accent: '#4e2ec7',
         primary: '#4B4DED',
         secondary: '#45d6fc',
-        background: '#eef1f6',
+        background: '#f7fafd',
         text: '#54595F',
       },
     },
   },
 
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/typography'), require('@tailwindcss/forms'),
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        /* Chrome, Safari and Opera */
+        ".scrollbar-hidden::-webkit-scrollbar": {
+          display: "none",
+        },
+
+        ".scrollbar-hidden": {
+          "scrollbar-width": "none" /* Firefox */,
+          "-ms-overflow-style": "none" /* IE and Edge */,
+        },
+      })
+    }),
+  ],
 }

@@ -1,6 +1,6 @@
 <ng-container aria-label="Editar Cadastro">
   <section [@fadeInOut] class="fixed inset-0 z-50 flex items-center justify-center bg-gray-700/50 p-4">
-    <div class="h-full w-full max-w-lg overflow-y-auto overflow-x-hidden rounded-lg bg-white shadow-xl sm:max-w-xl md:max-w-2xl lg:h-fit lg:max-w-3xl xl:max-w-5xl">
+    <div class="h-full w-full max-w-lg overflow-y-auto overflow-x-hidden rounded-lg bg-white shadow-xl sm:max-w-xl md:max-w-2xl lg:h-fit lg:max-w-3xl xl:max-w-2xl">
       <div class="space-y-4 p-4 sm:p-6">
         <div class="flex items-start justify-between">
           <div class="pb-5">
@@ -18,7 +18,7 @@
         </div>
         <ng-container *ngIf="!flagEdit">
           <form class="w-full" [formGroup]="updateClientDataForm">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <ng-container *ngFor="let input of editInputsList; index as i; trackBy: trackByFn">
                 <div class="w-full">
                   <label class="mb-1 block text-xs font-medium text-primary">{{ editInputTitles[i] }}</label>
@@ -35,14 +35,29 @@
         <!-- Editar bandeiras -->
         <ng-container *ngIf="flagEdit">
           <div class="flex flex-col gap-5">
-            <h1 class="tex-lg font-sans font-bold">Bandeiras Atuais</h1>
-            <app-layout-flagTag [Item]="getFlagNames(editInputOldValues)" (ItemClicked)="clickedFlagValue($event)" />
-            <h2>Adicionar Bandeiras</h2>
-            <ng-container>
-              <!-- <div *ngFor="let flagsToAdd of remainderFlags">
-                <app-layout-flagTag [Item]="getFlagNames(editInputOldValues)" />
-              </div> -->
+            <!-- <span>Bandeiras Atuais</span> -->
+
+            <ng-container *ngIf="flagsByNames.length > 0; else noActualFlags">
+              <app-layout-flagTag [Item]="flagsByNames" (ItemClicked)="clickedFlagValue($event)" />
             </ng-container>
+
+            <ng-template #noActualFlags>
+              <span class="text-sm text-red-500">Cliente não possui bandeiras no momento...</span>
+            </ng-template>
+
+            <div class="flex flex-col gap-3">
+              <span>Adicionar Bandeiras</span>
+              <select [disabled]="remainderFlags.length < 1" class="w-full rounded-lg border border-slate-300 disabled:bg-slate-200" (change)="addFlagClicked($event)" #selectFlag>
+                <option *ngIf="remainderFlags.length > 0" value="" selected disabled>Selecione uma bandeira</option>
+                <option *ngIf="remainderFlags.length < 1" value="" selected disabled>Todas as bandeiras já foram selecionadas</option>
+                <option *ngFor="let remain of remainderFlags" [value]="remain">{{ remain }}</option>
+              </select>
+            </div>
+
+            <div class="mt-5 flex justify-end gap-4">
+              <button class="h-[40px] rounded-lg border bg-accent px-3 text-white" (click)="saveAlterations()">Salvar Alteração</button>
+              <button class="h-[40px] rounded-lg border bg-red-500 px-3 text-white" (click)="closeEditModal()">Cancelar</button>
+            </div>
           </div>
         </ng-container>
       </div>

@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../../../../../../environments/environment.development";
 import { HttpClient } from "@angular/common/http";
-import { BasicData } from "./types/bigData.interface";
+import { BasicData, ConsultingParamsBigData } from "./types/bigData.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,18 +18,27 @@ export class OcrService {
 
 
   //* BigData
-  public searchInformationAtBigDataCorp(consultingParams:any) : Observable<any>  {
-
+  public searchInformationAtBigDataCorp(consultingParams:ConsultingParamsBigData) : Observable<any>  {
     const body = {
-      document: consultingParams,
+      document: consultingParams.document,
+      datasets: consultingParams.datasets
     }
-      return this.http.post(`${this.url}/ocr`, body)
+      return this.http.post(`${this.url}/ocr/bigData`, body)
   }
+
+
+  public forceNewSearchAtBigDataCorp(document:string) : Observable<any> {
+    const body = {
+      document: document
+    }
+    return this.http.post<any>(`${this.url}/ocr/bigData/force`, body, {observe:'response'})
+  }
+
+
 
     //* Gemini
 
   public searchTermWithAI(terms:string) : Observable<any> {
-    // console.log(terms, 'terms')
     const body = {
       prompt: terms
     }
@@ -48,7 +57,7 @@ export class OcrService {
         Idade: basicData.Age,
         PaisNascimento: basicData.BirthCountry,
         NomeMae: basicData.MotherName,
-        NomePai: basicData.FatherName,
+        // NomePai: basicData.FatherName,
         StatusIdFiscal: basicData.TaxIdStatus,
         OrigemIdFiscal: basicData.TaxIdOrigin,
         RegiaoFiscalIdFiscal: basicData.TaxIdFiscalRegion,
@@ -62,6 +71,8 @@ export class OcrService {
       Object.entries(processInformation).map(([key, value]) => [key, value])
     );
   }
+
+
 
   public filterFinancialInterestsInformationPF(financialInterestsInformation:any) :Object {
     return {
@@ -97,7 +108,7 @@ export class OcrService {
       DistribuicaoNivelTribunal: processInformation.CourtLevelDistribution,
       DistribuicaoNomeTribunal: processInformation.CourtNameDistribution,
       DistribuicaoTipoTribunal: processInformation.CourtTypeDistribution,
-      DistribuicaoTipoParte: processInformation.PartyTypeDistribution,
+      DistribuicaoTipoParte: this.translateRoles(processInformation.PartyTypeDistribution),
       DistribuicaoEstado: processInformation.StateDistribution,
       DistribuicaoStatus: processInformation.StatusDistribution,
       TotalProcessos:processInformation.TotalLawsuits,
@@ -108,7 +119,6 @@ export class OcrService {
     //* Methods for support PJ -->
 
     public filterBasicDataPJ(basicData:any) : Object{
-      console.log(basicData, 'basicData')
       return {
         Documento: this.formaterDocument(basicData.TaxIdNumber),
         PaisIdFiscal: basicData.TaxIdCountry,
@@ -119,7 +129,7 @@ export class OcrService {
         IdadeDaAberturaDoCNPJ: basicData.Age,
         StatusIdFiscal: basicData.TaxIdStatus,
         OrigemIdFiscal: basicData.TaxIdOrigin,
-        CapitalSocial:basicData.AdditionalOutputData.Capital,
+        CapitalSocial: basicData.AdditionalOutputData.Capital ?  basicData.AdditionalOutputData.Capital : '-',
         DataUltimaAtualizacao:  this.formaterDate(basicData.LastUpdateDate),
         TeveAlteracaoNoNomeFantasa:  basicData.HistoricalData ?  this.translateBooleanValue(basicData.HistoricalData.HasChangedTradeName) : '-',
         NaturezaJuridica: basicData.LegalNature.Activity + '-' + basicData.LegalNature.Code,
@@ -135,7 +145,7 @@ export class OcrService {
         DistribuicaoNivelTribunal: processInformation.CourtLevelDistribution,
         DistribuicaoNomeTribunal: processInformation.CourtNameDistribution,
         DistribuicaoTipoTribunal: processInformation.CourtTypeDistribution,
-        DistribuicaoTipoParte: processInformation.PartyTypeDistribution,
+        DistribuicaoTipoParte: this.translateRoles(processInformation.PartyTypeDistribution),
         DistribuicaoEstado: processInformation.StateDistribution,
         DistribuicaoStatus: processInformation.StatusDistribution,
         TotalProcessos:processInformation.TotalLawsuits,
@@ -153,7 +163,7 @@ export class OcrService {
     }
 
     protected translateFinancialActivityLevel(value:any) {
-     return value == 'VERY HIGH' ? 'Alto' : value
+     return value == 'VERY HIGH' || value == 'HIGH' ? 'Alto' : value == 'VERY LOW' ? "Baixíssimo" : value == 'LOW' ? 'Baixo' : value
     }
 
     protected translatePartyDistribution(values: any[]) {
@@ -182,7 +192,7 @@ export class OcrService {
               case 'JUDGE':
                   return 'Juiz';
               case 'INMATE':
-                  return 'Presidiário';
+                  return 'Detento';
               case 'OTHER':
                   return 'Outros';
               default:
@@ -193,10 +203,36 @@ export class OcrService {
 
 
     protected formaterDate(date:string) {
-      return new Date(date).toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+       return new Intl.DateTimeFormat('pt-BR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        timeZone: 'UTC'
+      }).format(new Date(Date.parse(date)));
+
     }
 
-    protected formaterDocument(document: string): string {
+    public translateRoles(roles: { [key: string]: number }): { [key: string]: number } {
+      const translations: { [key: string]: string } = {
+        'AUTHOR': 'Autor',
+        'CLAIMANT': 'Reclamante',
+        'CLAIMED': 'Reclamado',
+        'DEFENDANT': 'Réu',
+        'LAWYER': 'Advogado',
+        'OTHER': 'Outro'
+      };
+
+      const translatedRoles: { [key: string]: number } = {};
+      for (const key in roles) {
+        const translatedKey = translations[key] || key;
+        translatedRoles[translatedKey] = roles[key];
+      }
+
+      return translatedRoles;
+    }
+
+
+    public formaterDocument(document: string): string {
       const cleanDoc = document.replace(/\D/g, '');
 
       if (cleanDoc.length === 11) {

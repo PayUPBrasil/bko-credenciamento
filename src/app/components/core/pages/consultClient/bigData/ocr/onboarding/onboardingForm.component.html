@@ -9,32 +9,92 @@
         <div class="grid grid-cols-1 gap-4">
           <ng-container *ngFor="let item of inputsList; index as i">
             <div>
-              <span class="mb-1 block text-sm font-medium text-gray-700 after:text-red-500 after:content-['*']">{{ item.label }}</span>
-              <input (input)="checkIfFormHasErrors()" class="h-[50px] w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500" [formControlName]="item.id" [placeholder]="item.placeholder" [required]="item.required" [mask]="item.mask" [maxlength]="item.id === 'cpf' ? 14 : 18" appCpfCnpjValidator />
+              <span
+                class="mb-1 block text-sm font-medium text-gray-700 after:text-red-500 after:content-['*']">{{
+                item.label }}</span>
+              <input (input)="checkIfFormHasErrors()" (blur)="checkIfFormHasErrors()"
+                class="h-[50px] w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [formControlName]="item.id" [placeholder]="item.placeholder"
+                [required]="item.required" [mask]="item.mask"
+                [maxlength]="item.id === 'cpf' ? 14 : 18" appCpfCnpjValidator />
             </div>
             <ng-container>
               <div class="flex items-center justify-between">
                 <div>
-                  <span class="mt-2 text-xs text-red-500" *ngIf="ocrForm.get(item.id)?.hasError('required')">O campo é obrigatório</span>
-                  <span class="mt-2 text-xs text-red-500" *ngIf="ocrForm.get(item.id)?.hasError('cpfInvalid')">Informe um CPF válido</span>
-                  <span class="mt-2 text-xs text-red-500" *ngIf="ocrForm.get(item.id)?.hasError('cnpjInvalid')">Informe um CNPJ válido</span>
-                  <span class="mt-2 text-xs text-red-500" *ngIf="ocrForm.get(item.id)?.hasError('minlength')">Informe um documento válido</span>
+                  <span class="mt-2 text-xs text-red-500"
+                    *ngIf="ocrForm.get(item.id)?.hasError('required')">O campo é
+                    obrigatório</span>
+                  <span class="mt-2 text-xs text-red-500"
+                    *ngIf="ocrForm.get(item.id)?.hasError('cpfInvalid')">Informe um CPF
+                    válido</span>
+                  <span class="mt-2 text-xs text-red-500"
+                    *ngIf="ocrForm.get(item.id)?.hasError('cnpjInvalid')">Informe um CNPJ
+                    válido</span>
+                  <span class="mt-2 text-xs text-red-500"
+                    *ngIf="ocrForm.get(item.id)?.hasError('minlength')">Informe um
+                    documento válido</span>
                 </div>
                 <div class="flex items-center justify-end">
-                  <span (click)="changeConsultingType()" class="cursor-pointer text-sm text-primary underline"> Alterar tipo de consulta </span>
+                  <span (click)="changeConsultingType()"
+                    class="cursor-pointer text-sm text-primary underline"> Alterar tipo de
+                    consulta </span>
                 </div>
               </div>
             </ng-container>
           </ng-container>
         </div>
-        <div class="bottom-0 py-10">
-          <button (click)="searchOcrInformation()" type="button" [disabled]="buttonContinueData.disabled !== false" [ariaLabel]="buttonContinueData.aria_label" [title]="buttonContinueData.title" [ngClass]="{ 'cursor-not-allowed bg-slate-400 text-white': buttonContinueData.disabled == true, 'cursor-pointer bg-accent text-white': buttonContinueData.disabled === false }" class="flex h-[48px] w-full items-center justify-center gap-2 rounded-lg border p-3 text-white">
-            <span *ngIf="buttonContinueData.loadingStatus !== 'visible'" class="text-white">{{ buttonContinueData.title }}</span>
-            <div *ngIf="buttonContinueData.loadingStatus === 'visible'" class="border-[rgba(0,0,0, .1)] h-[25px] w-[25px] animate-spin rounded-[50%] border-[5px] border-solid border-l-secondary transition-all delay-1000"></div>
+        <div class="bottom-0 flex gap-2 py-10">
+          <button (click)="searchOcrInformation()" type="button"
+            [disabled]="buttonContinueData.disabled !== false"
+            [ariaLabel]="buttonContinueData.aria_label" [title]="buttonContinueData.title"
+            [ngClass]="{ 'cursor-not-allowed bg-slate-400 text-white': buttonContinueData.disabled == true  , 'cursor-pointer  text-primary hover:text-white border-primary relative overflow-hidden transition-all delay-75 before:absolute  before:top-0 before:left-0 before:h-full before:w-full before:origin-left before:scale-x-0 before:bg-primary before:transition-transform before:duration-500 before:ease-in-out hover:before:scale-x-100 before:z-0 group hover:border-primary hover:duration-500': buttonContinueData.disabled === false }"
+            class="flex h-[48px] w-full items-center justify-center gap-2 rounded-lg border p-3 text-white
+          ">
+            <div class="relative z-10 w-full flex justify-center items-center">
+              <span *ngIf="buttonContinueData.loadingStatus !== 'visible'">{{
+                buttonContinueData.title }}</span>
+              <div *ngIf="buttonContinueData.loadingStatus === 'visible'"
+                class="border-[rgba(0,0,0, .1)] h-[25px] w-[25px] animate-spin rounded-[50%] border-[5px] border-solid border-l-secondary transition-all delay-1000"></div>
+            </div>
+
           </button>
         </div>
-        <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira buscar outros datasets <a class="text-primary underline" href="https://center.bigdatacorp.com.br/login" target="_blank" rel="noreferrer"> clique aqui.</a></p>
+        <p class="text-center text-xs text-text">Os datasets consultados na busca padrão são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses Financeiros, Probabilidade de Negativação, KYC e Risco Financeiro ] caso queira buscar outros datasets <a class="text-primary underline" href="https://center.bigdatacorp.com.br/login" target="_blank" rel="noreferrer"> clique aqui.</a></p>
+        <!-- <p class="text-center text-xs text-text">Os datasets consultados na busca padrão
+          são: [ Dados Básicos, Dados de Distribuição de Processos Judiciais, Interesses
+          Financeiros, Probabilidade de Negativação e Risco Financeiro ] caso queira
+          adicionar outros datasets na busca <span
+            class="cursor-pointer text-primary underline"
+            (click)="datasetModal = true">clique aqui.</span></p> -->
       </form>
     </div>
+
+    <!-- Modal de datasets -->
+    <!-- <ng-container aria-label="Modal com os itens" *ngIf="datasetModal">
+      <div [@fadeInOut] class="fixed z-10 flex h-full w-full items-center justify-center">
+        <div class="relative h-full w-full bg-slate-500 opacity-45"></div>
+        <div
+          class="absolute z-50 h-[230px] max-h-[300px] min-h-[150px] w-[580px] rounded-lg bg-white p-5">
+          <div class="flex h-full w-full flex-col items-start space-y-6 ">
+            <div class="flex w-full items-center justify-between">
+              <div class="flex flex-col">
+                <h3 class="text-lg font-bold text-primary">Selecione os datasets
+                  adicionais que deseja consultar</h3>
+              </div>
+              <div>
+                <span>
+                  <img (click)="closeDataSetModal()" class="size-5 cursor-pointer"
+                    src="assets/icons/closeIcon.svg" alt="Icone para fechar o modal" />
+                </span>
+              </div>
+            </div>
+            <div>
+              <app-layout-checkbox (checkboxItemClicked)="clickedItemOnCheckbox($event)"
+                [checkboxValues]="listDatasetByType" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container> -->
   </section>
 </ng-container>

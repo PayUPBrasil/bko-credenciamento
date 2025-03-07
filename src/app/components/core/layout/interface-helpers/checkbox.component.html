@@ -1,0 +1,15 @@
+<ng-container>
+  <div class="checkbox-container">
+    <label class="ios-checkbox blue" *ngFor="let item of checkboxValues[0] | keyvalue; index as i">
+
+       <input [checked]="checkboxService.valueSelected.includes(item.key)" type="checkbox" (click)="clickedCheckboxItem(item.key)" />
+      <div class="checkbox-wrapper">
+        <div class="checkbox-bg"></div>
+        <svg fill="none" viewBox="0 0 24 24" class="checkbox-icon">
+          <path stroke-linejoin="round" stroke-linecap="round" stroke-width="3" stroke="currentColor" d="M4 12L10 18L20 6" class="check-path"></path>
+        </svg>
+      </div>
+      <span>{{ item.value }}</span>
+    </label>
+  </div>
+</ng-container>

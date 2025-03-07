@@ -1,143 +1,136 @@
 @if (!doAccreditation) {
-  <div class="relative bottom-0 z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 m-auto w-full bg-slate-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-    <div class="fixed inset-0 z-10 m-auto w-screen overflow-y-auto">
-      <div class="mt-10 flex w-full justify-center">
-        <div class="relative ml-64 flex transform flex-col gap-5 overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-[980px]">
-          <form [formGroup]="AdiqAccreditationModalForm">
-            <!-- Solução a ser contratada -->
-            <div class="group rounded-xl bg-white">
-              <div class="text-secondary-900 flex list-none items-center justify-between text-lg font-medium">
-                <div class="text-secondary-900 flex w-full list-none items-start justify-between text-lg font-medium">
-                  <div class="flex flex-col p-4">
-                    <span class="text-sm font-bold sm:text-lg">Configuração dos Produtos</span>
-                    <span class="text-sm">Configure os produtos. Caso queira alterar as tecnologias, edite o cadastro.</span>
-                  </div>
-                  <div class="cursor-pointer p-4" (click)="closeModalOfAccreditation('closeModalOfAccreditation')">
-                    <span><img class="h-6 w-6" src="/assets/icons/xMark.svg" alt="icone de close" /></span>
-                  </div>
-                </div>
+  <div class=" rounded-lg bg-white text-left shadow-xl transition-all  sm:w-full sm:max-w-[980px]">
+    <form [formGroup]="AdiqAccreditationModalForm">
+      <!-- Solução a ser contratada -->
+      <div class="group rounded-xl bg-white">
+        <div class="text-text flex list-none items-center justify-between text-lg font-medium">
+          <div class="text-text flex w-full list-none items-start justify-between text-lg font-medium">
+            <div class="flex flex-col p-4">
+              <span class="text-sm font-bold sm:text-lg">Configuração dos Produtos</span>
+              <span class="text-sm">Configure os produtos. Caso queira alterar as tecnologias, edite o cadastro.</span>
+            </div>
+            <div class="cursor-pointer p-4" (click)="closeModalOfAccreditation('closeModalOfAccreditation')">
+              <span><img class="h-6 w-6" src="/assets/icons/xMark.svg" alt="icone de close" /></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 font-sans">
+          <div class="grid grid-cols-1 items-center gap-3 pb-6">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-3">
+              <div class="flex w-full flex-col">
+                <span>Mid</span>
+
+                <input type="text" readonly class="h-[42px] cursor-default rounded-lg border border-slate-200 px-3 outline-none read-only:bg-slate-100 focus:border-purple-500" formControlName="mid" maxlength="9" />
+
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('mid')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('mid')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
               </div>
 
-              <div class="p-5 font-sans">
-                <div class="grid grid-cols-1 items-center gap-3 pb-6">
-                  <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-3">
-                    <div class="flex w-full flex-col">
-                      <span>Mid</span>
+              <div class="flex w-full flex-col">
+                <span class="text-sm">Id do Canal</span>
+                <input type="text" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="idCanal" maxlength="9" />
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('idCanal')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('idCanal')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
+              </div>
 
-                      <input type="text" readonly class="h-[42px] cursor-default rounded-lg border border-slate-200 px-3 outline-none read-only:bg-slate-100 focus:border-purple-500" formControlName="mid" maxlength="9" />
+              <div class="flex flex-col">
+                <span class="text-sm">Tipo de Pagamento</span>
+                <select class="block h-[42px] w-full rounded-md border border-slate-200 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="paymentType">
+                  <option value selected disabled>Selecione uma opção</option>
+                  <option value="0">Descentralizado</option>
+                  <option value="1">Centralizado</option>
+                </select>
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('paymentType')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('paymentType')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
+              </div>
 
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('mid')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('mid')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
+              <div class="flex w-full flex-col">
+                <span class="text-sm">Código MCC</span>
+                <input type="text" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="codMcc" maxlength="9" />
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('codMcc')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('codMcc')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
+              </div>
 
-                    <div class="flex w-full flex-col">
-                      <span class="text-sm">Id do Canal</span>
-                      <input type="text" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="idCanal" maxlength="9" />
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('idCanal')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('idCanal')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
+              <div class="flex w-full flex-col">
+                <span class="text-sm">Descrição do MCC</span>
+                <input type="text" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="descMcc" />
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('descMcc')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('descMcc')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
+              </div>
 
-                    <div class="flex flex-col">
-                      <span class="text-sm">Tipo de Pagamento</span>
-                      <select class="block h-[42px] w-full rounded-md border border-slate-200 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="paymentType">
-                        <option value selected disabled>Selecione uma opção</option>
-                        <option value="0">Descentralizado</option>
-                        <option value="1">Centralizado</option>
-                      </select>
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('paymentType')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('paymentType')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
-
-                    <div class="flex w-full flex-col">
-                      <span class="text-sm">Código MCC</span>
-                      <input type="text" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="codMcc" maxlength="9" />
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('codMcc')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('codMcc')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
-
-                    <div class="flex w-full flex-col">
-                      <span class="text-sm">Descrição do MCC</span>
-                      <input type="text" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="descMcc" />
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('descMcc')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('descMcc')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
-
-                    <div class="flex flex-col">
-                      <span class="text-sm">Tecnologias</span>
-                      <select class="block h-[42px] w-full rounded-md border border-slate-200 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="tecnologyCode">
-                        <option value selected disabled>Selecione uma opção</option>
-                        <option [value]="tecnologyList.cod" *ngFor="let tecnologyList of tecnologyTableAdiq.getTecnologyTableAdiq()">
-                          {{ tecnologyList.tecnologia | uppercase }}
-                        </option>
-                      </select>
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('tecnologyCode')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('tecnologyCode')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
-                  </div>
-
-                  <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
-                    <div class="flex flex-col">
-                      <span class="text-sm">Quantidade de Soluções</span>
-                      <input type="string" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="qtSolution" maxlength="3" minlength="1" placeholder="3" />
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('qtSolution')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('qtSolution')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
-
-                    <div class="flex flex-col">
-                      <span class="text-sm">Combo</span>
-                      <input type="string" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="combo" />
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('combo')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('combo')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
-
-                    <div class="flex flex-col">
-                      <span class="text-sm">Taxa</span>
-                      <input type="string" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="taxa" #taxa />
-                      <ng-container *ngIf="this.AdiqAccreditationModalForm.get('taxa')?.errors">
-                        <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('taxa')?.hasError('required')">O campo é obrigatório</span>
-                      </ng-container>
-                    </div>
-                  </div>
-
-                  <div class="mt-4 flex items-start justify-between">
-                    <button [ngClass]="{ 'bg-slate-400': !AdiqAccreditationModalForm.valid, 'bg-[#39d7ff]': AdiqAccreditationModalForm.valid }" class="flex items-center gap-1 rounded-lg p-3 font-semibold" (click)="addProd()">
-                      <span><img class="h-5 w-5 text-white" src="/assets/icons/plusIcon.svg " alt="Sinal de adição" /></span>
-                      <span class="font-sans text-sm text-white">Adicionar Produto</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div>
-                  @if (produtosAdicionados.length > 0) {
-                    <div>
-                      <h1 class="py-4 text-lg font-bold">Produtos Adicionados</h1>
-                    </div>
-
-                    <div>
-                      <app-pages-productListConfiguration [produtosAdicionados]="produtosAdicionados" (newRemoveEvent)="removeProd($event)" />
-                    </div>
-                  }
-                </div>
-
-                <div class="mt-2 flex w-full flex-col items-end justify-end gap-2 rounded-lg">
-                  <button [disabled]="produtosAdicionados.length < 1" [ngClass]="{ 'bg-slate-300 text-gray-400': produtosAdicionados.length < 1, 'bg-primary': produtosAdicionados.length > 0 }" [disabled]="produtosAdicionados.length < 1" (click)="doNewAccreditation()" class="w-48 rounded-lg p-3 text-white">Solicitar Tecnologia</button>
-                  <span *ngIf="produtosAdicionados.length < 1" class="text-xs text-red-500">* Você precisa adiconar pelo menos 1 produto</span>
-                </div>
+              <div class="flex flex-col">
+                <span class="text-sm">Tecnologias</span>
+                <select class="block h-[42px] w-full rounded-md border border-slate-200 disabled:cursor-not-allowed disabled:bg-gray-50" formControlName="tecnologyCode">
+                  <option value selected disabled>Selecione uma opção</option>
+                  <option [value]="tecnologyList.cod" *ngFor="let tecnologyList of tecnologyTableAdiq.getTecnologyTableAdiq()">
+                    {{ tecnologyList.tecnologia | uppercase }}
+                  </option>
+                </select>
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('tecnologyCode')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('tecnologyCode')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
               </div>
             </div>
-          </form>
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+              <div class="flex flex-col">
+                <span class="text-sm">Quantidade de Soluções</span>
+                <input type="string" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="qtSolution" maxlength="3" minlength="1" placeholder="3" />
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('qtSolution')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('qtSolution')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
+              </div>
+
+              <div class="flex flex-col">
+                <span class="text-sm">Combo</span>
+                <input type="string" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="combo" />
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('combo')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('combo')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
+              </div>
+
+              <div class="flex flex-col">
+                <span class="text-sm">Taxa</span>
+                <input type="string" class="h-[42px] rounded-lg border border-slate-200 px-3 outline-none focus:border-purple-500" formControlName="taxa" #taxa />
+                <ng-container *ngIf="this.AdiqAccreditationModalForm.get('taxa')?.errors">
+                  <span class="mt-2 text-xs text-red-500" *ngIf="this.AdiqAccreditationModalForm.get('taxa')?.hasError('required')">O campo é obrigatório</span>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="mt-4 flex items-start justify-between">
+              <button [ngClass]="{ 'bg-slate-400': !AdiqAccreditationModalForm.valid, 'bg-[#39d7ff]': AdiqAccreditationModalForm.valid }" class="flex items-center gap-1 rounded-lg p-3 font-semibold" (click)="addProd()">
+                <span><img class="h-5 w-5 text-white" src="/assets/icons/plusIcon.svg " alt="Sinal de adição" /></span>
+                <span class="font-sans text-sm text-white">Adicionar Produto</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            @if (produtosAdicionados.length > 0) {
+              <div>
+                <h1 class="py-4 text-lg font-bold">Produtos Adicionados</h1>
+              </div>
+
+              <div>
+                <app-pages-productListConfiguration [produtosAdicionados]="produtosAdicionados" (newRemoveEvent)="removeProd($event)" />
+              </div>
+            }
+          </div>
+
+          <div class="mt-2 flex w-full flex-col items-end justify-end gap-2 rounded-lg">
+            <button [disabled]="produtosAdicionados.length < 1" [ngClass]="{ 'bg-slate-300 text-gray-400': produtosAdicionados.length < 1, 'bg-primary': produtosAdicionados.length > 0 }" [disabled]="produtosAdicionados.length < 1" (click)="doNewAccreditation()" class="w-48 rounded-lg p-3 text-white">Solicitar Tecnologia</button>
+            <span *ngIf="produtosAdicionados.length < 1" class="text-xs text-red-500">* Você precisa adiconar pelo menos 1 produto</span>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 }
 @if (doAccreditation === true && produtosAdicionados.length > 0) {

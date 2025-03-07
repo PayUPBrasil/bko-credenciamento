@@ -6,6 +6,6 @@
     "editor.trimAutoWhitespace": true,
     "files.trimTrailingWhitespace": true,
     "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "mohd-akram.vscode-html-format"
     }
 }

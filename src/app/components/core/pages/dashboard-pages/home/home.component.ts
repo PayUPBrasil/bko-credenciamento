@@ -11,7 +11,7 @@ import type { EChartsCoreOption } from 'echarts/core';
 
 import { CoolTheme } from "../../../../CoolTheme/cool-theme";
 import { MetricsService } from "../../../../../services/metrics/metrics.service";
-
+ import { GetUserLoggedService } from "../../../../../services/utils/getUserData.service";
 @Component({
   selector: "app-pages-home",
   imports: [BreadcrumbComponent, CommonModule, NgxEchartsModule],
@@ -22,11 +22,11 @@ import { MetricsService } from "../../../../../services/metrics/metrics.service"
     },
   ],
   templateUrl: './home.component.html',
-  standalone:true
+  standalone:true,
 })
 
 
-export class HomeComponent implements OnInit {
+export class HomeComponent  implements OnInit {
 
   private metricsService = inject(MetricsService)
   public sumClients = 0
@@ -35,13 +35,16 @@ export class HomeComponent implements OnInit {
 
   public accreditationOptions!: EChartsCoreOption;
   public accreditationByMonth !: EChartsOption
+  public userName : string | null = ''
+  private getUserLoggedService = inject(GetUserLoggedService)
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.getTotalClients()
     this.getTotalActiveClients()
     this.getTotalPendingClients()
     this.getAccreditationBySeller()
     this.getAccreditationByMonth()
+    this.getUserName()
   }
 
   theme!: string | ThemeOption;
@@ -59,7 +62,9 @@ export class HomeComponent implements OnInit {
       }
     })
   }
-
+  public getUserName() {
+    this.userName  = this.getUserLoggedService.userInfo.name;
+  }
   getTotalActiveClients(){
     this.metricsService.totalActiveClients().subscribe({
       next: (data: any) => {
@@ -73,6 +78,7 @@ export class HomeComponent implements OnInit {
   }
 
   getTotalPendingClients(){
+
     this.metricsService.totalPendingClients().subscribe({
       next: (data: any) => {
         // console.log(data);
@@ -125,7 +131,7 @@ export class HomeComponent implements OnInit {
         left: '50%',
         text: 'Credenciamento por comercial',
         textStyle: {
-          fontFamily: 'Space Grotesk, serif',
+          fontFamily: 'Sora, serif',
           fontSize: 15
         },
         textAlign: 'center',
@@ -136,8 +142,8 @@ export class HomeComponent implements OnInit {
       },
        legend: {
         textStyle: {
-          fontFamily: 'Space Grotesk, serif',
-          fontSize: 10
+          fontFamily: 'Sora, serif',
+          fontSize: 12
         },
       bottom: 10,
       data: chartData,
@@ -154,15 +160,13 @@ export class HomeComponent implements OnInit {
           label: {
             show: true,
             formatter: '{b}: {c} ({d}%)',
-            textStyle: {
-              fontFamily: 'Space Grotesk, serif',
-              fontSize: 12
-            }
+            fontFamily: 'Sora, serif', // Mova estas propriedades para cá
+            fontSize: 12
           },
           emphasis: {
             label: {
               fontWeight: 'bold',
-              fontFamily: 'Space Grotesk, serif'
+              fontFamily: 'Sora, serif'
             }
           }
         },
@@ -192,7 +196,7 @@ export class HomeComponent implements OnInit {
         left: '50%',
         text: 'Credenciamentos Mensais (2025)',
         textStyle: {
-          fontFamily: 'Space Grotesk, serif',
+          fontFamily: 'Sora, sans-serif',
           fontSize: 15
         },
         textAlign: 'center',
@@ -207,7 +211,7 @@ export class HomeComponent implements OnInit {
       },
       legend: {
         textStyle: {
-          fontFamily: 'Space Grotesk, serif',
+          fontFamily: 'Sora, sans-serif',
           fontSize: 10
         },
       bottom: 10,

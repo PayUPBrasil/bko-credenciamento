@@ -5,24 +5,35 @@ import { OcrFormInputs } from "../types/ocr.interface";
 import { NgClass, NgFor, NgIf } from "@angular/common";
 import { NgxMaskDirective, provideNgxMask } from "ngx-mask";
 import { CpfCnpjValidatorDirective } from "../../../../../../../directives/validators/cpfcnpj-validator.directive";
+import { fadeInOut } from "../../../../../../animations/fadeInAnimation.component";
+import { DataSetListService } from "../../../../../../../services/utils/datasetsList.service";
+import { CheckBoxService } from "../../../../../layout/interface-helpers/checkbox.service";
 
 @Component({
   selector: "app-pages-onboarding-form",
   templateUrl: "./onboardingForm.component.html",
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective,   NgxMaskDirective, NgIf, NgClass],
-  providers: [provideNgxMask()]
+  imports: [ReactiveFormsModule, NgFor, CpfCnpjValidatorDirective,  NgxMaskDirective, NgIf, NgClass],
+  providers: [provideNgxMask()],
+  animations:[fadeInOut]
 
 })
 
 export class onboardingFormComponent implements OnInit{
+[x: string]: any;
 
   private activateRoute = inject(ActivatedRoute)
   protected type !: string;
   private fb = inject(FormBuilder)
+  private checkboxService = inject(CheckBoxService)
   private route = inject(Router)
   public ocrForm !: FormGroup;
   public inputsList : OcrFormInputs[] = [];
+  public datasetModal = false;
+  public listDatasetByType !: object[]
+
+  public datasets : string[] = []
+  public dataSetListService = inject(DataSetListService)
 
   public buttonContinueData = {
     title: 'Continuar Consulta',
@@ -40,12 +51,16 @@ ngOnInit(): void {
           this.type = params['type'];
           if(params['type'] == 'pf'){
             this.inputsList = this.createPfInputsToEdit()
+            this.listDatasetByType = this.dataSetListService.getPFDatasetList()
           } else {
             this.inputsList =  this.createPjInputsToEdit()
+            this.listDatasetByType = this.dataSetListService.getPJDatasetList()
           }
         }
       })
+      console.log(this.datasets,'verificando os datasets ao iniciar o componente')
       this.createForm();
+      return
 }
 
 public createForm(): void {
@@ -69,11 +84,11 @@ public createForm(): void {
 }
 
 public checkIfFormHasErrors(): void{
-  if(this.ocrForm.invalid) {
-    console.log('Formulário com erros')
+  const controls = Object.keys(this.ocrForm.controls)
+  const inputL = this.ocrForm.get(controls[0])
+  if(this.ocrForm.invalid || inputL?.value.length < 11) {
     this.buttonContinueData.disabled = true;
   } else {
-    console.log('agora o formulário não tem mais erros')
    this.buttonContinueData.disabled = false;
   }
 
@@ -109,14 +124,15 @@ public checkIfFormHasErrors(): void{
 
   public searchOcrInformation() : void {
     const formValues =  {... this.ocrForm.value}
-
-    this.route.navigate(['/dashboard/ocr/result', formValues.cnpj || formValues.cpf])
+    if(this.datasets && formValues.cnpj || formValues.cpf) {
+      let datasetinformation = this.datasets.join(',') || 'none'
+      this.route.navigate(['/dashboard/ocr/result', formValues.cnpj || formValues.cpf, datasetinformation
+      ])
+    }
 
     //Disbled button when button is clicked
     this.disableButton();
   }
-
-
 
   public disableButton(): void {
     this.buttonContinueData.disabled = true
@@ -124,9 +140,21 @@ public checkIfFormHasErrors(): void{
   }
 
   public changeConsultingType(){
+    this.clearDatasets()
     this.route.navigate(['/dashboard/consultar-cliente'])
 
   }
 
+  public closeDataSetModal(){
+    this.datasetModal = !this.datasetModal
+  }
 
+  public clickedItemOnCheckbox(event:any)
+  {
+    this.datasets = event
+  }
+
+  public clearDatasets() : void {
+    this.checkboxService.valueSelected = []
+  }
 }
