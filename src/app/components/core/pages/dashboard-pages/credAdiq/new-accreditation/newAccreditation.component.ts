@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
 import { Subject, lastValueFrom, takeUntil, timeout } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -9,10 +9,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 // Components
 import { BreadcrumbComponent } from '../../../../layout/breadcrumb.component';
 import { ModalComponent } from '../../../../layout/modal.component';
-import { LoaderComponent } from '../../../../layout/loader.component';
 import { FlagTagComponent } from '../../../../layout/flagTag.component';
-import { ButtonPrimaryComponent } from '../../../../layout/buttons/button-primary.component';
-import { FakeLoaderComponent } from '../../../../layout/fakeLoader.component';
 import { ContractModalComponent } from '../../contract/contractModal.component';
 import { NewAccreditationModalComponent } from "./newAccreditationModal.component";
 import { DocumentUploadComponent } from "./documentUpload.component";
@@ -32,14 +29,11 @@ import { TecnologyTableAdiq } from '../../../../../../services/utils/tecnologyTa
 import { TypeEnterpriseService } from '../../../../../../services/utils/typeEnterprise.service';
 import { NewAccreditationService } from './newAccreditation.service';
 import { SearchCepService } from '../../../../../../services/utils/searchCep.service';
-import { SearchCityIBGECodeService } from '../../../../../../services/utils/searchCityIBGECode.service';
-import { CountriesService } from '../../../../../../services/utils/countries.service';
 import { AccountTypesService } from '../../../../../../services/utils/accountTypes.service';
 // Directives
 import { DateValidatorDirective } from '../../../../../../directives/validators/date-validator.directive';
 import { MonthYearValidatorDirective } from '../../../../../../directives/validators/month-year-validator.directive';
 import { CpfCnpjValidatorDirective } from '../../../../../../directives/validators/cpfcnpj-validator.directive';
-import { PhoneValidatorDirective } from '../../../../../../directives/validators/phone-validator.directive';
 
 // Animations
 import { fadeInOut } from '../../../../../animations/fadeInAnimation.component';
@@ -58,14 +52,10 @@ import { SelectAccountTypeComponent } from "./selectAccountType.component";
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterLink,
     NgxMaskDirective,
     BreadcrumbComponent,
     ModalComponent,
-    LoaderComponent,
     FlagTagComponent,
-    ButtonPrimaryComponent,
-    FakeLoaderComponent,
     ContractModalComponent,
     NewAccreditationModalComponent,
     DocumentUploadComponent,
@@ -74,7 +64,6 @@ import { SelectAccountTypeComponent } from "./selectAccountType.component";
     CpfCnpjValidatorDirective,
     DateValidatorDirective,
     MonthYearValidatorDirective,
-    PhoneValidatorDirective,
     NgFor,
     NgIf,
     RegisterSuccessModalComponent,
