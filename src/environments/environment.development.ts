@@ -2,8 +2,8 @@ export const environment = {
   production: false,
 
   api: {
-    url:'http://localhost:3000',
-    // url: 'https://bko-backend.onrender.com',
+    // url:'http://localhost:3000',
+    url: 'https://bko-backend.onrender.com',
     url_searchCnpj: 'http://localhost:9000',
     url_credenciamento: 'http://localhost:3001',
     url_gateway: 'http://localhost:65533',
