@@ -49,6 +49,7 @@ import { Breadcrumb } from '../../../../layout/types/breadcrumb.interface';
 import { SessionService } from '../../../../../../services/session/session.service';
 import { contactResponsabilityListService } from '../../../../../../services/utils/contactResponsabilityList.service';
 import { RegisterSuccessModalComponent } from "../../clients/clientsDetailsForm/registerSuccessModal.component";
+import { SelectAccountTypeComponent } from "./selectAccountType.component";
 
 @Component({
   selector: 'app-pages-newAccreditation',
@@ -76,7 +77,8 @@ import { RegisterSuccessModalComponent } from "../../clients/clientsDetailsForm/
     PhoneValidatorDirective,
     NgFor,
     NgIf,
-    RegisterSuccessModalComponent
+    RegisterSuccessModalComponent,
+    SelectAccountTypeComponent
 ],
   animations: [fadeInOut],
 })
@@ -108,8 +110,8 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
     });
   }
 
-  // public accreditationOption!: number;
-  public accreditationOption = 2; //*-> Usado para testar um tipo específico de credenciamento (pf ou pj) -> Deve ser removido em produção
+  public accreditationOption!: number;
+  // public accreditationOption = 2; //*-> Usado para testar um tipo específico de credenciamento (pf ou pj) -> Deve ser removido em produção
   public formBuilder = inject(FormBuilder);
   public router = inject(Router);
 
@@ -178,7 +180,7 @@ export class NewAccreditationComponent implements OnDestroy, OnInit {
 
   //* @Permite que o usuário final escolha o tipo de credenciamento que vai realizar
   public accreditationOptSelect(value: any) {
-     this.accreditationOption = value;
+    this.accreditationOption = value;
     this.setValidators();
   }
 

@@ -1,0 +1,20 @@
+<div class="min-h-screen bg-[#eef1f6] p-4">
+  <div class="flex h-screen items-center justify-center">
+    <div
+      class="flex min-h-[230px] w-[500px] flex-col items-center justify-evenly rounded-lg bg-white px-4 text-center">
+      <span class="font-sans text-lg">Escolha qual o tipo de cadastro você deseja criar</span>
+      <div class="grid grid-cols-1 items-center gap-5 lg:grid-cols-2">
+        <div (click)="optionSelected('2')"
+          class="flex h-[80px] w-[200px] cursor-pointer  text-text hover:text-white relative overflow-hidden border-slate-200 before:absolute  before:top-0 before:left-0 before:h-full before:w-full before:origin-left before:scale-x-0 before:bg-primary before:transition-transform before:duration-500 before:ease-in-out hover:before:scale-x-100 before:z-0 group hover:border-primary hover:duration-500  items-center justify-center rounded-lg border  p-2 shadow-sm transition-all delay-100 ">
+          <span class="relative z-10">
+            Pessoa Física
+          </span>
+        </div>
+        <div (click)="optionSelected('1')"
+          class="flex h-[80px] w-[200px] cursor-pointer  text-text hover:text-white relative overflow-hidden border-slate-200 before:absolute  before:top-0 before:left-0 before:h-full before:w-full before:origin-left before:scale-x-0 before:bg-primary before:transition-transform before:duration-500 before:ease-in-out hover:before:scale-x-100 before:z-0 group hover:border-primary hover:duration-500  items-center justify-center rounded-lg border  p-2 shadow-sm transition-all delay-100">
+        <span class="relative z-10">Pessoa Jurídica</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

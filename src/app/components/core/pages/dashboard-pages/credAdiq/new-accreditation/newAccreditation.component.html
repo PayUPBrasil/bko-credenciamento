@@ -1391,18 +1391,9 @@
 }
 
 @if (!accreditationOption) {
-  <div class="min-h-screen bg-[#eef1f6] p-4">
-    <div class="flex h-screen items-center justify-center" [@fadeInOut]>
-      <div class="flex min-h-[230px] w-[500px] flex-col items-center justify-evenly rounded-lg bg-white px-4 text-center">
-        <span class="font-sans text-lg">Escolha qual o tipo de cadastro você deseja criar</span>
-
-        <div class="grid grid-cols-1 items-center gap-5 lg:grid-cols-2">
-          <div (click)="accreditationOptSelect('2')" class="flex h-[80px] w-[200px] cursor-pointer items-center justify-center rounded-lg border border-slate-200 p-2 shadow-sm transition-all delay-100 hover:border-primary">Pessoa Física</div>
-          <div (click)="accreditationOptSelect('1')" class="flex h-[80px] w-[200px] cursor-pointer items-center justify-center rounded-lg border border-slate-200 p-2 shadow-sm transition-all delay-100 hover:border-primary">Pessoa Jurídica</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div [@fadeInOut]>
+  <app-pages-select-account-type  (selectedAccountType)="accreditationOptSelect($event)"/>
+</div>
 }
 
 @if (doAccreditation === true && produtosAdicionados.length > 0) {
