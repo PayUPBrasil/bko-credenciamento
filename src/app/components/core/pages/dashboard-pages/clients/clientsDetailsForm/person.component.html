@@ -7,7 +7,7 @@
 
   <ng-container *ngIf="clientDetails[0] && clientDetails[0].basicData">
     <div class="flex flex-col gap-5 rounded-b-2xl bg-white p-5 pt-1 shadow-sm">
-      <div class="grid grid-cols-1 gap-8 text-sm sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+      <div class="grid grid-cols-1 gap-8 text-sm sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
         <div class="flex flex-col gap-1">
           <span class="font-sans font-semibold text-gray-800">Nome Fantasia</span>
           <span class="text-sm">{{ clientDetails[0].basicData.tradeName || '-' }}</span>

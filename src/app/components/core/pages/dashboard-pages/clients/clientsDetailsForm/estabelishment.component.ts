@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { Component, inject, Input, OnInit } from "@angular/core";
 import { FormatCpfCnpjPipe } from "../../../../../../pipes/format-cpf-cnpj.pipe";
 import { FormatPhonePipe } from "../../../../../../pipes/format-phone.pipe";
@@ -8,7 +8,7 @@ import { UserService } from "../../admin/users/user.service";
   selector: "app-pages-client-detail-estabelishment",
   templateUrl: "./estabelishment.component.html",
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, FormatCpfCnpjPipe, FormatPhonePipe]
+  imports: [NgClass, FormatCpfCnpjPipe, FormatPhonePipe]
 })
 
 export class EstabelishmentDetailsComponent {
