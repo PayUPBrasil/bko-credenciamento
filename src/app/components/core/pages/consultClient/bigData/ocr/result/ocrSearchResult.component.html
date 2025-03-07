@@ -348,15 +348,16 @@
                           :
                           'Este cliente possui baixas chances de ser uma pessoa públicamente exposta.'}}
 
-                          <ng-container *ngIf="socialNetworksName.length > 0">
+                          <ng-container *ngIf="totalSocialNetworks > 0">
                             Além disso, identificamos que o cliente está presente em
-                            {{totalSocialNetworks}} redes sociais:
+                            {{totalSocialNetworks}} {{ totalSocialNetworks > 1 ?  'redes sociais:' : 'rede social:'}}
                             <ng-container *ngFor="let social of socialNetworksName">
-                              <span> ({{ social }}) </span>
-                            </ng-container> e foi mencionado em {{ TotalSearchResults }}
-                            resultados de pesquisa. No entanto, não há postagens de mídia
-                            social identificadas pela pesquisa para mostrar.
+                              <a class="underline text-primary" [href]="social.socialLink" target="_blank" rel="noferer"> {{ social.socialName }} </a>
+                            </ng-container>
                           </ng-container>
+                          E foi mencionado em {{ TotalSearchResults }}
+                          resultados de pesquisa. No entanto, não há postagens de mídia
+                          social identificadas pela pesquisa para mostrar.
                         </p>
                       </div>
                     </div>

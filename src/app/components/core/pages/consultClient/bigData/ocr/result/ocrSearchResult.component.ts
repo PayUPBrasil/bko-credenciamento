@@ -92,7 +92,7 @@ public modalFormConfiguration =
   private router = inject(Router)
   public tableContent = []
   public totalSocialNetworks: any;
-  public socialNetworksName : any[] = [];
+  public socialNetworksName : any[] = []
 
 
   ngOnInit(): void {
@@ -236,13 +236,25 @@ public modalFormConfiguration =
     this.hasKYCInformation = true
 
     if (response.Result[0].AppsNetworksAndPlatforms) {
-      this.totalSocialNetworks = response.Result[0].AppsNetworksAndPlatforms.TotalSocialNetworks;
-      this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms);
+       this.addSocialNameToArrList(response.Result[0].AppsNetworksAndPlatforms.AppProfiles);
       this.TotalSearchResults = response.Result[0].AppsNetworksAndPlatforms.TotalSearchResults;
     }
   }
 
   protected addSocialNameToArrList(socialNetworks: any) {
+    console.log(this.socialNetworksName,'socialNetworksName.length ')
+
+    for(let i =0; i < socialNetworks.length; i++) {
+      if(socialNetworks[i].DisplayNameMatchRate > 40) {
+        this.socialNetworksName.push(
+          { socialName: socialNetworks[i].AppName,
+            socialLink: socialNetworks[i].ProfileUrl
+          }
+        );
+        this.totalSocialNetworks = this.socialNetworksName.length;
+      }
+    }
+
     const {
       HasFacebookProfile,
       HasGithubProfile,
@@ -266,11 +278,13 @@ public modalFormConfiguration =
     };
 
     if (Object.keys(objValues)) {
+      console.log(objValues, 'objValues')
       this.socialNetworksName.push(
         Object.keys(objValues)
           .filter((item) => objValues[item as keyof typeof objValues] === true)
           .map((item) => this.getSocialNetworkName(item))
       );
+
     }
   }
 public getSocialNetworkName(name:string) {

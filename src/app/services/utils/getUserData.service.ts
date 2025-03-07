@@ -9,7 +9,7 @@ import { UserService } from "../../components/core/pages/dashboard-pages/admin/u
 
 export class GetUserLoggedService {
 
-  userInfo : any = {}
+  public userInfo : any = {}
   public sessionService = inject(SessionService)
   public userName : any = ''
   public profilePic !: string;
@@ -41,12 +41,9 @@ export class GetUserLoggedService {
        this.sessionService.getSessao().subscribe({
         next: (session:any) => {
           if (session?.id) {
-            console.log(session.id, 'id session')
-
             this.token =  session.id
             this.userUUid = this.decodeToken(this.token)
-            console.log(this.userUUid, 'token decodificado')
-
+            this.userInfo.permissions = this.userUUid.permissions;
             return this.getUserById(this.userUUid.sub)
           }
 
@@ -59,6 +56,14 @@ export class GetUserLoggedService {
   this.userService.getUserById(userId).subscribe(
     {
       next: (user) => {
+        this.userInfo = {
+          name: user.name,
+          email: user.email,
+          profilePic: this.getProfilePic(),
+          role: user.role,
+          permissions: ["admin", "user"]
+        }
+
         return this.userLoggedData = user
       },
       error: (error) => {
